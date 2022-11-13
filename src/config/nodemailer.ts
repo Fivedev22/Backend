@@ -7,4 +7,10 @@ export const transporter = nodemailer.createTransport({
         user: 'jensen.wilderman3@ethereal.email',
         pass: 'rqTwRbgkaA7Y89F8XA'
     }
+
+    
 });
+
+transporter.verify().then(()=>{
+    console.log('listo para enviar email')
+  })

@@ -46,7 +46,19 @@ export class UserService {
     const userFound = await this.findByResetToken(reset_token);
     const encryptedPassword = await this.encryptPassword(password);
     userFound.reset_token = null;
-    await this.userRepository.save({ ...userFound, password: encryptedPassword });
+    try {
+      await this.userRepository.save({ ...userFound, password: encryptedPassword });
+      return {
+        estado: 201,
+        mensaje: 'Ok',
+      };
+    } catch (e) {
+      return {
+        estado: 400,
+        mensaje: 'Error',
+      };
+    }
+    
   }
 
   async create(createUserDto: CreateUserDto) {

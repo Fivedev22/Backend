@@ -10,12 +10,12 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
-    @Length(3, 60)
+    @Length(3, 61)
     last_name: string;
 
     @IsNotEmpty()
     @IsString()
-    @Length(10, 60)
+    @Length(6, 60)
     username: string;
 
     @IsNotEmpty()
@@ -24,6 +24,6 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
-    @Length(12)
+    @Length(8)
     password: string;
 }
