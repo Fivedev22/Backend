@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Put } from '@nestjs/common';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { LoginAuthDto, PasswordResetAuthDto, PasswordResetRequestAuthDto } from 'src/modules/auth/dto';
 
@@ -12,13 +12,13 @@ export class AuthController {
     return this.authService.login(loginAuthDto);
   }
 
-  @Patch('/password-reset-request')
+  @Put('/password-reset-request')
   @HttpCode(HttpStatus.OK)
   passwordResetRequest(@Body() passwordResetRequestAuthDto: PasswordResetRequestAuthDto) {
     return this.authService.passwordResetRequest(passwordResetRequestAuthDto);
   }
 
-  @Patch('/password-reset')
+  @Put('/password-reset')
   @HttpCode(HttpStatus.NO_CONTENT)
   passwordReset(@Body() passwordReset: PasswordResetAuthDto) {
     return this.authService.passwordReset(passwordReset);

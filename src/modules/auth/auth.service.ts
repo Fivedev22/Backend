@@ -23,7 +23,7 @@ export class AuthService {
     if (!checkPassword) throw new HttpException('Password incorrect', HttpStatus.NOT_ACCEPTABLE);
     const payload: JwtPayload = { username: userFound.username }
     const token = this.jwtService.sign(payload);
-    return token;
+    return { token };
   }
 
   async passwordResetRequest(passwordResetRequestAuthDto: PasswordResetRequestAuthDto) {
@@ -44,6 +44,7 @@ export class AuthService {
     try {
       await transporter.sendMail(message);
       await this.userService.addResetToken(email, resetToken);
+      return { resetToken };
     } catch {
       throw new HttpException('An error occurred while sending the email', HttpStatus.NOT_FOUND)
     }
