@@ -109,6 +109,9 @@ export class Booking {
         type: 'int',
         name: 'booking_amount',
     })
-    booking_amount: number;    
+    booking_amount: number;
+    
+    @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
+    is_active: boolean
  
 }
