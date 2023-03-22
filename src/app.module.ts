@@ -7,17 +7,21 @@ import { ClientModule } from 'src/modules/client/client.module';
 import { ProvinceModule } from 'src/shared/province/province.module';
 import { GenderTypeModule } from 'src/shared/gender_type/gender_type.module';
 import { DocumentTypeModule } from 'src/shared/document_type/document_type.module';
+import { BookingModule } from "src/modules/booking/booking.module";
+import { PropertyModule } from "src/modules/property/property.module";
+import { PaymentModule } from "src/modules/payment/payment.module";
+
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
+      host: 'localhost',
       port: 5432,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      username: 'postgres',
+      password: 'chelsea',
+      database: 'postgres',
       autoLoadEntities: true,
       logging: false,
       synchronize: true,
@@ -28,6 +32,9 @@ import { DocumentTypeModule } from 'src/shared/document_type/document_type.modul
     ProvinceModule,
     GenderTypeModule,
     DocumentTypeModule,
+    BookingModule,
+    PropertyModule,
+    PaymentModule
   ]
 })
 

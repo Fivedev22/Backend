@@ -31,7 +31,7 @@ export class CreateClientDto {
     @IsNotEmpty()
     @IsString()
     @Length(8, 20)
-    document: string;
+    document_number: string;
 
     @IsNotEmpty()
     @IsNumber()

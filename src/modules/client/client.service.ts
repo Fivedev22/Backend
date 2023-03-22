@@ -8,8 +8,8 @@ import { Client } from 'src/modules/client/client.entity';
 export class ClientService {
   constructor(@InjectRepository(Client) private readonly clientRepository: Repository<Client>) { }
 
-  async findByDocument(document: string) {
-    const documentFound = await this.clientRepository.findOne({ where: { document } });
+  async findByDocument(document_number: string) {
+    const documentFound = await this.clientRepository.findOne({ where: { document_number } });
     return documentFound;
   }
 
@@ -31,8 +31,8 @@ export class ClientService {
   }
 
   async create(createClientDto: CreateClientDto) {
-    const { document } = createClientDto;
-    if (await this.findByDocument(document)) throw new HttpException('Repeating client', HttpStatus.NOT_ACCEPTABLE);
+    const { document_number } = createClientDto;
+    if (await this.findByDocument(document_number)) throw new HttpException('Repeating client', HttpStatus.NOT_ACCEPTABLE);
     try {
       await this.clientRepository.save(createClientDto);
     } catch {
