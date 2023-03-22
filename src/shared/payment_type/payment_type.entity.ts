@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Payment } from "./payment.entity";
+import { Payment } from "../../modules/payment/entities/payment.entity";
 
 @Entity({
     name: 'payment_type',
@@ -14,9 +14,9 @@ export class PaymentType {
 
     @Column('varchar', {
         length: 100,
-        name: 'tipo_cobro',
+        name: 'payment_type_name',
     })
-    tipo_cobro: string;
+    payment_type_name: string;
 
     @OneToMany(() => Payment, (payment) => payment.id_payment)
     payments: Payment[]

@@ -31,19 +31,19 @@ export class BookingService {
         createBooking.booking_type = body.booking_type;
         createBooking.booking_origin = body.booking_origin;
         createBooking.client=body.client;
-        //createBooking.inmueble=body.inmueble;
+        createBooking.property=body.property;
         createBooking.adults_number=body.adults_number;
         createBooking.kids_number=body.kids_number;
-        createBooking.cant_mascotas=body.cant_mascotas;
-        createBooking.fecha_check_in=body.fecha_check_in;
-        createBooking.fecha_check_out=body.fecha_check_out;
-        createBooking.hora_check_in=body.hora_check_in;
-        createBooking.hora_check_out=body.hora_check_out;
-        createBooking.precio_incial=body.precio_incial;
-        createBooking.descuento=body.descuento;
-        createBooking.monto_seña=body.monto_seña;
-        createBooking.monto_estimado_seña=body.monto_estimado_seña;
-        createBooking.monto_reserva=body.monto_reserva;
+        createBooking.pets_number=body.pets_number;
+        createBooking.check_in_date=body.check_in_date;
+        createBooking.check_out_date=body.check_out_date;
+        createBooking.check_in_hour=body.check_in_hour;
+        createBooking.check_out_hour=body.check_out_hour;
+        createBooking.starting_price=body.starting_price;
+        createBooking.discount=body.discount;
+        createBooking.deposit_amount=body.deposit_amount;
+        createBooking.estimated_amount_deposit=body.estimated_amount_deposit;
+        createBooking.booking_amount=body.booking_amount;
         try {
           const BookingSaved = await this.bookingRepository.save(createBooking);
           return {
@@ -66,19 +66,19 @@ export class BookingService {
           EditBooking.booking_type = body.booking_type;
           EditBooking.booking_origin = body.booking_origin;
           EditBooking.client=body.client;
-          //EditBooking.inmueble=body.inmueble;
+          EditBooking.property=body.property;
           EditBooking.adults_number=body.adults_number;
           EditBooking.kids_number=body.kids_number;
-          EditBooking.cant_mascotas=body.cant_mascotas;
-          EditBooking.fecha_check_in=body.fecha_check_out;
-          EditBooking.fecha_check_out=body.fecha_check_out;
-          EditBooking.hora_check_in=body.hora_check_in;
-          EditBooking.hora_check_out=body.hora_check_out;
-          EditBooking.precio_incial=body.precio_incial;
-          EditBooking.descuento=body.descuento;
-          EditBooking.monto_seña=body.monto_seña;
-          EditBooking.monto_estimado_seña=body.monto_estimado_seña;
-          EditBooking.monto_reserva=body.monto_reserva;
+          EditBooking.pets_number=body.pets_number;
+          EditBooking.check_in_date=body.check_in_date;
+          EditBooking.check_out_date=body.check_out_date;
+          EditBooking.check_in_hour=body.check_in_hour;
+          EditBooking.check_out_hour=body.check_out_hour;
+          EditBooking.starting_price=body.starting_price;
+          EditBooking.discount=body.discount;
+          EditBooking.deposit_amount=body.deposit_amount;
+          EditBooking.estimated_amount_deposit=body.estimated_amount_deposit;
+          EditBooking.booking_amount=body.booking_amount;
           await this.bookingRepository.save(EditBooking);
           return {
             statusCode: 200,

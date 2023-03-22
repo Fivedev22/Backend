@@ -1,7 +1,9 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Province } from "src/shared/province/province.entity";
 import { Booking } from "src/modules/booking/entities/booking.entity";
-import { PropertyType } from "./property_type.entity";
+import { PropertyType } from "../../../shared/property_type/property_type.entity";
+import { AvailabilityStatus } from "src/shared/availability_status/availability_status.entity";
+import { ActivityStatus } from "src/shared/activity_status/activity_status.entity";
 
 @Entity({
     name: "property",
@@ -16,88 +18,90 @@ export class Property {
 
     @Column({
         type: 'int',
-        name: 'nro_referencia',
+        name: 'reference_number',
         unique: true
     })
-    nro_referencia: number;
+    reference_number: number;
 
     @Column('varchar', {
         length: 100,
-        name: 'nombre_inmueble',
+        name: 'property_name',
+        nullable: false
     })
-    nombre_inmueble: string;
+    property_name: string;
 
     @ManyToOne(() => PropertyType, (property_type) => property_type.id)
     property_type: PropertyType
 
     @Column('varchar', {
         length: 100,
-        name: 'metros_cuadrados',
+        name: 'square_meter',
         nullable: true
     })
-    metros_cuadrados: string;
+    square_meter: string;
 
     @Column('varchar', {
         length: 100,
-        name: 'calle',
+        name: 'street',
     })
-    calle: string;
+    street: string;
 
     @Column('varchar', {
         length: 100,
-        name: 'numero',
+        name: 'street_number',
     })
-    numero: string;
+    street_number: string;
 
     @Column('varchar', {
         length: 100,
-        name: 'piso',
+        name: 'building_floor',
         nullable: true
     })
-    piso: string;
+    building_floor: string;
 
     @ManyToOne(() => Province, (province) => province.id_province)
     province: Province
 
     @Column('varchar', {
         length: 100,
-        name: 'ciudad',
+        name: 'town',
     })
-    ciudad: string;
+    town: string;
 
     @Column('varchar', {
         length: 100,
-        name: 'barrio',
+        name: 'district',
     })
-    barrio: string;
+    district: string;
+    // puse district para barrio//
 
     @Column('bool',{
-        name: 'alquiler_diario',
+        name: 'daily_rent',
         default: false,
     })
-    alquiler_diario: boolean
+    daily_rent: boolean
 
     @Column('bool',{
-        name: 'alquiler_mensual',
+        name: 'monthly_rent',
         default: false,
     })
-    alquiler_mensual: boolean
+    monthly_rent: boolean
 
     @Column('bool',{
-        name: 'alquiler_anual',
+        name: 'annual_rent',
         default: false,
     })
-    alquiler_anual: boolean
+    annual_rent: boolean
 
     @Column('int', {
-        name: 'cant_habitaciones',
+        name: 'rooms_number',
     })
-    cant_habitaciones: number;
+    rooms_number: number;
 
     @Column('int', {
-        name: 'cant_baños',
+        name: 'bathrooms_number',
     })
-    cant_baños: number;
+    bathrooms_number: number;
 
     @Column('bool',{
         name: 'internet',
@@ -106,28 +110,28 @@ export class Property {
     internet: boolean
 
     @Column('bool',{
-        name: 'pileta',
+        name: 'pool',
         default: false,
     })
-    pileta: boolean
+    pool: boolean
 
     @Column('bool',{
-        name: 'cocina',
+        name: 'kitchen',
         default: false,
     })
-    cocina: boolean
+    kitchen: boolean
 
     @Column('bool',{
-        name: 'equipo_lavanderia',
+        name: 'laundry_equipment',
         default: false,
     })
-    equipo_lavanderia: boolean
+    laundry_equipment: boolean
 
     @Column('bool',{
-        name: 'patio',
+        name: 'yard',
         default: false,
     })
-    patio: boolean
+    yard: boolean
 
     @Column('bool',{
         name: 'parking',
@@ -136,32 +140,22 @@ export class Property {
     parking: boolean
 
     @Column('bool',{
-        name: 'acceso_discapacitados',
+        name: 'disabled_access',
         default: false,
     })
-    acceso_discapacitados: boolean
+    disabled_access: boolean
 
     @Column('bool',{
-        name: 'camas_niños',
+        name: 'kids_beds',
         default: false,
     })
-    camas_niños: boolean
+    kids_beds: boolean
 
-    @Column('varchar', {
-        length: 50,
-        name: 'estado_disponibilidad',
-        nullable: false,
-        unique: true
-    })
-    estado_disponibilidad: string;
+    @ManyToOne(() => AvailabilityStatus, (availability_status) => availability_status.id)
+    availability_status: AvailabilityStatus
 
-    @Column('varchar', {
-        length: 50,
-        name: 'estado_actividad',
-        nullable: false,
-        unique:true
-    })
-    estado_actividad: string;
+    @ManyToOne(() => ActivityStatus, (activity_status) => activity_status.id)
+    activity_status: ActivityStatus
 
     @OneToMany(() => Booking, (booking) => booking.id_booking)
     bookings: Booking[]

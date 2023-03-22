@@ -2,7 +2,7 @@ import { Booking } from "src/modules/booking/entities/booking.entity";
 import { Client } from "src/modules/client/client.entity";
 import { Property } from "src/modules/property/entities/property.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { PaymentType } from "./payment_type.entity";
+import { PaymentType } from "../../../shared/payment_type/payment_type.entity";
 
 @Entity({
     name: "payment",
@@ -17,10 +17,10 @@ export class Payment {
 
     @Column({
         type: 'int',
-        name: 'nro_cobro',
+        name: 'payment_number',
         unique: true
     })
-    nro_cobro: number;
+    payment_number: number;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -38,55 +38,55 @@ export class Payment {
     property: Property
 
     @Column('bool',{
-        name: 'estado_cobro',
+        name: 'payment_status',
         default: false,
         nullable: true
     })
-    estado_cobro: boolean
+    payment_status: boolean
 
     // las siguientes columnas salvo la ultima hay que ver si se pueden asociar con la de reserva para no poner todo de nuevo
     @Column({ 
         type: 'date',
-        name: 'fecha_check_in',
+        name: 'check_in_date',
     })
-    fecha_check_in: string;
+    check_in_date: string;
 
     @Column({ 
         type: 'date',
-        name: 'fecha_check_out',
+        name: 'check_out_date',
     })
-    fecha_check_out: string;
+    check_out_date: string;
 
     @Column({
         type: 'int',
-        name: 'monto_reserva',
+        name: 'booking_amount',
     })
-    monto_reserva: number;
+    booking_amount: number;
 
     @Column({
         type: "int",
-        name: 'descuento_reserva',
+        name: 'booking_discount',
         nullable: true
     })
-    descuento_reserva: number;
+    booking_discount: number;
 
     @Column({
         type: 'int',
-        name: 'monto_seña',
+        name: 'deposit_amount',
     })
-    monto_seña: number;
+    deposit_amount: number;
 
     @Column({
         type: 'int',
-        name: 'subtotal',
+        name: 'payment_amount_subtotal',
     })
-    subtotal: number;
+    payment_amount_subtotal: number;
 
     @Column({
         type: 'int',
-        name: 'total',
+        name: 'payment_amount_total',
     })
-    total: number;
+    payment_amount_total: number;
 
     @ManyToOne(() => PaymentType, (payment_type) => payment_type.id)
     payment_type: PaymentType

@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Property } from "./property.entity";
+import { Property } from "../../modules/property/entities/property.entity";
 
 @Entity({
     name: "property_type",
@@ -14,11 +14,11 @@ export class PropertyType {
 
     @Column('varchar', {
         length: 100,
-        name: 'tipo_inmueble',
+        name: 'property_type_name',
     })
-    tipo_inmueble: string;
+    property_type_name: string;
 
-    @OneToMany(() => Property, (property) => property.nro_referencia)
+    @OneToMany(() => Property, (property) => property.reference_number)
     propertys: Property[]
 
     

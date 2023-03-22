@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Booking } from "./booking.entity";
+import { Booking } from "../../modules/booking/entities/booking.entity";
 
 @Entity({
     name: "booking_type",

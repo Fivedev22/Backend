@@ -27,20 +27,19 @@ export class PaymentService {
     
       public async create(body) {
         const CreatePayment = new Payment();
-        CreatePayment.nro_cobro = body.nro_cobro;
+        CreatePayment.payment_number = body.payment_number;
         CreatePayment.booking = body.booking;
         CreatePayment.client = body.client;
         CreatePayment.property = body.property;
-        CreatePayment.nro_cobro = body.nro_cobro;
-        CreatePayment.estado_cobro= body.estado_cobro;
-        CreatePayment.fecha_check_in = body.fecha_check_in;
-        CreatePayment.fecha_check_out = body.fecha_check_out;
-        CreatePayment.monto_reserva = body.monto_reserva;
-        CreatePayment.descuento_reserva = body.descuento_reserva;
-        CreatePayment.monto_seña = body.monto_seña;
-        CreatePayment.subtotal = body.subtotal;
-        CreatePayment.total = body.total;
-        CreatePayment.payment_type = body.tipo_cobro;
+        CreatePayment.payment_status= body.payment_status;
+        CreatePayment.check_in_date = body.check_in_date;
+        CreatePayment.check_out_date = body.check_out_date;
+        CreatePayment.booking_amount = body.booking_amount;
+        CreatePayment.booking_discount = body.booking_discount;
+        CreatePayment.deposit_amount = body.deposit_amount;
+        CreatePayment.payment_amount_subtotal = body.payment_amount_subtotal;
+        CreatePayment.payment_amount_total = body.payment_amount_total;
+        CreatePayment.payment_type = body.payment_type;
         try {
           const PaymentSaved = await this.paymentRepository.save(CreatePayment);
           return {
@@ -59,19 +58,19 @@ export class PaymentService {
               id_payment: id_payment,
             },
           });
-          EditPayment.nro_cobro = body.nro_cobro;
+          EditPayment.payment_number = body.payment_number;
           EditPayment.booking = body.booking;
           EditPayment.client = body.client;
           EditPayment.property = body.property;
-          EditPayment.nro_cobro = body.nro_cobro;
-          EditPayment.estado_cobro= body.estado_cobro;
-          EditPayment.fecha_check_in = body.fecha_check_in;
-          EditPayment.fecha_check_out = body.fecha_check_out;
-          EditPayment.monto_reserva = body.monto_reserva;
-          EditPayment.descuento_reserva = body.descuento_reserva;
-          EditPayment.monto_seña = body.monto_seña;
-          EditPayment.subtotal = body.subtotal;
-          EditPayment.total = body.total;
+          EditPayment.payment_status= body.payment_status;
+          EditPayment.check_in_date = body.check_in_date;
+          EditPayment.check_out_date = body.check_out_date;
+          EditPayment.booking_amount = body.booking_amount;
+          EditPayment.booking_discount = body.booking_discount;
+          EditPayment.deposit_amount = body.deposit_amount;
+          EditPayment.payment_amount_subtotal = body.payment_amount_subtotal;
+          EditPayment.payment_amount_total = body.payment_amount_total;
+          EditPayment.payment_type = body.payment_type;
           EditPayment.payment_type = body.payment_type;
           await this.paymentRepository.save(EditPayment);
           return {

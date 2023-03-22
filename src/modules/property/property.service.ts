@@ -27,31 +27,31 @@ export class PropertyService {
     
       public async createProperty(body) {
         const createProperty = new Property();
-        createProperty.nro_referencia = body.nro_referencia;
-        createProperty.nombre_inmueble = body.nombre_inmueble;
+        createProperty.reference_number = body.reference_number;
+        createProperty.property_name = body.property_name;
         createProperty.property_type = body.property_type;
-        createProperty.metros_cuadrados = body.metros_cuadrados;
-        createProperty.calle = body.calle;
-        createProperty.numero = body.numero;
-        createProperty.piso = body.piso;
+        createProperty.square_meter = body.square_meter;
+        createProperty.street = body.street;
+        createProperty.street_number = body.street_number;
+        createProperty.building_floor = body.building_floor;
         createProperty.province = body.province;
-        createProperty.ciudad = body.ciudad;
-        createProperty.barrio = body.barrio;
-        createProperty.alquiler_diario = body.alquiler_diario;
-        createProperty.alquiler_mensual = body.alquiler_mensual;
-        createProperty.alquiler_anual = body.alquiler_anual;
-        createProperty.cant_habitaciones = body.cant_habitaciones;
-        createProperty.cant_baños = body.cant_baños;
+        createProperty.town = body.town;
+        createProperty.district = body.district;
+        createProperty.daily_rent = body.daily_rent;
+        createProperty.monthly_rent = body.monthly_rent;
+        createProperty.annual_rent = body.annual_rent;
+        createProperty.rooms_number = body.rooms_number;
+        createProperty.bathrooms_number = body.bathrooms_number;
         createProperty.internet = body.internet;
-        createProperty.pileta = body.pileta;
-        createProperty.cocina = body.cocina;
-        createProperty.equipo_lavanderia = body.equipo_lavanderia;
-        createProperty.patio = body.patio;
+        createProperty.pool = body.pool;
+        createProperty.kitchen = body.kitchen;
+        createProperty.laundry_equipment = body.laundry_equipment;
+        createProperty.yard = body.yard;
         createProperty.parking = body.parking;
-        createProperty.acceso_discapacitados = body.acceso_discapacitados;
-        createProperty.camas_niños = body.camas_niños;
-        createProperty.estado_disponibilidad = body.estado_disponibilidad;
-        createProperty.estado_actividad = body.estado_actividad;
+        createProperty.disabled_access = body.disabled_access;
+        createProperty.kids_beds = body.kids_beds;
+        createProperty.availability_status = body.estado_disponibilidad;
+        createProperty.activity_status = body.activity_status;
         try {
           const PropertySaved = await this.propertyRepository.save(createProperty);
           return {
@@ -70,31 +70,31 @@ export class PropertyService {
               id_property: id_property,
             },
           });
-          EditProperty.nro_referencia = body.nro_referencia;
-          EditProperty.nombre_inmueble = body.nombre_inmueble;
+          EditProperty.reference_number = body.reference_number;
+          EditProperty.property_name = body.property_name;
           EditProperty.property_type = body.property_type;
-          EditProperty.metros_cuadrados = body.metros_cuadrados;
-          EditProperty.calle = body.calle;
-          EditProperty.numero = body.numero;
-          EditProperty.piso = body.piso;
+          EditProperty.square_meter = body.square_meter;
+          EditProperty.street = body.street;
+          EditProperty.street_number = body.street_number;
+          EditProperty.building_floor = body.building_floor;
           EditProperty.province = body.province;
-          EditProperty.ciudad = body.ciudad;
-          EditProperty.barrio = body.barrio;
-          EditProperty.alquiler_diario = body.alquiler_diario;
-          EditProperty.alquiler_mensual = body.alquiler_mensual;
-          EditProperty.alquiler_anual = body.alquiler_anual;
-          EditProperty.cant_habitaciones = body.cant_habitaciones;
-          EditProperty.cant_baños = body.cant_baños;
+          EditProperty.town = body.town;
+          EditProperty.district = body.district;
+          EditProperty.daily_rent = body.daily_rent;
+          EditProperty.monthly_rent = body.monthly_rent;
+          EditProperty.annual_rent = body.annual_rent;
+          EditProperty.rooms_number = body.rooms_number;
+          EditProperty.bathrooms_number = body.bathrooms_number;
           EditProperty.internet = body.internet;
-          EditProperty.pileta = body.pileta;
-          EditProperty.cocina = body.cocina;
-          EditProperty.equipo_lavanderia = body.equipo_lavanderia;
-          EditProperty.patio = body.patio;
+          EditProperty.pool = body.pool;
+          EditProperty.kitchen = body.kitchen;
+          EditProperty.laundry_equipment = body.laundry_equipment;
+          EditProperty.yard = body.yard;
           EditProperty.parking = body.parking;
-          EditProperty.acceso_discapacitados = body.acceso_discapacitados;
-          EditProperty.camas_niños = body.camas_niños;
-          EditProperty.estado_disponibilidad = body.estado_disponibilidad;
-          EditProperty.estado_actividad = body.estado_actividad;
+          EditProperty.disabled_access = body.disabled_access;
+          EditProperty.kids_beds = body.kids_beds;
+          EditProperty.availability_status = body.availability_status;
+          EditProperty.activity_status = body.activity_status;
           await this.propertyRepository.save(EditProperty);
           return {
             statusCode: 200,

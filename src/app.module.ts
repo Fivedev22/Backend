@@ -10,6 +10,12 @@ import { DocumentTypeModule } from 'src/shared/document_type/document_type.modul
 import { BookingModule } from "src/modules/booking/booking.module";
 import { PropertyModule } from "src/modules/property/property.module";
 import { PaymentModule } from "src/modules/payment/payment.module";
+import { PropertyTypeModule } from './shared/property_type/property_type.module';
+import { PaymentTypeModule } from './shared/payment_type/payment_type.module';
+import { BookingTypeModule } from './shared/booking_type/booking_type.module';
+import { BookingOriginModule } from './shared/booking_origin/booking_origin.module';
+import { AvailabilityStatusModule } from './shared/availability_status/availability_status.module';
+import { ActivityStatusModule } from './shared/activity_status/activity_status.module';
 
 
 @Module({
@@ -32,8 +38,14 @@ import { PaymentModule } from "src/modules/payment/payment.module";
     ProvinceModule,
     GenderTypeModule,
     DocumentTypeModule,
+    PropertyTypeModule,
+    PaymentTypeModule,
+    BookingTypeModule,
+    BookingOriginModule,
     BookingModule,
     PropertyModule,
+    AvailabilityStatusModule,
+    ActivityStatusModule,
     PaymentModule
   ]
 })

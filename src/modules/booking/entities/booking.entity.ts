@@ -1,7 +1,8 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Client } from "src/modules/client/client.entity";
-import { BookingType } from "src/modules/booking/entities/booking_type.entity";
-import { Booking_Origin } from "src/modules/booking/entities/origin.entity";
+import { BookingType } from "../../../shared/booking_type/booking_type.entity";
+import { Booking_Origin } from "../../../shared/booking_origin/origin.entity";
+import { Property } from "src/modules/property/entities/property.entity";
 
 
 @Entity({
@@ -34,8 +35,8 @@ export class Booking {
     @ManyToOne(() => Client, (client) => client.id_client)
     client: Client
 
-    //@ManyToOne(() => Inmueble, (inmueble) => inmueble.id)
-    //inmueble: Inmueble
+    @ManyToOne(() => Property, (property) => property.id_property)
+    property: Property
 
     @Column({
         type: 'int',
@@ -51,63 +52,63 @@ export class Booking {
 
     @Column({
         type: 'int',
-        name: 'cant_mascotas',
+        name: 'pets_number',
     })
-    cant_mascotas: number;
+    pets_number: number;
 
     @Column({ 
         type: 'date',
-        name: 'fecha_check_in',
+        name: 'check_in_date',
     })
-    fecha_check_in: string;
+    check_in_date: string;
 
     @Column({ 
         type: 'date',
-        name: 'fecha_check_out',
+        name: 'check_out_date',
     })
-    fecha_check_out: string;
+    check_out_date: string;
 
     @Column({ 
         type: 'time',
-        name: 'hora_check_in',
+        name: 'check_in_hour',
     })
-    hora_check_in: string;
+    check_in_hour: string;
 
     @Column({ 
         type: 'time',
-        name: 'hora_check_out',
+        name: 'check_out_hour',
     })
-    hora_check_out: string;
+    check_out_hour: string;
 
     @Column({
         type: 'int',
-        name: 'precio_incial',
+        name: 'starting_price',
     })
-    precio_incial: number;
+    starting_price: number;
 
     @Column({
         type: 'int',
-        name: 'descuento',
+        name: 'discount',
         nullable: true
     })
-    descuento: number;
+    discount: number;
 
     @Column({
         type: 'int',
-        name: 'monto_seña',
+        name: 'deposit_amount',
     })
-    monto_seña: number;
+    deposit_amount: number;
 
     @Column({
         type: 'int',
-        name: 'monto_estimado_seña',
+        name: 'estimated_amount_deposit',
     })
-    monto_estimado_seña: number;
+    estimated_amount_deposit: number;
 
     @Column({
         type: 'int',
-        name: 'monto_reserva',
+        name: 'booking_amount',
     })
-    monto_reserva: number;    
+    booking_amount: number;    
  
 }
