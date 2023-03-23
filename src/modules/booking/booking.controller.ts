@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
 import { BookingService } from "../booking/booking.service";
+import { CreateBookingDto, UpdateBookingDto } from "src/modules/booking/dto";
 
 @Controller('booking')
 export class BookingController {
@@ -7,8 +8,8 @@ export class BookingController {
 
     @Post('/create')
     @HttpCode(HttpStatus.CREATED)
-    createBooking(@Body() body) {
-        return this.bookingService.createBooking(body);
+    createBooking(@Body() createBookingDto: CreateBookingDto) {
+        return this.bookingService.createBooking(createBookingDto);
     }
 
     @Get()
@@ -26,8 +27,8 @@ export class BookingController {
 
     @Patch('/edit/:id')
     @HttpCode(HttpStatus.ACCEPTED)
-    updateBooking(@Param('id') id_booking, @Body() body) {
-        return this.bookingService.updateBooking(id_booking, body);
+    updateBooking(@Param('id', ParseIntPipe) id_booking: number, @Body() updateBookingDto: UpdateBookingDto) {
+        return this.bookingService.updateBooking(+id_booking, updateBookingDto);
     }
 
     
