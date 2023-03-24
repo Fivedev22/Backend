@@ -18,15 +18,15 @@ export class BookingService {
 
     public async findAllBookings() {
         return await this.bookingRepository.find({
-          relations: ['booking_type', 'booking_origin'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property'],
           where: {is_active: true},
           order: { id_booking: 'ASC'}
         })
       }
     
-      public async findOneBooking(id_booking) {
+      public async findOneBooking(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property'],
           where: {
             id_booking: id_booking,
             is_active: true

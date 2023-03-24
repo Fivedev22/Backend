@@ -77,7 +77,6 @@ export class CreateBookingDto {
   @Min(0)
   discount: number;
 
-  @ApiProperty({ type: 'integer', minimum: 0 })
   @IsInt()
   @Min(0)
   deposit_amount: number;

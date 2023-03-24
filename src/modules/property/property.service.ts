@@ -1,59 +1,43 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { Property } from './entities/property.entity';
 
 @Injectable()
 export class PropertyService {
-    constructor(
-        @InjectRepository(Property)
-        private readonly propertyRepository: Repository<Property>,
-    ) {}
+    constructor(@InjectRepository(Property) private readonly propertyRepository: Repository<Property>) {}
 
+
+    async findByReferenceNumber(reference_number: number) {
+      const numberFound = await this.propertyRepository.findOne({ where: { reference_number } });
+      return numberFound;
+    }
+  
     public async findAll() {
-        return await this.propertyRepository
-          .createQueryBuilder('property')
-          .select()
-          .getMany();
+      const properties = await this.propertyRepository.find({
+        relations: ['property_type', 'province', 'booking', 'availability_status', 'activity_status'],
+        where: { is_active: true },
+        order: { id_property: 'ASC'}
+      })
+      return properties;
       }
     
-      public async findOneProperty(id_property) {
+      public async findOneProperty(id_property: number) {
         return await this.propertyRepository.findOne({
+          relations: ['property_type', 'province', 'booking', 'availability_status', 'activity_status'],
           where: {
             id_property: id_property,
-          },
-        });
+            is_active: true
+          }
+        })
       }
     
-      public async createProperty(body) {
-        const createProperty = new Property();
-        createProperty.reference_number = body.reference_number;
-        createProperty.property_name = body.property_name;
-        createProperty.property_type = body.property_type;
-        createProperty.square_meter = body.square_meter;
-        createProperty.street = body.street;
-        createProperty.street_number = body.street_number;
-        createProperty.building_floor = body.building_floor;
-        createProperty.province = body.province;
-        createProperty.town = body.town;
-        createProperty.district = body.district;
-        createProperty.daily_rent = body.daily_rent;
-        createProperty.monthly_rent = body.monthly_rent;
-        createProperty.annual_rent = body.annual_rent;
-        createProperty.rooms_number = body.rooms_number;
-        createProperty.bathrooms_number = body.bathrooms_number;
-        createProperty.internet = body.internet;
-        createProperty.pool = body.pool;
-        createProperty.kitchen = body.kitchen;
-        createProperty.laundry_equipment = body.laundry_equipment;
-        createProperty.yard = body.yard;
-        createProperty.parking = body.parking;
-        createProperty.disabled_access = body.disabled_access;
-        createProperty.kids_beds = body.kids_beds;
-        createProperty.availability_status = body.estado_disponibilidad;
-        createProperty.activity_status = body.activity_status;
+      public async createProperty(createBookingDto: CreatePropertyDto) {
+        const {reference_number} = createBookingDto;
+        if (await this.findByReferenceNumber(reference_number)) throw new HttpException('Repeating property', HttpStatus.NOT_ACCEPTABLE);
         try {
-          const PropertySaved = await this.propertyRepository.save(createProperty);
+          await this.propertyRepository.save(createBookingDto);
           return {
             statusCode: 200,
             msg: 'Property Saved Successfully',
@@ -63,48 +47,16 @@ export class PropertyService {
         }
       }
     
-      public async updateProperty(id_property, body: Property) {
-        try {
-          const EditProperty = await this.propertyRepository.findOne({
-            where: {
-              id_property: id_property,
-            },
-          });
-          EditProperty.reference_number = body.reference_number;
-          EditProperty.property_name = body.property_name;
-          EditProperty.property_type = body.property_type;
-          EditProperty.square_meter = body.square_meter;
-          EditProperty.street = body.street;
-          EditProperty.street_number = body.street_number;
-          EditProperty.building_floor = body.building_floor;
-          EditProperty.province = body.province;
-          EditProperty.town = body.town;
-          EditProperty.district = body.district;
-          EditProperty.daily_rent = body.daily_rent;
-          EditProperty.monthly_rent = body.monthly_rent;
-          EditProperty.annual_rent = body.annual_rent;
-          EditProperty.rooms_number = body.rooms_number;
-          EditProperty.bathrooms_number = body.bathrooms_number;
-          EditProperty.internet = body.internet;
-          EditProperty.pool = body.pool;
-          EditProperty.kitchen = body.kitchen;
-          EditProperty.laundry_equipment = body.laundry_equipment;
-          EditProperty.yard = body.yard;
-          EditProperty.parking = body.parking;
-          EditProperty.disabled_access = body.disabled_access;
-          EditProperty.kids_beds = body.kids_beds;
-          EditProperty.availability_status = body.availability_status;
-          EditProperty.activity_status = body.activity_status;
-          await this.propertyRepository.save(EditProperty);
-          return {
-            statusCode: 200,
-            msg: 'Property Updated Successfully.',
-          };
-        } catch (error) {
-          return new BadRequestException(error);
-        }
-      }
-    
+      public async updateProperty(id_property: number, updatePropertyDto: UpdatePropertyDto) {
+        if (!await this.findOneProperty(id_property)) throw new HttpException(`Property with id ${id_property} does not exist`, HttpStatus.NOT_FOUND);
+        const property = await this.propertyRepository.preload({ id_property, ...updatePropertyDto});
+          try {
+            await this.propertyRepository.update(id_property, property);
+          } catch (error) {
+            return new BadRequestException(error);
+          }
+        } 
+      
       public async removeProperty (id_property: number) {
         try {
           await this.propertyRepository.delete({
@@ -118,4 +70,27 @@ export class PropertyService {
           return new BadRequestException(error);
         }
     }
+
+    async archive(id_property: number) {
+      const property = await this.findOneProperty(id_property);
+      if (!property) throw new HttpException(`Property with id ${id_property} does not exist`, HttpStatus.NOT_FOUND);
+      try {
+        property.is_active = false;
+        await this.propertyRepository.update(id_property, property);
+      } catch {
+        throw new HttpException('A problem occurred while archiving the property', HttpStatus.NOT_FOUND);
+      }
+    }
+  
+    async unarchive(id_property: number) {
+      const property = await this.findOneProperty(id_property);
+      if (!property) throw new HttpException(`Property with id ${id_property} does not exist`, HttpStatus.NOT_FOUND);
+      try {
+        property.is_active = true;
+        await this.propertyRepository.update(id_property, property);
+      } catch {
+        throw new HttpException('A problem occurred while unarchiving the property', HttpStatus.NOT_FOUND);
+      }
+    }
+  
 }

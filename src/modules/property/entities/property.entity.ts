@@ -160,4 +160,7 @@ export class Property {
     @OneToMany(() => Booking, (booking) => booking.id_booking)
     bookings: Booking[]
 
+    @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
+    is_active: boolean
+
 }
