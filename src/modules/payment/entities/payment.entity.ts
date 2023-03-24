@@ -1,6 +1,7 @@
 import { Booking } from "src/modules/booking/entities/booking.entity";
 import { Client } from "src/modules/client/client.entity";
 import { Property } from "src/modules/property/entities/property.entity";
+import { PaymentStatus } from "src/shared/payment_status/payment_status.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PaymentType } from "../../../shared/payment_type/payment_type.entity";
 
@@ -36,13 +37,6 @@ export class Payment {
     @OneToOne(() => Property)
     @JoinColumn()
     property: Property
-
-    @Column('bool',{
-        name: 'payment_status',
-        default: false,
-        nullable: true
-    })
-    payment_status: boolean
 
     // las siguientes columnas salvo la ultima hay que ver si se pueden asociar con la de reserva para no poner todo de nuevo
     @Column({ 
@@ -90,5 +84,12 @@ export class Payment {
 
     @ManyToOne(() => PaymentType, (payment_type) => payment_type.id)
     payment_type: PaymentType
+
+    @ManyToOne(() => PaymentStatus, (payment_status) => payment_status.id_payment_status)
+    payment_status: PaymentStatus
+
+    @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
+    is_active: boolean
+    // el is_active es para archivar y desarchivar el cobro
 
 }

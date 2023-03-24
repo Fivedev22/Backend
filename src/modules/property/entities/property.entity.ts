@@ -162,5 +162,6 @@ export class Property {
 
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
+    // el is_active es para archivar y desarchivar el cobro
 
 }

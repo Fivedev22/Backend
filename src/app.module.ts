@@ -16,6 +16,7 @@ import { BookingTypeModule } from './shared/booking_type/booking_type.module';
 import { BookingOriginModule } from './shared/booking_origin/booking_origin.module';
 import { AvailabilityStatusModule } from './shared/availability_status/availability_status.module';
 import { ActivityStatusModule } from './shared/activity_status/activity_status.module';
+import { PaymentStatusModule } from './shared/payment_status/payment_status.module';
 
 
 @Module({
@@ -46,7 +47,8 @@ import { ActivityStatusModule } from './shared/activity_status/activity_status.m
     PropertyModule,
     AvailabilityStatusModule,
     ActivityStatusModule,
-    PaymentModule
+    PaymentModule,
+    PaymentStatusModule
   ]
 })
 

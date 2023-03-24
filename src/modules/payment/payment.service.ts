@@ -1,47 +1,43 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreatePaymentDTO } from './dto';
+import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Payment } from './entities/payment.entity';
 
 @Injectable()
 export class PaymentService {
-    constructor(
-        @InjectRepository(Payment)
-        private readonly paymentRepository: Repository<Payment>,
-      ) {}
+    constructor(@InjectRepository(Payment) private readonly paymentRepository: Repository<Payment>) {}
 
-      public async findAll() {
-        return await this.paymentRepository
-          .createQueryBuilder('payment')
-          .select()
-          .getMany();
+    async findByPaymentNumber(payment_number: number) {
+      const paymentFound = await this.paymentRepository.findOne({ where: { payment_number } });
+      return paymentFound;
+    }  
+    
+    public async findAll() {
+        const payments = await this.paymentRepository.find({
+          relations: ['booking', 'client', 'property', 'payment_type'],
+          where: {is_active: true},
+          order: {id_payment: 'ASC'}
+        });
+        return payments;
       }
     
-      public async findOne(id_payment) {
+      public async findOne(id_payment: number) {
         return await this.paymentRepository.findOne({
+          relations: ['booking', 'client', 'property', 'payment_type'],
           where: {
             id_payment: id_payment,
-          },
+            is_active: true
+          }
         });
       }
     
-      public async create(body) {
-        const CreatePayment = new Payment();
-        CreatePayment.payment_number = body.payment_number;
-        CreatePayment.booking = body.booking;
-        CreatePayment.client = body.client;
-        CreatePayment.property = body.property;
-        CreatePayment.payment_status= body.payment_status;
-        CreatePayment.check_in_date = body.check_in_date;
-        CreatePayment.check_out_date = body.check_out_date;
-        CreatePayment.booking_amount = body.booking_amount;
-        CreatePayment.booking_discount = body.booking_discount;
-        CreatePayment.deposit_amount = body.deposit_amount;
-        CreatePayment.payment_amount_subtotal = body.payment_amount_subtotal;
-        CreatePayment.payment_amount_total = body.payment_amount_total;
-        CreatePayment.payment_type = body.payment_type;
+      public async create(createPaymentDto: CreatePaymentDTO) {
+        const {payment_number} = createPaymentDto;
+        if (await this.findByPaymentNumber(payment_number)) throw new HttpException('Repeating payment', HttpStatus.NOT_ACCEPTABLE);
         try {
-          const PaymentSaved = await this.paymentRepository.save(CreatePayment);
+          await this.paymentRepository.save(createPaymentDto);
           return {
             statusCode: 200,
             msg: 'Payment Saved Successfully',
@@ -51,34 +47,13 @@ export class PaymentService {
         }
       }
     
-      public async update(id_payment, body: Payment) {
+      public async update(id_payment: number, updatePaymentDto: UpdatePaymentDto) {
+        if (!await this.findOne(id_payment)) throw new HttpException(`Payment with id ${id_payment} does not exist`, HttpStatus.NOT_FOUND);
+        const payment = await this.paymentRepository.preload({ id_payment, ...updatePaymentDto});
         try {
-          const EditPayment = await this.paymentRepository.findOne({
-            where: {
-              id_payment: id_payment,
-            },
-          });
-          EditPayment.payment_number = body.payment_number;
-          EditPayment.booking = body.booking;
-          EditPayment.client = body.client;
-          EditPayment.property = body.property;
-          EditPayment.payment_status= body.payment_status;
-          EditPayment.check_in_date = body.check_in_date;
-          EditPayment.check_out_date = body.check_out_date;
-          EditPayment.booking_amount = body.booking_amount;
-          EditPayment.booking_discount = body.booking_discount;
-          EditPayment.deposit_amount = body.deposit_amount;
-          EditPayment.payment_amount_subtotal = body.payment_amount_subtotal;
-          EditPayment.payment_amount_total = body.payment_amount_total;
-          EditPayment.payment_type = body.payment_type;
-          EditPayment.payment_type = body.payment_type;
-          await this.paymentRepository.save(EditPayment);
-          return {
-            statusCode: 200,
-            msg: 'Payment Updated Successfully.',
-          };
+          await this.paymentRepository.update(id_payment, payment);
         } catch (error) {
-          return new BadRequestException(error);
+          throw new HttpException('A problem occurred while updating the payment', HttpStatus.NOT_FOUND);
         }
       }
     
@@ -93,6 +68,28 @@ export class PaymentService {
           };
         } catch (error) {
           return new BadRequestException(error);
+        }
+      }
+
+      async archive(id_payment: number) {
+        const payment = await this.findOne(id_payment);
+        if (!payment) throw new HttpException(`Payment with id ${id_payment} does not exist`, HttpStatus.NOT_FOUND);
+        try {
+          payment.is_active = false;
+          await this.paymentRepository.update(id_payment, payment);
+        } catch {
+          throw new HttpException('A problem occurred while archiving the payment', HttpStatus.NOT_FOUND);
+        }
+      }
+    
+      async unarchive(id_payment: number) {
+        const payment = await this.findOne(id_payment);
+        if (!payment) throw new HttpException(`Payment with id ${id_payment} does not exist`, HttpStatus.NOT_FOUND);
+        try {
+          payment.is_active = true;
+          await this.paymentRepository.update(id_payment, payment);
+        } catch {
+          throw new HttpException('A problem occurred while unarchiving the payment', HttpStatus.NOT_FOUND);
         }
       }
 }

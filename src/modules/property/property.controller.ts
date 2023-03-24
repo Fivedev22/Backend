@@ -47,4 +47,5 @@ export class PropertyController {
     removeProperty(@Param('id') id_property) {
         return this.propertyService.removeProperty(id_property);
     }
+
 }

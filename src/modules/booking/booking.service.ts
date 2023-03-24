@@ -17,11 +17,12 @@ export class BookingService {
     }
 
     public async findAllBookings() {
-        return await this.bookingRepository.find({
+        const bookings = await this.bookingRepository.find({
           relations: ['booking_type', 'booking_origin', 'client', 'property'],
           where: {is_active: true},
           order: { id_booking: 'ASC'}
-        })
+        });
+        return bookings;
       }
     
       public async findOneBooking(id_booking: number) {
