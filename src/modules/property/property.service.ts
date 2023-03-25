@@ -1,5 +1,6 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Image } from 'src/shared/image/image.entity';
 import { Repository } from 'typeorm';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { Property } from './entities/property.entity';
@@ -13,6 +14,12 @@ export class PropertyService {
       const numberFound = await this.propertyRepository.findOne({ where: { reference_number } });
       return numberFound;
     }
+
+    //async findImagesProperty(images: Image) {
+      //const imagesFound = await this.propertyRepository.findOne({ where: { images } });
+      //return imagesFound;
+    //}
+
   
     public async findAll() {
       const properties = await this.propertyRepository.find({

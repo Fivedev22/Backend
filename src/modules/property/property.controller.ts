@@ -1,17 +1,26 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { PropertyService } from './property.service';
+import { Image } from '../../shared/image/image.entity'
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 @Controller('property')
 export class PropertyController {
+    connection: any;
+    paymentService: any;
     constructor (private propertyService: PropertyService) {}
     
+
     @Post('/create')
     @HttpCode(HttpStatus.CREATED)
     createProperty(@Body() createPropertyDto: CreatePropertyDto) {
         return this.propertyService.createProperty(createPropertyDto);
     }
-    
+
     @Get()
     @HttpCode(HttpStatus.OK)
     findAll() {
@@ -48,4 +57,37 @@ export class PropertyController {
         return this.propertyService.removeProperty(id_property);
     }
 
+    
+    /*
+    @Post('/create')
+    @UseInterceptors(
+    FilesInterceptor('images', null, {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, cb) => {
+          const filename: string = uuidv4();
+          const extension: string = file.originalname.split('.').pop();
+          cb(null, `${filename}.${extension}`);
+        },
+      }),
+    }),
+  )
+  async create(@UploadedFiles() images, @Body() createPropertyDto: CreatePropertyDto) {
+    const imageRepository = this.connection.getRepository(Image);
+
+    // Almacena cada imagen en la base de datos
+    const imageEntities = images.map(image => {
+      const {filename } = image;
+      const imageEntity = new Image();
+      imageEntity.filename = filename;
+      return imageEntity;
+    });
+
+    await imageRepository.save(imageEntities);
+
+    // Crea la propiedad utilizando la información de createPaymentDto
+    return this.paymentService.create(createPropertyDto);
+  }
+    */
 }
+

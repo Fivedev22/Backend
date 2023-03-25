@@ -17,6 +17,7 @@ import { BookingOriginModule } from './shared/booking_origin/booking_origin.modu
 import { AvailabilityStatusModule } from './shared/availability_status/availability_status.module';
 import { ActivityStatusModule } from './shared/activity_status/activity_status.module';
 import { PaymentStatusModule } from './shared/payment_status/payment_status.module';
+import { ImageModule } from './shared/image/image.module';
 
 
 @Module({
@@ -48,7 +49,8 @@ import { PaymentStatusModule } from './shared/payment_status/payment_status.modu
     AvailabilityStatusModule,
     ActivityStatusModule,
     PaymentModule,
-    PaymentStatusModule
+    PaymentStatusModule,
+    ImageModule
   ]
 })
 
