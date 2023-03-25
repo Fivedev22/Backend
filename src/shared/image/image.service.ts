@@ -19,4 +19,5 @@ export class ImageService {
         const image = await this.imageRepository.findOne({ where: { id } });
         return image;
       }
+
 }
