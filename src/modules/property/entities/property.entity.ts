@@ -159,12 +159,13 @@ export class Property {
     activity_status: ActivityStatus
 
     @OneToMany(() => Booking, (booking) => booking.id_booking)
-    bookings: Booking[]
+    bookings: Booking[];
 
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
     // el is_active es para archivar y desarchivar el cobro
 
+    
     //@OneToMany(() => Image, image => image.property)
     //images: Image[];
 

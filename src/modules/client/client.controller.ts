@@ -48,4 +48,9 @@ export class ClientController {
     return this.clientService.remove(+id_client);
   }
 
+  @Get('/:document_number')
+  @HttpCode(HttpStatus.OK)
+  searchByDocument(@Param('document_number') document_number: string) {
+    return this.clientService.findByDocument(document_number);
+  }
 }

@@ -15,24 +15,19 @@ export class PropertyService {
       return numberFound;
     }
 
-    //async findImagesProperty(images: Image) {
-      //const imagesFound = await this.propertyRepository.findOne({ where: { images } });
-      //return imagesFound;
-    //}
 
-  
     public async findAll() {
       const properties = await this.propertyRepository.find({
-        relations: ['property_type', 'province', 'booking', 'availability_status', 'activity_status'],
+        relations: ['property_type', 'province', 'availability_status', 'activity_status'],
         where: { is_active: true },
         order: { id_property: 'ASC'}
-      })
+      });
       return properties;
       }
     
       public async findOneProperty(id_property: number) {
         return await this.propertyRepository.findOne({
-          relations: ['property_type', 'province', 'booking', 'availability_status', 'activity_status'],
+          relations: ['property_type', 'province', 'availability_status', 'activity_status'],
           where: {
             id_property: id_property,
             is_active: true
@@ -59,6 +54,10 @@ export class PropertyService {
         const property = await this.propertyRepository.preload({ id_property, ...updatePropertyDto});
           try {
             await this.propertyRepository.update(id_property, property);
+            return {
+              statusCode: 200,
+              msg: 'Property Updated Successfully',
+            };
           } catch (error) {
             return new BadRequestException(error);
           }
@@ -90,7 +89,9 @@ export class PropertyService {
     }
   
     async unarchive(id_property: number) {
-      const property = await this.findOneProperty(id_property);
+      const property = await this.propertyRepository.findOne({
+        where: { id_property, is_active: false }
+      });
       if (!property) throw new HttpException(`Property with id ${id_property} does not exist`, HttpStatus.NOT_FOUND);
       try {
         property.is_active = true;

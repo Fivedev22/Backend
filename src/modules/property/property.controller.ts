@@ -10,8 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Controller('property')
 export class PropertyController {
-    connection: any;
-    paymentService: any;
+    //connection: any;
     constructor (private propertyService: PropertyService) {}
     
 
@@ -57,8 +56,16 @@ export class PropertyController {
         return this.propertyService.removeProperty(id_property);
     }
 
+    @Get('/:reference_number')
+    @HttpCode(HttpStatus.OK)
+    searchByReference(@Param('reference_number') reference_number: number) {
+      return this.propertyService.findByReferenceNumber(reference_number);
+    }
+
+
+
     
-    /*
+    /* Dejo este ejemplo para poder subir multiples imagenes y mandarlas a la carpeta uploads pero no hice la prueba todavia
     @Post('/create')
     @UseInterceptors(
     FilesInterceptor('images', null, {
@@ -85,8 +92,8 @@ export class PropertyController {
 
     await imageRepository.save(imageEntities);
 
-    // Crea la propiedad utilizando la información de createPaymentDto
-    return this.paymentService.create(createPropertyDto);
+    // Crea la propiedad utilizando la información de createPropertyDto
+    return this.propertyService.createProperty(createPropertyDto);
   }
     */
 }

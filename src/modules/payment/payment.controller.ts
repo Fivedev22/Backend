@@ -48,4 +48,10 @@ export class PaymentController {
     removePayment(@Param('id') id_payment) {
         return this.paymentService.remove(id_payment);
     }
+
+    @Get('/:payment_number')
+    @HttpCode(HttpStatus.OK)
+    searchByNumber(@Param('payment_number') payment_number: number) {
+        return this.paymentService.findByPaymentNumber(payment_number);
+    }
 }

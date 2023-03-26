@@ -16,7 +16,7 @@ export class PaymentService {
     
     public async findAll() {
         const payments = await this.paymentRepository.find({
-          relations: ['booking', 'client', 'property', 'payment_type'],
+          relations: ['booking', 'client', 'property', 'payment_type', 'payment_status'],
           where: {is_active: true},
           order: {id_payment: 'ASC'}
         });
@@ -25,7 +25,7 @@ export class PaymentService {
     
       public async findOne(id_payment: number) {
         return await this.paymentRepository.findOne({
-          relations: ['booking', 'client', 'property', 'payment_type'],
+          relations: ['booking', 'client', 'property', 'payment_type', 'payment_status'],
           where: {
             id_payment: id_payment,
             is_active: true
@@ -83,7 +83,9 @@ export class PaymentService {
       }
     
       async unarchive(id_payment: number) {
-        const payment = await this.findOne(id_payment);
+        const payment = await this.paymentRepository.findOne({
+          where: {id_payment, is_active: false}
+        });
         if (!payment) throw new HttpException(`Payment with id ${id_payment} does not exist`, HttpStatus.NOT_FOUND);
         try {
           payment.is_active = true;

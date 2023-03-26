@@ -49,4 +49,12 @@ export class BookingController {
     removeBooking(@Param('id') id_booking) {
       return this.bookingService.removeBooking(id_booking);
     }
+
+    @Get('/:booking_number')
+    @HttpCode(HttpStatus.OK)
+    searchByNumber(@Param('booking_number') booking_number: number) {
+        return this.bookingService.findByBookingNumber(booking_number);
+      }
+
+
 }

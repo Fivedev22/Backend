@@ -35,6 +35,10 @@ export class ClientService {
     if (await this.findByDocument(document_number)) throw new HttpException('Repeating client', HttpStatus.NOT_ACCEPTABLE);
     try {
       await this.clientRepository.save(createClientDto);
+      return {
+        statusCode: 200,
+        msg: 'Client Saved Successfully',
+      };
     } catch {
       throw new HttpException('A problem occurred while creating the client', HttpStatus.NOT_FOUND);
     }
@@ -45,6 +49,10 @@ export class ClientService {
     const client = await this.clientRepository.preload({ id_client, ...updateClientDto });
     try {
       await this.clientRepository.update(id_client, client);
+      return {
+        statusCode: 200,
+        msg: 'Client Updated Successfully',
+      };
     } catch {
       throw new HttpException('A problem occurred while updating the client', HttpStatus.NOT_FOUND);
     }
@@ -54,6 +62,10 @@ export class ClientService {
     if (!await this.findOne(id_client)) throw new HttpException(`Client with id ${id_client} does not exist`, HttpStatus.NOT_FOUND);
     try {
       await this.clientRepository.delete(id_client);
+      return {
+        statusCode: 200,
+        msg: 'Client Removed Successfully',
+      };
     } catch {
       throw new HttpException('A problem occurred while deleting the client', HttpStatus.NOT_FOUND);
     }
@@ -65,17 +77,27 @@ export class ClientService {
     try {
       client.is_active = false;
       await this.clientRepository.update(id_client, client);
+      return {
+        statusCode: 200,
+        msg: 'Client Archived Successfully',
+      };
     } catch {
       throw new HttpException('A problem occurred while archiving the client', HttpStatus.NOT_FOUND);
     }
   }
 
   async unarchive(id_client: number) {
-    const client = await this.findOne(id_client);
+    const client = await this.clientRepository.findOne({
+      where: { id_client, is_active: false }
+    });
     if (!client) throw new HttpException(`Client with id ${id_client} does not exist`, HttpStatus.NOT_FOUND);
     try {
       client.is_active = true;
       await this.clientRepository.update(id_client, client);
+      return {
+        statusCode: 200,
+        msg: 'Client Unarchived Successfully',
+      };
     } catch {
       throw new HttpException('A problem occurred while unarchiving the client', HttpStatus.NOT_FOUND);
     }

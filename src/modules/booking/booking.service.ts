@@ -86,7 +86,9 @@ export class BookingService {
     }
 
     async unarchive(id_booking: number) {
-      const booking = await this.findOneBooking(id_booking);
+      const booking = await this.bookingRepository.findOne({
+        where: { id_booking, is_active: false}
+      });
       if (!booking) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
       try {
         booking.is_active = true;
