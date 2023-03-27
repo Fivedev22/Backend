@@ -10,7 +10,9 @@ export class PaymentService {
     constructor(@InjectRepository(Payment) private readonly paymentRepository: Repository<Payment>) {}
 
     async findByPaymentNumber(payment_number: number) {
-      const paymentFound = await this.paymentRepository.findOne({ where: { payment_number } });
+      const paymentFound = await this.paymentRepository.findOne({
+        relations: ['booking', 'client', 'property', 'payment_type', 'payment_status'],
+        where: { payment_number: payment_number } });
       return paymentFound;
     }  
     

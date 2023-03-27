@@ -1,7 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Province } from 'src/shared/province/province.entity';
 import { GenderType } from 'src/shared/gender_type/gender_type.entity';
 import { DocumentType } from 'src/shared/document_type/document_type.entity';
+import { Booking } from '../booking/entities/booking.entity';
+import { Payment } from '../payment/entities/payment.entity';
 
 @Entity('client')
 export class Client {
@@ -38,4 +40,11 @@ export class Client {
 
     @ManyToOne(() => DocumentType, (document_type) => document_type.client, { cascade: true })
     document_type: DocumentType;
+
+    @OneToMany(() => Booking, (booking) => booking.client)
+    bookings: Booking[];
+
+    @OneToMany(() => Payment, payment => payment.client)
+    payments: Payment[];
+
 }

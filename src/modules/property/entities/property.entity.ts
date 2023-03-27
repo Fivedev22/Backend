@@ -5,6 +5,7 @@ import { PropertyType } from "../../../shared/property_type/property_type.entity
 import { AvailabilityStatus } from "src/shared/availability_status/availability_status.entity";
 import { ActivityStatus } from "src/shared/activity_status/activity_status.entity";
 import { Image } from "src/shared/image/image.entity";
+import { Payment } from "src/modules/payment/entities/payment.entity";
 
 @Entity({
     name: "property",
@@ -158,8 +159,11 @@ export class Property {
     @ManyToOne(() => ActivityStatus, (activity_status) => activity_status.id)
     activity_status: ActivityStatus
 
-    @OneToMany(() => Booking, (booking) => booking.id_booking)
+    @OneToMany(() => Booking, (booking) => booking.property)
     bookings: Booking[];
+
+    @OneToMany(() => Payment, (payment) => payment.property)
+    payments: Payment[];
 
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean

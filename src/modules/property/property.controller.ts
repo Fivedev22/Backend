@@ -7,7 +7,6 @@ import { Image } from '../../shared/image/image.entity'
 import { v4 as uuidv4 } from 'uuid';
 
 
-
 @Controller('property')
 export class PropertyController {
     //connection: any;
@@ -56,10 +55,10 @@ export class PropertyController {
         return this.propertyService.removeProperty(id_property);
     }
 
-    @Get('/:reference_number')
+    @Get('/search/:reference_number')
     @HttpCode(HttpStatus.OK)
-    searchByReference(@Param('reference_number') reference_number: number) {
-      return this.propertyService.findByReferenceNumber(reference_number);
+    searchByReference(@Param('reference_number', ParseIntPipe) reference_number: number) {
+      return this.propertyService.findByReferenceNumber(+reference_number);
     }
 
 

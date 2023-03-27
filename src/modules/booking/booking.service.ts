@@ -12,7 +12,9 @@ export class BookingService {
     ) {}
 
     async findByBookingNumber(booking_number: number) {
-      const numberFound = await this.bookingRepository.findOne({ where: { booking_number } });
+      const numberFound = await this.bookingRepository.findOne({
+        relations: ['booking_type', 'booking_origin', 'client', 'property'], 
+        where: { booking_number: booking_number } });
       return numberFound;
     }
 
@@ -27,7 +29,7 @@ export class BookingService {
     
       public async findOneBooking(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment'],
           where: {
             id_booking: id_booking,
             is_active: true

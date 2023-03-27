@@ -9,13 +9,15 @@ export class ClientService {
   constructor(@InjectRepository(Client) private readonly clientRepository: Repository<Client>) { }
 
   async findByDocument(document_number: string) {
-    const documentFound = await this.clientRepository.findOne({ where: { document_number } });
+    const documentFound = await this.clientRepository.findOne({ 
+      relations: ['gender_type', 'document_type', 'province','bookings','payments'],
+      where: { document_number: document_number } });
     return documentFound;
   }
 
   async findAll() {
     const clients = await this.clientRepository.find({
-      relations: ['gender_type', 'document_type', 'province'],
+      relations: ['gender_type', 'document_type', 'province','bookings','payments'],
       where: { is_active: true },
       order: { id_client: 'ASC' }
     });
@@ -24,7 +26,7 @@ export class ClientService {
 
   async findOne(id_client: number) {
     const client = await this.clientRepository.findOne({
-      relations: ['gender_type', 'document_type', 'province'],
+      relations: ['gender_type', 'document_type', 'province','bookings','payments'],
       where: { id_client, is_active: true }
     });
     return client;

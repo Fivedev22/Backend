@@ -38,7 +38,7 @@ export class Payment {
     @JoinColumn()
     property: Property
 
-    // las siguientes columnas salvo la ultima hay que ver si se pueden asociar con la de reserva para no poner todo de nuevo
+    // las siguientes columnas salvo la ultima hay que ver si se pueden asociar con la de reserva para no cargar todo de nuevo
     @Column({ 
         type: 'date',
         name: 'check_in_date',

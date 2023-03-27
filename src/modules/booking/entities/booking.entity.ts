@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Client } from "src/modules/client/client.entity";
 import { BookingType } from "../../../shared/booking_type/booking_type.entity";
 import { Booking_Origin } from "../../../shared/booking_origin/origin.entity";
 import { Property } from "src/modules/property/entities/property.entity";
+import { Payment } from "src/modules/payment/entities/payment.entity";
 
 
 @Entity({
@@ -32,10 +33,10 @@ export class Booking {
     @ManyToOne(() => Booking_Origin, (booking_origin) => booking_origin.id)
     booking_origin: Booking_Origin
 
-    @ManyToOne(() => Client, (client) => client.id_client)
+    @ManyToOne(() => Client, (client) => client.bookings)
     client: Client
 
-    @ManyToOne(() => Property, (property) => property.id_property)
+    @ManyToOne(() => Property, (property) => property.bookings)
     property: Property
 
     @Column({
@@ -53,6 +54,7 @@ export class Booking {
     @Column({
         type: 'int',
         name: 'pets_number',
+        nullable: true
     })
     pets_number: number;
 
@@ -110,6 +112,10 @@ export class Booking {
         name: 'booking_amount',
     })
     booking_amount: number;
+
+    @OneToOne(() => Payment, {eager: true, cascade: true})
+    @JoinColumn()
+    payment: Payment;
     
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean

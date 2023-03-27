@@ -49,9 +49,9 @@ export class PaymentController {
         return this.paymentService.remove(id_payment);
     }
 
-    @Get('/:payment_number')
+    @Get('/search/:payment_number')
     @HttpCode(HttpStatus.OK)
-    searchByNumber(@Param('payment_number') payment_number: number) {
-        return this.paymentService.findByPaymentNumber(payment_number);
+    searchByNumber(@Param('payment_number', ParseIntPipe) payment_number: number) {
+        return this.paymentService.findByPaymentNumber(+payment_number);
     }
 }

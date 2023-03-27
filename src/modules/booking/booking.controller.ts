@@ -50,10 +50,10 @@ export class BookingController {
       return this.bookingService.removeBooking(id_booking);
     }
 
-    @Get('/:booking_number')
+    @Get('/search/:booking_number')
     @HttpCode(HttpStatus.OK)
-    searchByNumber(@Param('booking_number') booking_number: number) {
-        return this.bookingService.findByBookingNumber(booking_number);
+    searchByNumber(@Param('booking_number', ParseIntPipe) booking_number: number) {
+        return this.bookingService.findByBookingNumber(+booking_number);
       }
 
 

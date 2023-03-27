@@ -11,14 +11,16 @@ export class PropertyService {
 
 
     async findByReferenceNumber(reference_number: number) {
-      const numberFound = await this.propertyRepository.findOne({ where: { reference_number } });
+      const numberFound = await this.propertyRepository.findOne({ 
+        relations: ['property_type', 'province', 'availability_status', 'activity_status','bookings','payments'],
+        where: { reference_number: reference_number } });
       return numberFound;
     }
 
 
     public async findAll() {
       const properties = await this.propertyRepository.find({
-        relations: ['property_type', 'province', 'availability_status', 'activity_status'],
+        relations: ['property_type', 'province', 'availability_status', 'activity_status','bookings','payments'],
         where: { is_active: true },
         order: { id_property: 'ASC'}
       });
@@ -27,7 +29,7 @@ export class PropertyService {
     
       public async findOneProperty(id_property: number) {
         return await this.propertyRepository.findOne({
-          relations: ['property_type', 'province', 'availability_status', 'activity_status'],
+          relations: ['property_type', 'province', 'availability_status', 'activity_status','bookings', 'payments'],
           where: {
             id_property: id_property,
             is_active: true
