@@ -27,10 +27,10 @@ export class Booking {
     @CreateDateColumn()
     createdAt: Date;
 
-    @ManyToOne(() => BookingType, (booking_type) => booking_type.id)
+    @ManyToOne(() => BookingType, (booking_type) => booking_type.bookings)
     booking_type: BookingType
 
-    @ManyToOne(() => Booking_Origin, (booking_origin) => booking_origin.id)
+    @ManyToOne(() => Booking_Origin, (booking_origin) => booking_origin.bookings)
     booking_origin: Booking_Origin
 
     @ManyToOne(() => Client, (client) => client.bookings)
@@ -112,10 +112,6 @@ export class Booking {
         name: 'booking_amount',
     })
     booking_amount: number;
-
-    @OneToOne(() => Payment, {eager: true, cascade: true})
-    @JoinColumn()
-    payment: Payment;
     
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean

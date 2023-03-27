@@ -18,7 +18,7 @@ export class BookingType {
     })
     booking_type_name: string;
 
-    @OneToMany(() => Booking, (booking) => booking.id_booking)
+    @OneToMany(() => Booking, (booking) => booking.booking_type)
     bookings: Booking[]
 
 

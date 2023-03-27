@@ -11,12 +11,16 @@ export class BookingTypeService {
       ) { }
     
       async findAll() {
-        const booking_types = await this.bookingTypeRepository.find({ order: { booking_type_name: 'ASC' } });
+        const booking_types = await this.bookingTypeRepository.find({
+          relations: ['bookings'], 
+          order: { booking_type_name: 'ASC' } });
         return booking_types;
       }
     
       async findOne(id: number) {
-        const booking_type = await this.bookingTypeRepository.findOne({ where: { id } });
+        const booking_type = await this.bookingTypeRepository.findOne({
+          relations: ['bookings'],  
+          where: { id } });
         return booking_type;
       }
 }

@@ -18,6 +18,6 @@ export class PaymentType {
     })
     payment_type_name: string;
 
-    @OneToMany(() => Payment, (payment) => payment.id_payment)
+    @OneToMany(() => Payment, (payment) => payment.payment_type)
     payments: Payment[]
 }

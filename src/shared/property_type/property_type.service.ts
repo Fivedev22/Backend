@@ -11,12 +11,16 @@ export class PropertyTypeService {
       ) { }
     
       async findAll() {
-        const property_types = await this.propertyTypeRepository.find({ order: { property_type_name: 'ASC' } });
+        const property_types = await this.propertyTypeRepository.find({ 
+          relations: ['properties'],
+          order: { property_type_name: 'ASC' } });
         return property_types;
       }
     
       async findOne(id: number) {
-        const property_type = await this.propertyTypeRepository.findOne({ where: { id } });
+        const property_type = await this.propertyTypeRepository.findOne({
+          relations: ['properties'], 
+          where: { id } });
         return property_type;
       }
 }

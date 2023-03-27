@@ -11,12 +11,16 @@ export class BookingOriginService {
       ) { }
     
       async findAll() {
-        const booking_origins = await this.bookingOriginRepository.find({ order: { origin_name: 'ASC' } });
+        const booking_origins = await this.bookingOriginRepository.find({
+          relations: ['bookings'], 
+          order: { origin_name: 'ASC' } });
         return booking_origins;
       }
     
       async findOne(id: number) {
-        const booking_origin = await this.bookingOriginRepository.findOne({ where: { id } });
+        const booking_origin = await this.bookingOriginRepository.findOne({
+          relations: ['bookings'],  
+          where: { id } });
         return booking_origin;
       }
 }

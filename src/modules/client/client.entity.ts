@@ -32,13 +32,13 @@ export class Client {
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
 
-    @ManyToOne(() => Province, (province) => province.client, { cascade: true, nullable: true })
+    @ManyToOne(() => Province, (province) => province.clients, { cascade: true, nullable: true })
     province: Province;
 
-    @ManyToOne(() => GenderType, (gender_type) => gender_type.client, { cascade: true })
+    @ManyToOne(() => GenderType, (gender_type) => gender_type.clients, { cascade: true })
     gender_type: GenderType;
 
-    @ManyToOne(() => DocumentType, (document_type) => document_type.client, { cascade: true })
+    @ManyToOne(() => DocumentType, (document_type) => document_type.clients, { cascade: true })
     document_type: DocumentType;
 
     @OneToMany(() => Booking, (booking) => booking.client)

@@ -11,12 +11,16 @@ export class AvailabilityStatusService {
       ) { }
     
       async findAll() {
-        const availability_statuses = await this.availabilityStatusRepository.find({ order: { availability_status_name: 'ASC' } });
+        const availability_statuses = await this.availabilityStatusRepository.find({
+          relations: ['properties'], 
+          order: { availability_status_name: 'ASC' } });
         return availability_statuses;
       }
     
       async findOne(id: number) {
-        const gender_type = await this.availabilityStatusRepository.findOne({ where: { id } });
+        const gender_type = await this.availabilityStatusRepository.findOne({
+          relations: ['properties'],  
+          where: { id } });
         return gender_type;
       }
 }

@@ -12,12 +12,16 @@ export class GenderTypeService {
   ) { }
 
   async findAll() {
-    const gender_types = await this.genderTypeRepository.find({ order: { gender_type_name: 'ASC' } });
+    const gender_types = await this.genderTypeRepository.find({ 
+      relations:['clients'],
+      order: { gender_type_name: 'ASC' } });
     return gender_types;
   }
 
   async findOne(id_gender_type: number) {
-    const gender_type = await this.genderTypeRepository.findOne({ where: { id_gender_type } });
+    const gender_type = await this.genderTypeRepository.findOne({ 
+      relations: ['clients'],
+      where: { id_gender_type } });
     return gender_type;
   }
 

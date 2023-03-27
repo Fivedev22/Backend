@@ -18,8 +18,8 @@ export class PropertyType {
     })
     property_type_name: string;
 
-    @OneToMany(() => Property, (property) => property.reference_number)
-    propertys: Property[]
+    @OneToMany(() => Property, (property) => property.property_type)
+    properties: Property[]
 
     
 }

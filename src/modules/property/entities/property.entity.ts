@@ -32,7 +32,7 @@ export class Property {
     })
     property_name: string;
 
-    @ManyToOne(() => PropertyType, (property_type) => property_type.id)
+    @ManyToOne(() => PropertyType, (property_type) => property_type.properties)
     property_type: PropertyType
 
     @Column('varchar', {
@@ -61,7 +61,7 @@ export class Property {
     })
     building_floor: string;
 
-    @ManyToOne(() => Province, (province) => province.id_province)
+    @ManyToOne(() => Province, (province) => province.properties)
     province: Province
 
     @Column('varchar', {
@@ -153,10 +153,10 @@ export class Property {
     })
     kids_beds: boolean
 
-    @ManyToOne(() => AvailabilityStatus, (availability_status) => availability_status.id)
+    @ManyToOne(() => AvailabilityStatus, (availability_status) => availability_status.properties)
     availability_status: AvailabilityStatus
 
-    @ManyToOne(() => ActivityStatus, (activity_status) => activity_status.id)
+    @ManyToOne(() => ActivityStatus, (activity_status) => activity_status.properties)
     activity_status: ActivityStatus
 
     @OneToMany(() => Booking, (booking) => booking.property)

@@ -20,6 +20,6 @@ export class AvailabilityStatus {
     availability_status_name: string;
 
 
-    @OneToMany(() => Property, (property) => property.id_property)
-    propertys: Property[]
+    @OneToMany(() => Property, (property) => property.activity_status)
+    properties: Property[]
 }

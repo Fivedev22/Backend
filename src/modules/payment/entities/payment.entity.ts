@@ -82,10 +82,10 @@ export class Payment {
     })
     payment_amount_total: number;
 
-    @ManyToOne(() => PaymentType, (payment_type) => payment_type.id)
+    @ManyToOne(() => PaymentType, (payment_type) => payment_type.payments)
     payment_type: PaymentType
 
-    @ManyToOne(() => PaymentStatus, (payment_status) => payment_status.id_payment_status)
+    @ManyToOne(() => PaymentStatus, (payment_status) => payment_status.payments)
     payment_status: PaymentStatus
 
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })

@@ -11,12 +11,16 @@ export class PaymentTypeService {
       ) { }
     
       async findAll() {
-        const payment_types = await this.paymentTypeRepository.find({ order: { payment_type_name: 'ASC' } });
+        const payment_types = await this.paymentTypeRepository.find({
+          relations: ['payments'], 
+          order: { payment_type_name: 'ASC' } });
         return payment_types;
       }
     
       async findOne(id: number) {
-        const payment_type = await this.paymentTypeRepository.findOne({ where: { id } });
+        const payment_type = await this.paymentTypeRepository.findOne({
+          relations: ['payments'],  
+          where: { id } });
         return payment_type;
       }
 }

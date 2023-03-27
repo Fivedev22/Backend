@@ -18,6 +18,6 @@ export class Booking_Origin {
     })
     origin_name: string;
 
-    @OneToMany(() => Booking, (booking) => booking.id_booking)
+    @OneToMany(() => Booking, (booking) => booking.booking_origin)
     bookings: Booking[]
 }

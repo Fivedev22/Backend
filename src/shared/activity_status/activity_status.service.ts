@@ -11,12 +11,16 @@ export class ActivityStatusService {
       ) { }
     
       async findAll() {
-        const activity_statuses = await this.activityStatusRepository.find({ order: { activity_status_name: 'ASC' } });
+        const activity_statuses = await this.activityStatusRepository.find({
+          relations: ['properties'], 
+          order: { activity_status_name: 'ASC' } });
         return activity_statuses;
       }
     
       async findOne(id: number) {
-        const activity_status = await this.activityStatusRepository.findOne({ where: { id } });
+        const activity_status = await this.activityStatusRepository.findOne({
+          relations: ['properties'], 
+          where: { id } });
         return activity_status;
       }
 }

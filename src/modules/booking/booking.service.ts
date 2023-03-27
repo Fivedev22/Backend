@@ -29,7 +29,7 @@ export class BookingService {
     
       public async findOneBooking(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin', 'client', 'property','payment'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property'],
           where: {
             id_booking: id_booking,
             is_active: true
