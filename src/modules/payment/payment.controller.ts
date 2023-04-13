@@ -19,10 +19,22 @@ export class PaymentController {
         return this.paymentService.findAll();
     }
 
+    @Get('/archived')
+    @HttpCode(HttpStatus.OK)
+    findAllPaymentsArchived() {
+        return this.paymentService.findAllArchived();
+    }
+
     @Get('/:id')
     @HttpCode(HttpStatus.OK)
     findOnePayment(@Param('id', ParseIntPipe) id_payment: number) {
         return this.paymentService.findOne(+id_payment);
+    }
+
+    @Get('/archived/:id')
+    @HttpCode(HttpStatus.OK)
+    findOnePaymentArchived(@Param('id', ParseIntPipe) id_payment: number) {
+        return this.paymentService.findOneArchived(+id_payment);
     }
 
     @Patch('/update/:id')

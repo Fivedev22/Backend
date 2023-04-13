@@ -18,10 +18,22 @@ export class ClientController {
     return this.clientService.findAll();
   }
 
+  @Get('/archived')
+  @HttpCode(HttpStatus.OK)
+  findAllArchived() {
+    return this.clientService.findAllArchived();
+  }
+
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   findOneClient(@Param('id', ParseIntPipe) id_client: number) {
     return this.clientService.findOne(+id_client);
+  }
+
+  @Get('/archived/:id')
+  @HttpCode(HttpStatus.OK)
+  findOneArchived(@Param('id', ParseIntPipe) id_client: number) {
+    return this.clientService.findOneArchived(+id_client);
   }
 
   @Patch('update/:id')
@@ -30,7 +42,7 @@ export class ClientController {
     return this.clientService.update(+id_client, updateClientDto);
   }
 
-  @Patch('archive/:id')
+  @Patch('/archive/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   archiveClient(@Param('id', ParseIntPipe) id_client: number) {
     return this.clientService.archive(+id_client);

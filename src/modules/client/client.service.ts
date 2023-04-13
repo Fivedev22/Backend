@@ -24,10 +24,27 @@ export class ClientService {
     return clients;
   }
 
+  async findAllArchived() {
+    const clients = await this.clientRepository.find({
+      relations: ['gender_type', 'document_type', 'province','bookings','payments'],
+      where: { is_active: false },
+      order: { id_client: 'ASC' }
+    });
+    return clients;
+  }
+
   async findOne(id_client: number) {
     const client = await this.clientRepository.findOne({
       relations: ['gender_type', 'document_type', 'province','bookings','payments'],
       where: { id_client, is_active: true }
+    });
+    return client;
+  }
+
+  async findOneArchived(id_client: number) {
+    const client = await this.clientRepository.findOne({
+      relations: ['gender_type', 'document_type', 'province','bookings','payments'],
+      where: { id_client, is_active: false }
     });
     return client;
   }
@@ -74,7 +91,9 @@ export class ClientService {
   }
 
   async archive(id_client: number) {
-    const client = await this.findOne(id_client);
+    const client = await this.clientRepository.findOne({
+      where: {id_client:id_client}
+    });
     if (!client) throw new HttpException(`Client with id ${id_client} does not exist`, HttpStatus.NOT_FOUND);
     try {
       client.is_active = false;
@@ -90,7 +109,10 @@ export class ClientService {
 
   async unarchive(id_client: number) {
     const client = await this.clientRepository.findOne({
-      where: { id_client, is_active: false }
+      where: { 
+        id_client: id_client, 
+        is_active: false 
+      }
     });
     if (!client) throw new HttpException(`Client with id ${id_client} does not exist`, HttpStatus.NOT_FOUND);
     try {

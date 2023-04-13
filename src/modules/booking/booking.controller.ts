@@ -18,10 +18,22 @@ export class BookingController {
         return this.bookingService.findAllBookings();
     }
 
+    @Get('/archived')
+    @HttpCode(HttpStatus.OK)
+    findAllArchived() {
+        return this.bookingService.findAllBookingsArchived();
+    }
+
     @Get('/:id')
     @HttpCode(HttpStatus.OK)
     findOneBooking(@Param('id', ParseIntPipe) id_booking: number) {
         return this.bookingService.findOneBooking(+id_booking);
+    }
+
+    @Get('/archived/:id')
+    @HttpCode(HttpStatus.OK)
+    findOneArchived(@Param('id', ParseIntPipe) id_booking: number) {
+        return this.bookingService.findOneBookingArchived(+id_booking);
     }
 
 
