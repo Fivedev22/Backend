@@ -25,10 +25,22 @@ export class PropertyController {
         return this.propertyService.findAll();
     }
 
+    @Get('/archived')
+    @HttpCode(HttpStatus.OK)
+    findAllArchived() {
+        return this.propertyService.findAllArchived();
+    }
+
     @Get('/:id')
     @HttpCode(HttpStatus.OK)
     findOneProperty(@Param('id', ParseIntPipe) id_property: number) {
         return this.propertyService.findOneProperty(+id_property);
+    }
+
+    @Get('/archived/:id')
+    @HttpCode(HttpStatus.OK)
+    findOneArchived(@Param('id', ParseIntPipe) id_property: number) {
+        return this.propertyService.findOneArchived(+id_property);
     }
 
     @Patch('/update/:id')
@@ -37,13 +49,13 @@ export class PropertyController {
         return this.propertyService.updateProperty(+id_property,updatePropertyDto);
     }
 
-    @Patch('archive/:id')
+    @Patch('/archive/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     archiveProperty(@Param('id', ParseIntPipe) id_property: number) {
       return this.propertyService.archive(+id_property);
     }
   
-    @Patch('unarchive/:id')
+    @Patch('/unarchive/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     unarchiveProperty(@Param('id', ParseIntPipe) id_property: number) {
       return this.propertyService.unarchive(+id_property);

@@ -1,6 +1,5 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Image } from 'src/shared/image/image.entity';
 import { Repository } from 'typeorm';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { Property } from './entities/property.entity';
@@ -26,6 +25,15 @@ export class PropertyService {
       });
       return properties;
       }
+
+      public async findAllArchived() {
+        const properties = await this.propertyRepository.find({
+          relations: ['property_type', 'province', 'availability_status', 'activity_status','bookings','payments'],
+          where: { is_active: false },
+          order: { id_property: 'ASC'}
+        });
+        return properties;
+        }
     
       public async findOneProperty(id_property: number) {
         return await this.propertyRepository.findOne({
@@ -33,6 +41,16 @@ export class PropertyService {
           where: {
             id_property: id_property,
             is_active: true
+          }
+        })
+      }
+
+      public async findOneArchived(id_property: number) {
+        return await this.propertyRepository.findOne({
+          relations: ['property_type', 'province', 'availability_status', 'activity_status','bookings', 'payments'],
+          where: {
+            id_property: id_property,
+            is_active: false
           }
         })
       }
@@ -80,7 +98,9 @@ export class PropertyService {
     }
 
     async archive(id_property: number) {
-      const property = await this.findOneProperty(id_property);
+      const property = await this.propertyRepository.findOne({
+        where: { id_property: id_property}
+      });
       if (!property) throw new HttpException(`Property with id ${id_property} does not exist`, HttpStatus.NOT_FOUND);
       try {
         property.is_active = false;
@@ -92,7 +112,9 @@ export class PropertyService {
   
     async unarchive(id_property: number) {
       const property = await this.propertyRepository.findOne({
-        where: { id_property, is_active: false }
+        where: { 
+          id_property: id_property, 
+          is_active: false }
       });
       if (!property) throw new HttpException(`Property with id ${id_property} does not exist`, HttpStatus.NOT_FOUND);
       try {

@@ -50,7 +50,7 @@ import { ImageModule } from './shared/image/image.module';
     ActivityStatusModule,
     PaymentModule,
     PaymentStatusModule,
-    ImageModule
+    ImageModule,
   ]
 })
 

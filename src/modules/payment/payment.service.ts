@@ -24,6 +24,15 @@ export class PaymentService {
         });
         return payments;
       }
+
+      public async findAllArchived() {
+        const payments = await this.paymentRepository.find({
+          relations: ['booking', 'client', 'property', 'payment_type', 'payment_status'],
+          where: {is_active: false},
+          order: {id_payment: 'ASC'}
+        });
+        return payments;
+      }
     
       public async findOne(id_payment: number) {
         return await this.paymentRepository.findOne({
@@ -31,6 +40,16 @@ export class PaymentService {
           where: {
             id_payment: id_payment,
             is_active: true
+          }
+        });
+      }
+
+      public async findOneArchived(id_payment: number) {
+        return await this.paymentRepository.findOne({
+          relations: ['booking', 'client', 'property', 'payment_type', 'payment_status'],
+          where: {
+            id_payment: id_payment,
+            is_active: false
           }
         });
       }
@@ -74,7 +93,9 @@ export class PaymentService {
       }
 
       async archive(id_payment: number) {
-        const payment = await this.findOne(id_payment);
+        const payment = await this.paymentRepository.findOne({
+          where: {id_payment: id_payment}
+        });
         if (!payment) throw new HttpException(`Payment with id ${id_payment} does not exist`, HttpStatus.NOT_FOUND);
         try {
           payment.is_active = false;

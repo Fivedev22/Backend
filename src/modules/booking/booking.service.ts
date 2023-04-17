@@ -26,6 +26,15 @@ export class BookingService {
         });
         return bookings;
       }
+
+      public async findAllBookingsArchived() {
+        const bookings = await this.bookingRepository.find({
+          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          where: {is_active: false},
+          order: { id_booking: 'ASC'}
+        });
+        return bookings;
+      }
     
       public async findOneBooking(id_booking: number) {
         return await this.bookingRepository.findOne({
@@ -33,6 +42,16 @@ export class BookingService {
           where: {
             id_booking: id_booking,
             is_active: true
+          },
+        });
+      }
+
+      public async findOneBookingArchived(id_booking: number) {
+        return await this.bookingRepository.findOne({
+          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          where: {
+            id_booking: id_booking,
+            is_active: false
           },
         });
       }
@@ -77,7 +96,9 @@ export class BookingService {
     }
 
     async archive(id_booking: number) {
-      const booking = await this.findOneBooking(id_booking);
+      const booking = await this.bookingRepository.findOne({
+        where: { id_booking: id_booking}
+      });
       if (!booking) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
       try {
         booking.is_active = false;
@@ -89,7 +110,9 @@ export class BookingService {
 
     async unarchive(id_booking: number) {
       const booking = await this.bookingRepository.findOne({
-        where: { id_booking, is_active: false}
+        where: { 
+          id_booking: id_booking, 
+          is_active: false}
       });
       if (!booking) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
       try {
