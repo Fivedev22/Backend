@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { Booking } from 'src/modules/booking/entities/booking.entity';
+import { Client } from 'src/modules/client/client.entity';
+import { Property } from 'src/modules/property/entities/property.entity';
+import { PaymentStatus } from 'src/shared/payment_status/payment_status.entity';
+import { PaymentType } from 'src/shared/payment_type/payment_type.entity';
 
 export class CreatePaymentDTO {
   @ApiProperty({ example: 1 })
@@ -14,37 +20,39 @@ export class CreatePaymentDTO {
   @IsDateString()
   createdAt: Date;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  bookingId: number;
+  @ApiProperty({ type: Booking })
+  @IsNotEmpty()
+  booking: Booking;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  clientId: number;
+  @ApiProperty({ type: Client })
+  @IsNotEmpty()
+  client: Client;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  propertyId: number;
+  @ApiProperty({ type: Property })
+  @IsNotEmpty()
+  property: Property;
 
-  @ApiProperty({ example: '2022-01-01' })
-  @IsString()
+  @ApiProperty({ type: 'string', format: 'date' })
+  @IsDateString()
   check_in_date: string;
 
-  @ApiProperty({ example: '2022-01-05' })
-  @IsString()
+  @ApiProperty({ type: 'string', format: 'date' })
+  @IsDateString()
   check_out_date: string;
 
-  @ApiProperty({ example: 100 })
-  @IsNumber()
+  @IsNotEmpty()
+  @IsInt()
+  @ApiProperty()
   booking_amount: number;
 
-  @ApiProperty({ example: 10 })
+  @ApiProperty({ type: 'integer', minimum: 0, nullable: true })
   @IsOptional()
-  @IsNumber()
+  @IsInt()
+  @Min(0)
   booking_discount?: number;
 
-  @ApiProperty({ example: 20 })
-  @IsNumber()
+  @IsInt()
+  @Min(0)
   deposit_amount: number;
 
   @ApiProperty({ example: 110 })
@@ -55,12 +63,13 @@ export class CreatePaymentDTO {
   @IsNumber()
   payment_amount_total: number;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  payment_type_id: number;
+  @ApiProperty({ type: PaymentType })
+  @Type(() => PaymentType)
+  payment_type: PaymentType;
 
-  @IsNumber()
-  payment_status_id: number;
+  @ApiProperty({ type: PaymentStatus })
+  @Type(() => PaymentStatus)
+  payment_status: PaymentStatus;
 
   @ApiProperty({ example: true })
   @IsOptional()

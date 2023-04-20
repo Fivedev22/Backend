@@ -57,8 +57,16 @@ export class BookingService {
       }
     
       public async createBooking(createBookingDto: CreateBookingDto) {
-        const {booking_number} = createBookingDto;
-        if (await this.findByBookingNumber(booking_number)) throw new HttpException('Repeating booking', HttpStatus.NOT_ACCEPTABLE);
+        const {booking_number, check_in_date} = createBookingDto;
+      
+        if (await this.findByBookingNumber(booking_number)) {
+          throw new HttpException('Repeating booking', HttpStatus.NOT_ACCEPTABLE);
+        }
+      
+        if (!await this.checkAvailability(check_in_date)) {
+          throw new HttpException('The check-in date is not available', HttpStatus.NOT_ACCEPTABLE);
+        }
+      
         try {
           await this.bookingRepository.save(createBookingDto);
           return {
@@ -68,6 +76,11 @@ export class BookingService {
         } catch (error) {
           return new BadRequestException(error);
         }
+      }
+      
+      private async checkAvailability(check_in_date: string): Promise<boolean> {
+        const bookings = await this.bookingRepository.find();
+        return !bookings.some(booking => booking.check_in_date === check_in_date);
       }
     
       public async updateBooking(id_booking: number, updateBookingDto: UpdateBookingDto) {

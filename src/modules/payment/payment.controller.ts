@@ -55,7 +55,7 @@ export class PaymentController {
         return this.paymentService.unarchive(+id_payment);
     }
 
-    @Delete('/delete/:id')
+    @Delete('/remove/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     removePayment(@Param('id') id_payment) {
         return this.paymentService.remove(id_payment);

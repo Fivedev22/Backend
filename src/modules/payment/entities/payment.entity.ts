@@ -23,18 +23,21 @@ export class Payment {
     })
     payment_number: number;
 
-    @CreateDateColumn()
+    @Column({
+        type: 'date',
+        name: 'createdAt',
+    })
     createdAt: Date;
 
-    @OneToOne(() => Booking)
+    @ManyToOne(() => Booking, booking => booking.payments)
     @JoinColumn()
     booking: Booking
 
-    @OneToOne(() => Client)
+    @ManyToOne(() => Client, client => client.payments)
     @JoinColumn()
     client: Client
 
-    @OneToOne(() => Property)
+    @ManyToOne(() => Property, property => property.payments)
     @JoinColumn()
     property: Property
 
