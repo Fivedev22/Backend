@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Client } from "src/modules/client/client.entity";
 import { BookingType } from "../../../shared/booking_type/booking_type.entity";
 import { Booking_Origin } from "../../../shared/booking_origin/origin.entity";
@@ -17,7 +17,7 @@ export class Booking {
     })
     id_booking: number;
 
-    @Column({
+    @PrimaryColumn({
         type: 'int',
         name: 'booking_number',
         unique: true,
