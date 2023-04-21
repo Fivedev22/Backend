@@ -17,7 +17,7 @@ export class Booking {
     })
     id_booking: number;
 
-    @PrimaryColumn({
+    @Column({
         type: 'int',
         name: 'booking_number',
         unique: true,
