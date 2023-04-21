@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Client } from "src/modules/client/client.entity";
 import { BookingType } from "../../../shared/booking_type/booking_type.entity";
 import { Booking_Origin } from "../../../shared/booking_origin/origin.entity";
@@ -20,8 +20,7 @@ export class Booking {
     @Column({
         type: 'int',
         name: 'booking_number',
-        unique: true,
-        generated: 'increment'
+        unique: true
     })
     booking_number: number;
 
