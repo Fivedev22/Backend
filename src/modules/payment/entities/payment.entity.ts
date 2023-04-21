@@ -26,6 +26,7 @@ export class Payment {
     @Column({
         type: 'date',
         name: 'createdAt',
+        nullable: true
     })
     createdAt: Date;
 

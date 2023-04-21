@@ -21,12 +21,14 @@ export class Booking {
         type: 'int',
         name: 'booking_number',
         unique: true,
+        generated: 'increment'
     })
     booking_number: number;
 
     @Column({
         type: 'date',
         name: 'createdAt',
+        nullable: true
     })
     createdAt: Date;
 
