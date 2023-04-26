@@ -57,11 +57,7 @@ export class BookingService {
       }
     
       public async createBooking(createBookingDto: CreateBookingDto) {
-        const {booking_number, check_in_date} = createBookingDto;
-      
-        if (await this.findByBookingNumber(booking_number)) {
-          throw new HttpException('Repeating booking', HttpStatus.NOT_ACCEPTABLE);
-        }
+        const {check_in_date} = createBookingDto;
       
         if (!await this.checkAvailability(check_in_date)) {
           throw new HttpException('The check-in date is not available', HttpStatus.NOT_ACCEPTABLE);
