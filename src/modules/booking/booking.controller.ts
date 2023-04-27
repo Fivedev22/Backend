@@ -68,10 +68,16 @@ export class BookingController {
         return this.bookingService.findByBookingNumber(+booking_number);
     }
 
-    @Get('/get-last-number/:booking_number')
+    @Get('get-last-number/:')
     @HttpCode(HttpStatus.OK)
-    getNumber() {
+    async getNumber(): Promise<number> {
         return this.bookingService.GetLastNumber();
+    }
+
+    @Get(':id/booking_number')
+    @HttpCode(HttpStatus.OK)
+    async getBookingNumber(@Param('id', ParseIntPipe) id: number): Promise<number> {
+        return this.bookingService.GetBookingNumber(id);
     }
 
 }

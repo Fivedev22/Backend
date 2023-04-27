@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
@@ -133,12 +133,21 @@ export class BookingService {
     }
 
     async GetLastNumber(): Promise<number> {
-      const bookings = this.bookingRepository
+      const booking = await this.bookingRepository
       .createQueryBuilder('booking')
       .orderBy('booking.booking_number', 'DESC')
       .getOne();
 
-      return (await bookings).booking_number;
+      return  booking ? booking.booking_number:1;
     }
 
+    async GetBookingNumber(id_booking: number): Promise<number> {
+      const booking = await this.bookingRepository.findOne({
+        where: {id_booking: id_booking},
+      })
+      if (!booking) {
+        throw new NotFoundException(`Reservation with id ${id_booking} not found`);
+      }
+      return booking.booking_number;
+    }
 }
