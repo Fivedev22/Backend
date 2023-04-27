@@ -20,7 +20,7 @@ export class Booking {
     @Column({
         type: 'int',
         name: 'booking_number',
-        generated: 'increment'
+        unique: true,
     })
     booking_number: number;
 

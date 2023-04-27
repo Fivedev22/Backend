@@ -66,7 +66,12 @@ export class BookingController {
     @HttpCode(HttpStatus.OK)
     searchByNumber(@Param('booking_number', ParseIntPipe) booking_number: number) {
         return this.bookingService.findByBookingNumber(+booking_number);
-      }
+    }
 
+    @Get('/get-last-number/:booking_number')
+    @HttpCode(HttpStatus.OK)
+    getNumber() {
+        return this.bookingService.GetLastNumber();
+    }
 
 }

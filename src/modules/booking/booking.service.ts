@@ -132,4 +132,13 @@ export class BookingService {
       }
     }
 
+    async GetLastNumber(): Promise<number> {
+      const bookings = this.bookingRepository
+      .createQueryBuilder('booking')
+      .orderBy('booking.booking_number', 'DESC')
+      .getOne();
+
+      return (await bookings).booking_number;
+    }
+
 }
