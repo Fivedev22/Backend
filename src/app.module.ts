@@ -54,4 +54,4 @@ import { ImageModule } from './shared/image/image.module';
   ]
 })
 
-export class AppModule { }
+export class AppModule {}

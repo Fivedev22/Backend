@@ -73,11 +73,4 @@ export class BookingController {
     async getNumber(): Promise<number> {
         return this.bookingService.GetLastNumber();
     }
-
-    @Get(':id/booking_number')
-    @HttpCode(HttpStatus.OK)
-    async getBookingNumber(@Param('id', ParseIntPipe) id: number): Promise<number> {
-        return this.bookingService.GetBookingNumber(id);
-    }
-
 }
