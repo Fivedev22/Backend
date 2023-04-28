@@ -7,9 +7,9 @@ import { ClientModule } from 'src/modules/client/client.module';
 import { ProvinceModule } from 'src/shared/province/province.module';
 import { GenderTypeModule } from 'src/shared/gender_type/gender_type.module';
 import { DocumentTypeModule } from 'src/shared/document_type/document_type.module';
-import { BookingModule } from "src/modules/booking/booking.module";
-import { PropertyModule } from "src/modules/property/property.module";
-import { PaymentModule } from "src/modules/payment/payment.module";
+import { BookingModule } from 'src/modules/booking/booking.module';
+import { PropertyModule } from 'src/modules/property/property.module';
+import { PaymentModule } from 'src/modules/payment/payment.module';
 import { PropertyTypeModule } from './shared/property_type/property_type.module';
 import { PaymentTypeModule } from './shared/payment_type/payment_type.module';
 import { BookingTypeModule } from './shared/booking_type/booking_type.module';
@@ -19,17 +19,16 @@ import { ActivityStatusModule } from './shared/activity_status/activity_status.m
 import { PaymentStatusModule } from './shared/payment_status/payment_status.module';
 import { ImageModule } from './shared/image/image.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5433,
-      username: 'postgres',
-      password: 'robertino',
-      database: 'postgres',
+      host: process.env.DB_HOST,
+      port: 5432,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       logging: false,
       synchronize: true,
@@ -51,7 +50,6 @@ import { ImageModule } from './shared/image/image.module';
     PaymentModule,
     PaymentStatusModule,
     ImageModule,
-  ]
+  ],
 })
-
 export class AppModule {}
