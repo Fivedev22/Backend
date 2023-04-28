@@ -140,14 +140,4 @@ export class BookingService {
 
       return  booking ? booking.booking_number:1;
     }
-
-    async GetBookingNumber(id_booking: number): Promise<number> {
-      const booking = await this.bookingRepository.findOne({
-        where: {id_booking: id_booking},
-      })
-      if (!booking) {
-        throw new NotFoundException(`Reservation with id ${id_booking} not found`);
-      }
-      return booking.booking_number;
-    }
 }

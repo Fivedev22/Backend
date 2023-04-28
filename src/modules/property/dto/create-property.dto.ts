@@ -114,9 +114,6 @@ export class CreatePropertyDto {
     activity_status: ActivityStatus;
   
     @IsNotEmpty()
-    bookings: Booking[];
-  
-    @IsNotEmpty()
     @IsBoolean()
     is_active: boolean;
   }

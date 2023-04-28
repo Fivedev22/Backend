@@ -4,7 +4,6 @@ import { Booking } from "src/modules/booking/entities/booking.entity";
 import { PropertyType } from "../../../shared/property_type/property_type.entity";
 import { AvailabilityStatus } from "src/shared/availability_status/availability_status.entity";
 import { ActivityStatus } from "src/shared/activity_status/activity_status.entity";
-import { Image } from "src/shared/image/image.entity";
 import { Payment } from "src/modules/payment/entities/payment.entity";
 
 @Entity({
