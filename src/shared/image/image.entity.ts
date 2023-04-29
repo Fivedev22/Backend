@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Property } from 'src/modules/property/entities/property.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity({
   name: 'image',
@@ -11,8 +12,15 @@ export class Image {
   @Column()
   filename: string;
 
-  //@ManyToOne(() => Property, property => property.images)
-  //property: Property;
+  @Column()
+  path: string;
 
+  @Column()
+  mimetype: string;
 
+  @Column()
+  size: number;
+
+  @ManyToOne(() => Property, (property) => property.images)
+  property: Property;
 }

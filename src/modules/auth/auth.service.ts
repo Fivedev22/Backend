@@ -20,34 +20,12 @@ export class AuthService {
   async login(loginAuthDto: LoginAuthDto) {
     const { username, password } = loginAuthDto;
     const userFound = await this.userService.findByUsername(username);
-<<<<<<< HEAD
-    try {
-      if (!userFound)
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-      const checkPassword = await this.userService.checkPassword(
-        password,
-        userFound.password,
-      );
-      if (!checkPassword)
-        throw new HttpException(
-          'Password incorrect',
-          HttpStatus.NOT_ACCEPTABLE,
-        );
-      const payload: JwtPayload = { username: userFound.username };
-      const token = this.jwtService.sign(payload);
-      console.log(token);
-      return { token };
-    } catch {
-      throw new HttpException('Datos incorrectos', HttpStatus.NOT_FOUND);
-    }
-=======
     if (!userFound) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     const checkPassword = await this.userService.checkPassword(password, userFound.password);
     if (!checkPassword) throw new HttpException('Password incorrect', HttpStatus.NOT_ACCEPTABLE);
     const payload: JwtPayload = { username: userFound.username }
     const token = this.jwtService.sign(payload);
     return { token };
->>>>>>> tino
   }
 
   async passwordResetRequest(
@@ -71,12 +49,7 @@ export class AuthService {
     try {
       await transporter.sendMail(message);
       await this.userService.addResetToken(email, resetToken);
-<<<<<<< HEAD
-
-      return { resetToken }
-=======
       return { resetToken };
->>>>>>> tino
     } catch {
       throw new HttpException(
         'An error occurred while sending the email',

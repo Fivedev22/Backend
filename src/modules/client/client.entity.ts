@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Province } from 'src/shared/province/province.entity';
 import { GenderType } from 'src/shared/gender_type/gender_type.entity';

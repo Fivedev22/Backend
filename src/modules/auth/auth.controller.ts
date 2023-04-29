@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Controller, Post, Body, Patch, Put , HttpCode, HttpStatus } from '@nestjs/common';
-=======
 import { Controller, Post, Body, HttpCode, HttpStatus, Put } from '@nestjs/common';
->>>>>>> tino
 import { AuthService } from 'src/modules/auth/auth.service';
 import { LoginAuthDto, PasswordResetAuthDto, PasswordResetRequestAuthDto } from 'src/modules/auth/dto';
 

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,6 +11,9 @@ export class ImageService {
         private readonly imageRepository: Repository<Image>
       ) { }
     
+      async create(images: Image[]): Promise<Image[]> {
+        return this.imageRepository.save(images);
+      }
       async findAll() {
         const images = await this.imageRepository.find({ order: { filename: 'ASC' } });
         return images;
@@ -19,5 +23,6 @@ export class ImageService {
         const image = await this.imageRepository.findOne({ where: { id } });
         return image;
       }
+      
 
 }

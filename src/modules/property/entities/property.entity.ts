@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Province } from "src/shared/province/province.entity";
 import { Booking } from "src/modules/booking/entities/booking.entity";
@@ -164,6 +165,9 @@ export class Property {
 
     @OneToMany(() => Payment, (payment) => payment.property)
     payments: Payment[];
+
+    @OneToMany(() => Image, (image) => image.property)
+    images: Image[]
 
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean

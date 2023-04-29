@@ -45,29 +45,12 @@ export class UserService {
     const userFound = await this.findByResetToken(reset_token);
     if (!userFound) throw new HttpException('Incorrect reset token', HttpStatus.NOT_FOUND);
     const encryptedPassword = await this.encryptPassword(password);
-<<<<<<< HEAD
-    userFound.reset_token = null;
-    try {
-      await this.userRepository.save({ ...userFound, password: encryptedPassword });
-      return {
-        estado: 201,
-        mensaje: 'Ok',
-      };
-    } catch (e) {
-      return {
-        estado: 400,
-        mensaje: 'Error',
-      };
-    }
-    
-=======
     try {
       userFound.reset_token = null;
       await this.userRepository.save({ ...userFound, password: encryptedPassword });
     } catch (error) {
       throw new HttpException('A problem occurred while updating the reset token', HttpStatus.NOT_FOUND);
     }
->>>>>>> tino
   }
 
   async create(createUserDto: CreateUserDto) {

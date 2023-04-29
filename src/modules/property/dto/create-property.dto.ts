@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsBoolean, IsInt, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PropertyType } from 'src/shared/property_type/property_type.entity';
@@ -5,6 +6,8 @@ import { Province } from 'src/shared/province/province.entity';
 import { AvailabilityStatus } from 'src/shared/availability_status/availability_status.entity';
 import { ActivityStatus } from 'src/shared/activity_status/activity_status.entity';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
+import { Image } from 'src/shared/image/image.entity';
+
 
 export class CreatePropertyDto {
     @IsNotEmpty()
@@ -115,7 +118,10 @@ export class CreatePropertyDto {
   
     @IsNotEmpty()
     bookings: Booking[];
-  
+
+    @IsNotEmpty()
+    images: Image[];
+
     @IsNotEmpty()
     @IsBoolean()
     is_active: boolean;
