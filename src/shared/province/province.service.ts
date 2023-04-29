@@ -12,12 +12,16 @@ export class ProvinceService {
   ) { }
 
   async findAll() {
-    const provinces = await this.provinceRepository.find({ order: { province_name: 'ASC' } });
+    const provinces = await this.provinceRepository.find({ 
+      relations: ['clients','properties'],
+      order: { province_name: 'ASC' } });
     return provinces;
   }
 
   async findOne(id_province: number) {
-    const province = await this.provinceRepository.findOne({ where: { id_province } });
+    const province = await this.provinceRepository.findOne({ 
+      relations: ['clients','properties'],
+      where: { id_province } });
     return province;
   }
 

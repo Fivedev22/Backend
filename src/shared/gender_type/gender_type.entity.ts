@@ -11,7 +11,7 @@ export class GenderType {
     gender_type_name: string;
 
     @OneToMany(() => Client, (client) => client.gender_type)
-    client: Client;
+    clients: Client[];
 
 }
 

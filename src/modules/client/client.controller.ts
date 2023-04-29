@@ -1,45 +1,68 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { ClientService } from './client.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
+import { ClientService } from 'src/modules/client/client.service';
 import { CreateClientDto, UpdateClientDto } from 'src/modules/client/dto';
-import { JwtAuthGuard } from '../auth/jwt';
 
-
-@UseGuards(JwtAuthGuard)
 @Controller('client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) { }
+
   @Post('/create')
-  create(@Body() createClientDto: CreateClientDto) {
+  @HttpCode(HttpStatus.CREATED)
+  createClient(@Body() createClientDto: CreateClientDto) {
     return this.clientService.create(createClientDto);
   }
 
-  @Get('/')
-  findAll() {
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  findAllClients() {
     return this.clientService.findAll();
   }
 
+  @Get('/archived')
+  @HttpCode(HttpStatus.OK)
+  findAllArchived() {
+    return this.clientService.findAllArchived();
+  }
+
   @Get('/:id')
-  findOne(@Param('id', ParseIntPipe) id_client: number) {
+  @HttpCode(HttpStatus.OK)
+  findOneClient(@Param('id', ParseIntPipe) id_client: number) {
     return this.clientService.findOne(+id_client);
   }
 
+  @Get('/archived/:id')
+  @HttpCode(HttpStatus.OK)
+  findOneArchived(@Param('id', ParseIntPipe) id_client: number) {
+    return this.clientService.findOneArchived(+id_client);
+  }
+
   @Patch('update/:id')
-  update(@Param('id', ParseIntPipe) id_client: number, @Body() updateClientDto: UpdateClientDto) {
+  @HttpCode(HttpStatus.ACCEPTED)
+  updateClient(@Param('id', ParseIntPipe) id_client: number, @Body() updateClientDto: UpdateClientDto) {
     return this.clientService.update(+id_client, updateClientDto);
   }
 
-  @Patch('archive/:id')
-  archive(@Param('id', ParseIntPipe) id_client: number) {
+  @Patch('/archive/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  archiveClient(@Param('id', ParseIntPipe) id_client: number) {
     return this.clientService.archive(+id_client);
   }
 
   @Patch('unarchive/:id')
-  unarchive(@Param('id', ParseIntPipe) id_client: number) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  unarchiveClient(@Param('id', ParseIntPipe) id_client: number) {
     return this.clientService.unarchive(+id_client);
   }
 
   @Delete('remove/:id')
-  remove(@Param('id', ParseIntPipe) id_client: number) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  removeClient(@Param('id', ParseIntPipe) id_client: number) {
     return this.clientService.remove(+id_client);
+  }
+
+  @Get('/search/:document_number')
+  @HttpCode(HttpStatus.OK)
+  searchByDocument(@Param('document_number') document_number: string) {
+    return this.clientService.findByDocument(document_number);
   }
 }

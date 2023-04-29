@@ -11,6 +11,6 @@ export class DocumentType {
     document_type_name: string;
 
     @OneToMany(() => Client, (client) => client.document_type)
-    client: Client;
+    clients: Client[];
 
 }

@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Client } from 'src/modules/client/client.entity';
+import { Property } from 'src/modules/property/entities/property.entity';
 
 @Entity('provinces')
 export class Province {
@@ -11,6 +12,9 @@ export class Province {
     province_name: string;
 
     @OneToMany(() => Client, (client) => client.province)
-    client: Client;
+    clients: Client[];
+
+    @OneToMany(() => Property, (property) => property.province)
+    properties: Property[];
 
 }
