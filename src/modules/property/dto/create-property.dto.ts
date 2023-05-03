@@ -113,6 +113,9 @@ export class CreatePropertyDto {
     @Type(() => ActivityStatus)
     activity_status: ActivityStatus;
   
+    //@IsNotEmpty()
+    //bookings: Booking[];
+  
     @IsNotEmpty()
     @IsBoolean()
     is_active: boolean;
