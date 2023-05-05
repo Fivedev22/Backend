@@ -116,11 +116,13 @@ export class CreatePropertyDto {
     @Type(() => ActivityStatus)
     activity_status: ActivityStatus;
   
-    @IsNotEmpty()
-    bookings: Booking[];
+    // @IsNotEmpty()
+    // bookings: Booking[];
 
     @IsNotEmpty()
+    @Type(() => Image)
     images: Image[];
+    
 
     @IsNotEmpty()
     @IsBoolean()

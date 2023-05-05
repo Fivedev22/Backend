@@ -7,6 +7,7 @@ import { PropertyService } from './property.service';
 import { Image } from '../../shared/image/image.entity'
 import { v4 as uuidv4 } from 'uuid';
 import { ImagePropertyDto } from './dto/image-property.dto';
+import { multerConfig } from 'src/shared/image/image.controller';
 
 
 @Controller('property')
@@ -23,27 +24,10 @@ export class PropertyController {
     // }
 
     @Post('/create')
-    @UseInterceptors(FilesInterceptor('image'))
+    @UseInterceptors(FilesInterceptor('files', 10, multerConfig ))
     @HttpCode(HttpStatus.CREATED)
     create(@UploadedFiles() files, @Body() createPropertyDto: CreatePropertyDto) {
-      // let {images} = createPropertyDto;
-      // images = files;
-      
-      // // const imagesUpload = []
-      // // files.map((img)=> {
-      // //    imagesUpload.push(img);
-      // // })
-     
-      
-      // console.log("==>Imagenes prop CPDTO; ",images)
-      // console.log("=> CPDTO: ",createPropertyDto)
-
-        // let {images} = createPropertyDto;
-        console.log(files)
-        // images = [...images, files]; // agregar los elementos del array "files" al array "images" del DTO
-
-        // console.log("==>Imagenes prop CPDTO; ", images);
-        // console.log("=> CPDTO: ", createPropertyDto);
+      return this.propertyService.createProperty(files, createPropertyDto)
     }
 
     @Get()
@@ -133,6 +117,25 @@ export class PropertyController {
     // Crea la propiedad utilizando la información de createPropertyDto
     return this.propertyService.createProperty(createPropertyDto);
   }
+
+   // let {images} = createPropertyDto;
+      // images = files;
+      
+      // // const imagesUpload = []
+      // // files.map((img)=> {
+      // //    imagesUpload.push(img);
+      // // })
+     
+      
+      // console.log("==>Imagenes prop CPDTO; ",images)
+      // console.log("=> CPDTO: ",createPropertyDto)
+
+        // let {images} = createPropertyDto;
+       
+        // images = [...images, files]; // agregar los elementos del array "files" al array "images" del DTO
+
+        // console.log("==>Imagenes prop CPDTO; ", images);
+        // console.log("=> CPDTO: ", createPropertyDto);
     */
 }
 
