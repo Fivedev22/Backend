@@ -149,6 +149,36 @@ export class BookingService {
 
       return  booking ? booking.booking_number:0;
     }
+
+
+    public async getOccupiedDates(id_property: number): Promise<Date[]> {
+      const query = this.bookingRepository.createQueryBuilder('booking')
+        .innerJoin('booking.property', 'property')
+        .select('booking.check_in_date', 'check_in_date')
+        .addSelect('booking.check_out_date', 'check_out_date')
+        .where('booking.is_active = true')
+        .andWhere('property.id_property = :id_property', { id_property })
+        .andWhere('booking.check_out_date >= :now', { now: moment().startOf('day').toDate() })
+        .orderBy('booking.check_in_date', 'ASC');
+    
+      const bookings = await query.getRawMany();
+      const occupiedDatesArray: Date[] = [];
+    
+      for (const booking of bookings) {
+        const checkInDate = new Date(booking.check_in_date);
+        const checkOutDate = new Date(booking.check_out_date);
+        const daysDiff = moment(checkOutDate).diff(checkInDate, 'days');
+        const datesInRange = Array.from({ length: daysDiff + 1 }, (_, i) =>
+          moment(checkInDate).add(i, 'days').toDate()
+        );
+        occupiedDatesArray.push(...datesInRange);
+      }
+    
+      return occupiedDatesArray;
+    }
+    
+    
+    
       
 }
 

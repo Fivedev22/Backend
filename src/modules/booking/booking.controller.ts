@@ -73,4 +73,10 @@ export class BookingController {
     async getNumber(): Promise<number> {
         return this.bookingService.GetLastNumber();
     }
+
+    @Get(':property/occupied-dates')
+    async getOccupiedDatesForProperty(
+        @Param('property') propertyId: number,) {
+            return this.bookingService.getOccupiedDates(propertyId);
+    }
 }
