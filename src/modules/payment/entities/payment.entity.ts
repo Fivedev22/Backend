@@ -78,16 +78,17 @@ export class Payment {
 
     @Column({
         type: 'int',
+        name: 'booking_amount',
+    })
+    booking_amount: number;
+
+
+    @Column({
+        type: 'int',
         name: 'extra_expenses',
         nullable: true
     })
     extra_expenses: number;
-
-    @Column({
-        type: 'int',
-        name: 'booking_amount',
-    })
-    booking_amount: number;
 
     @Column({
         type: 'int',
