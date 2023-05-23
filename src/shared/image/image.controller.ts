@@ -1,5 +1,6 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Res } from '@nestjs/common';
 import { ImageService } from './image.service';
+
 
 @Controller('image')
 export class ImageController {
@@ -16,4 +17,5 @@ export class ImageController {
     findOne(@Param('id', ParseIntPipe) id: number) {
         return this.imageService.findOne(+id);
     }
+    
 }

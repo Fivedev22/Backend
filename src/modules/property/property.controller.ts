@@ -1,16 +1,26 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { PropertyService } from './property.service';
 import { Image } from '../../shared/image/image.entity'
 import { v4 as uuidv4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as path from 'path';
+import * as fs from 'fs';
+import { In } from 'typeorm';
+import { Response } from 'express';
+
 
 
 @Controller('property')
 export class PropertyController {
-    //connection: any;
-    constructor (private propertyService: PropertyService) {}
+    constructor (
+      private propertyService: PropertyService,
+      @InjectRepository(Image)
+      private imageRepository: Repository<Image>,
+    ) {}
     
 
     @Post('/create')
@@ -73,39 +83,84 @@ export class PropertyController {
       return this.propertyService.findByReferenceNumber(+reference_number);
     }
 
-
-
     
-    /* Dejo este ejemplo para poder subir multiples imagenes y mandarlas a la carpeta uploads pero no hice la prueba todavia
-    @Post('/create')
-    @UseInterceptors(
-    FilesInterceptor('images', null, {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (req, file, cb) => {
-          const filename: string = uuidv4();
-          const extension: string = file.originalname.split('.').pop();
-          cb(null, `${filename}.${extension}`);
-        },
-      }),
-    }),
-  )
-  async create(@UploadedFiles() images, @Body() createPropertyDto: CreatePropertyDto) {
-    const imageRepository = this.connection.getRepository(Image);
+    @Post('/:id/upload-images')
+    @HttpCode(HttpStatus.CREATED)
+    @UseInterceptors(FilesInterceptor('images', 10))
+    async uploadImages(
+      @Param('id', ParseIntPipe) id: number,
+      @UploadedFiles() files: Express.Multer.File[],
+      ) {
+        const property = await this.propertyService.findOneProperty(id);
+        if (!property) {
+          throw new NotFoundException('Property not found');
+        }
+        
+        for (const file of files) {
+          const image = new Image();
+          image.filename = file.originalname;
+          image.mimeType = file.mimetype;
+          image.path = path.join('uploads', uuidv4()); // Cambiar la ruta según tus necesidades
+          image.property = property;
+          
+          await this.imageRepository.save(image);
+          
+          // Guardar la imagen en el sistema de archivos
+          const filePath = path.join(__dirname, '..', '..', 'public', image.path);
+          await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+          await fs.promises.writeFile(filePath, file.buffer);
+        }
+        
+        return { message: 'Images uploaded successfully' };
+      }
 
-    // Almacena cada imagen en la base de datos
-    const imageEntities = images.map(image => {
-      const {filename } = image;
-      const imageEntity = new Image();
-      imageEntity.filename = filename;
-      return imageEntity;
-    });
 
-    await imageRepository.save(imageEntities);
+      @Get('/:id/images')
+      @HttpCode(HttpStatus.OK)
+      async getPropertyImages(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+        const property = await this.propertyService.findOneProperty(id);
+        if (!property) {
+          throw new NotFoundException('Property not found');
+        }
+        
+        const images = await this.imageRepository.find({ where: { property } });
+        
+        for (const image of images) {
+          const imagePath = path.resolve(__dirname, '..', '..', 'public', image.path);
+          res.sendFile(imagePath);
+        }
+      }
 
-    // Crea la propiedad utilizando la información de createPropertyDto
-    return this.propertyService.createProperty(createPropertyDto);
-  }
-    */
+      @Delete('/:id/images')
+      async deletePropertyImages(
+        @Param('id', ParseIntPipe) id: number,
+        @Body('imageIds') imageIds: number[],
+        ) {
+          const property = await this.propertyService.findOneProperty(id);
+          if (!property) {
+            throw new NotFoundException('Property not found');
+          }
+          
+          await this.imageRepository.delete({ property, id: In(imageIds) });
+          
+          return { message: 'Images deleted successfully' };
+        
+        }
+
+        @Get('/:id/get-images')
+        @HttpCode(HttpStatus.OK)
+        async getImages(@Param('id', ParseIntPipe) id: number) {
+          const property = await this.propertyService.findOneProperty(id);
+          if (!property) {
+            throw new NotFoundException('Property not found');
+          }
+      
+          const images = await this.imageRepository.find({ where: { property } });
+      
+          return { images };
+        }
 }
+    
+
+
 

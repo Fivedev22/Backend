@@ -65,4 +65,15 @@ export class ClientController {
   searchByDocument(@Param('document_number') document_number: string) {
     return this.clientService.findByDocument(document_number);
   }
+
+  @Get(':id/bookings')
+  async getClientBookings(@Param('id') id: number) {
+    return this.clientService.findClientBookings(id);
+  }
+
+  @Get(':id/payments')
+  async getClientPayments(@Param('id') id: number) {
+    return this.clientService.findClientPayments(id);
+  }
+
 }

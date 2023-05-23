@@ -19,5 +19,10 @@ export class ImageService {
         const image = await this.imageRepository.findOne({ where: { id } });
         return image;
       }
+      
+
+      async getPropertyImages(id_property: number): Promise<Image[]> {
+        return this.imageRepository.find({ where: { property: {id_property: id_property} } });
+      }
 
 }

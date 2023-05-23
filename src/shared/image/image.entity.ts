@@ -1,9 +1,7 @@
 import { Property } from 'src/modules/property/entities/property.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
-@Entity({
-  name: 'image',
-})
+@Entity('image')
 export class Image {
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,8 +9,12 @@ export class Image {
   @Column()
   filename: string;
 
-  //@ManyToOne(() => Property, property => property.images)
-  //property: Property;
+  @Column()
+  mimeType: string;
 
+  @Column()
+  path: string; // Nuevo campo para almacenar la ruta de la imagen
 
+  @ManyToOne(() => Property, property => property.images)
+  property: Property;
 }
