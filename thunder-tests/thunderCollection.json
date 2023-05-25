@@ -1,0 +1,79 @@
+[
+  {
+    "_id": "8c9fc5ca-16ca-4c1d-b1c6-7ca5a053b56f",
+    "colName": "training",
+    "created": "2022-09-01T17:15:20.413Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "e8631e4e-5613-4e8e-822e-5f56e2bb8b04",
+        "name": "users",
+        "containerId": "",
+        "created": "2022-09-01T17:18:34.527Z",
+        "sortNum": 120000,
+        "settings": {}
+      },
+      {
+        "_id": "33a5add2-5622-4adc-bfa8-62747415c825",
+        "name": "administrators",
+        "containerId": "",
+        "created": "2022-09-01T20:27:15.891Z",
+        "sortNum": 5000,
+        "settings": {}
+      },
+      {
+        "_id": "9e6724ed-66a8-4db4-ae56-91270d21a59c",
+        "name": "stores",
+        "containerId": "",
+        "created": "2023-05-11T17:33:23.042Z",
+        "sortNum": 130000,
+        "settings": {}
+      },
+      {
+        "_id": "17331fe5-7bee-46b9-addb-6ce164316d66",
+        "name": "categories",
+        "containerId": "",
+        "created": "2023-05-12T02:45:30.099Z",
+        "sortNum": 140000,
+        "settings": {}
+      }
+    ],
+    "settings": {
+      "headers": [
+        {
+          "name": "x-access-token",
+          "value": "{{AccessToken}}",
+          "isDisabled": true
+        },
+        {
+          "name": "x-refresh-token",
+          "value": "{{RefreshToken}}",
+          "isDisabled": true
+        }
+      ],
+      "tests": [
+        {
+          "type": "res-code",
+          "custom": "",
+          "action": "equal",
+          "value": "200"
+        },
+        {
+          "type": "res-time",
+          "custom": "",
+          "action": "<",
+          "value": "10000"
+        },
+        {
+          "type": "Content-Type",
+          "custom": "",
+          "action": "contains",
+          "value": "application/json"
+        }
+      ],
+      "options": {
+        "baseUrl": "http://localhost:5432/"
+      }
+    }
+  }
+]

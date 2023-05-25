@@ -1,4 +1,5 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, Put, Param } from '@nestjs/common';
 import { UserService } from 'src/modules/user/user.service';
 import { CreateUserDto } from 'src/modules/user/dto';
 
@@ -8,6 +9,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService
   ) { }
+
 
   @Post('/create')
   @HttpCode(HttpStatus.NO_CONTENT)

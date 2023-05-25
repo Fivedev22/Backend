@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { ClientService } from 'src/modules/client/client.service';
 import { CreateClientDto, UpdateClientDto } from 'src/modules/client/dto';
