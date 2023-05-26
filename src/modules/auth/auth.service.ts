@@ -33,7 +33,7 @@ export class AuthService {
     if (!userFound) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     const resetToken = v4();
     userFound.reset_token = resetToken;
-    const slug = `http://localhost:4200/auth/password-reset/${resetToken}`;
+    const slug = `http://localhost:4200/auth/reset-password/${resetToken}`;
     const message = {
       from: 'support.anahi-departamentos.com',
       to: userFound.email,
