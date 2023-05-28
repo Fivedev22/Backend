@@ -79,4 +79,5 @@ export class BookingController {
         @Param('property') propertyId: number,) {
             return this.bookingService.getOccupiedDates(propertyId);
     }
+
 }

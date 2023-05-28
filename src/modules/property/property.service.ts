@@ -123,6 +123,6 @@ export class PropertyService {
       } catch {
         throw new HttpException('A problem occurred while unarchiving the property', HttpStatus.NOT_FOUND);
       }
-    }
+    }    
   
 }

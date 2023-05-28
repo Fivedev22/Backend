@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Req, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
@@ -11,6 +11,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { In } from 'typeorm';
 import { Response } from 'express';
+import { join } from 'path';
+import { Request } from 'express';
+
+
 
 
 
@@ -83,82 +87,79 @@ export class PropertyController {
       return this.propertyService.findByReferenceNumber(+reference_number);
     }
 
-    
-    @Post('/:id/upload-images')
+
+    @Post('/images/upload/:id')
     @HttpCode(HttpStatus.CREATED)
-    @UseInterceptors(FilesInterceptor('images', 10))
+    @UseInterceptors(
+      FilesInterceptor('images', 10, {
+        storage: diskStorage({
+          destination: './uploads',
+          filename: (req, file, cb) => {
+            const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+            const extension: string = path.parse(file.originalname).ext;
+            cb(null, `${filename}${extension}`);
+          },
+        }),
+      }),
+    )
     async uploadImages(
-      @Param('id', ParseIntPipe) id: number,
-      @UploadedFiles() files: Express.Multer.File[],
-      ) {
-        const property = await this.propertyService.findOneProperty(id);
-        if (!property) {
-          throw new NotFoundException('Property not found');
-        }
-        
-        for (const file of files) {
+      @Param('id', ParseIntPipe) id_property: number,
+      @UploadedFiles() images: Express.Multer.File[],
+    ) {
+      const property = await this.propertyService.findOneProperty(+id_property);
+      if (!property) {
+        throw new NotFoundException('Property not found');
+      }
+  
+      const savedImages = await Promise.all(
+        images.map(async (file) => {
           const image = new Image();
-          image.filename = file.originalname;
-          image.mimeType = file.mimetype;
-          image.path = path.join('uploads', uuidv4()); // Cambiar la ruta según tus necesidades
           image.property = property;
-          
-          await this.imageRepository.save(image);
-          
-          // Guardar la imagen en el sistema de archivos
-          const filePath = path.join(__dirname, '..', '..', 'public', image.path);
-          await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
-          await fs.promises.writeFile(filePath, file.buffer);
-        }
-        
-        return { message: 'Images uploaded successfully' };
+          image.filename = file.filename;
+          return await this.imageRepository.save(image);
+        }),
+      );
+  
+      return savedImages;
+    }
+
+    @Get('/:id/images')
+    @HttpCode(HttpStatus.OK)
+    async getPropertyImages(@Param('id', ParseIntPipe) id: number) {
+      const property = await this.propertyService.findOneProperty(id);
+      if (!property) {
+        throw new NotFoundException('Property not found');
       }
+      
+      const images = await this.imageRepository.find({ where: { property } });
+      
+      return { images };
+    }
 
-
-      @Get('/:id/images')
-      @HttpCode(HttpStatus.OK)
-      async getPropertyImages(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-        const property = await this.propertyService.findOneProperty(id);
-        if (!property) {
-          throw new NotFoundException('Property not found');
-        }
-        
-        const images = await this.imageRepository.find({ where: { property } });
-        
-        for (const image of images) {
-          const imagePath = path.resolve(__dirname, '..', '..', 'public', image.path);
-          res.sendFile(imagePath);
+    @Delete('/images/:id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    async deleteImages(@Param('id', ParseIntPipe) id: number, @Body('imageIds') imageIds: number[]) {
+      const property = await this.propertyService.findOneProperty(id);
+      if (!property) {
+        throw new NotFoundException('Property not found');
+      }
+      
+      // Eliminar imágenes de la base de datos
+      await this.imageRepository.delete({ property, id: In(imageIds) });
+      
+      // Eliminar imágenes del almacenamiento externo
+      for (const imageId of imageIds) {
+        const image = await this.imageRepository.findOne({ where: { property, id: imageId } });
+        if (image) {
+          const imagePath = path.join(__dirname, '..', '..', '..', 'uploads', image.filename);
+          if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+          }
         }
       }
-
-      @Delete('/:id/images')
-      async deletePropertyImages(
-        @Param('id', ParseIntPipe) id: number,
-        @Body('imageIds') imageIds: number[],
-        ) {
-          const property = await this.propertyService.findOneProperty(id);
-          if (!property) {
-            throw new NotFoundException('Property not found');
-          }
-          
-          await this.imageRepository.delete({ property, id: In(imageIds) });
-          
-          return { message: 'Images deleted successfully' };
-        
-        }
-
-        @Get('/:id/get-images')
-        @HttpCode(HttpStatus.OK)
-        async getImages(@Param('id', ParseIntPipe) id: number) {
-          const property = await this.propertyService.findOneProperty(id);
-          if (!property) {
-            throw new NotFoundException('Property not found');
-          }
-      
-          const images = await this.imageRepository.find({ where: { property } });
-      
-          return { images };
-        }
+      return { message: 'Images deleted successfully' };
+    }
+  
 }
     
 
