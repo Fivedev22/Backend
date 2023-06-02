@@ -6,6 +6,7 @@ import { AvailabilityStatus } from "src/shared/availability_status/availability_
 import { ActivityStatus } from "src/shared/activity_status/activity_status.entity";
 import { Payment } from "src/modules/payment/entities/payment.entity";
 import { Image } from "src/shared/image/image.entity";
+import { Inventory } from "./inventory.entity";
 
 @Entity({
     name: "property",
@@ -173,6 +174,10 @@ export class Property {
      // Relación con la entidad Image
      @OneToMany(() => Image, image => image.property)
      images: Image[];
+
+     // Relación con la entidad Inventory
+     @OneToMany(() => Inventory, inventory => inventory.property)
+     inventories: Inventory[];
 
 
 }

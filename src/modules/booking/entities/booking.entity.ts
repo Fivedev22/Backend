@@ -4,6 +4,7 @@ import { BookingType } from "../../../shared/booking_type/booking_type.entity";
 import { Booking_Origin } from "../../../shared/booking_origin/origin.entity";
 import { Property } from "src/modules/property/entities/property.entity";
 import { Payment } from "src/modules/payment/entities/payment.entity";
+import { Contract } from "./contract.entity";
 
 
 @Entity({
@@ -125,4 +126,7 @@ export class Booking {
 
     @OneToMany(() => Payment, (payment) => payment.booking)
     payments: Payment[];
+
+    @OneToMany(() => Contract, contract => contract.booking)
+    contracts: Contract[];
 }
