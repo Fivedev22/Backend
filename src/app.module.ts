@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from 'src/modules/auth/auth.module';
@@ -19,6 +18,11 @@ import { AvailabilityStatusModule } from './shared/availability_status/availabil
 import { ActivityStatusModule } from './shared/activity_status/activity_status.module';
 import { PaymentStatusModule } from './shared/payment_status/payment_status.module';
 import { ImageModule } from './shared/image/image.module';
+import { join } from 'path';
+import * as express from 'express';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
+
 
 @Module({
   imports: [
@@ -51,6 +55,20 @@ import { ImageModule } from './shared/image/image.module';
     PaymentModule,
     PaymentStatusModule,
     ImageModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // Ruta absoluta a la carpeta de uploads
+      serveRoot: '/uploads', // Ruta base para servir los archivos
+    }),
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // Agregar el middleware para servir archivos estáticos
+    const staticPath = join(__dirname, '..', 'uploads');
+    consumer
+      .apply(express.static(staticPath))
+      .exclude({ path: '/uploads/(.*)', method: RequestMethod.ALL }) // Excluir la ruta /uploads de otros middlewares
+      .forRoutes('*');
+    }
+  }
+

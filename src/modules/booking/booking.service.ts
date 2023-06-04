@@ -176,8 +176,7 @@ export class BookingService {
     
       return occupiedDatesArray;
     }
-   
-      
-}
+
+  }
 
 

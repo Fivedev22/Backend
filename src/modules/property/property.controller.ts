@@ -1,10 +1,22 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Req, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { PropertyService } from './property.service';
 import { Image } from '../../shared/image/image.entity'
 import { v4 as uuidv4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as path from 'path';
+import * as fs from 'fs';
+import { In } from 'typeorm';
+import { Response } from 'express';
+import { join } from 'path';
+import { Request } from 'express';
+import { Inventory } from './entities/inventory.entity';
+
+
+
 
 
 @Controller('property')
@@ -13,6 +25,8 @@ export class PropertyController {
       private propertyService: PropertyService,
       @InjectRepository(Image)
       private imageRepository: Repository<Image>,
+      @InjectRepository(Inventory)
+      private inventoryRepository: Repository<Inventory>,
     ) {}
     
 
@@ -85,39 +99,160 @@ export class PropertyController {
     }
 
 
-
-    
-    /* Dejo este ejemplo para poder subir multiples imagenes y mandarlas a la carpeta uploads pero no hice la prueba todavia
-    @Post('/create')
+    @Post('/images/upload/:id')
+    @HttpCode(HttpStatus.CREATED)
     @UseInterceptors(
-    FilesInterceptor('images', null, {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (req, file, cb) => {
-          const filename: string = uuidv4();
-          const extension: string = file.originalname.split('.').pop();
-          cb(null, `${filename}.${extension}`);
+      FilesInterceptor('images', 10, {
+        storage: diskStorage({
+          destination: './uploads',
+          filename: (req, file, cb) => {
+            const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+            const extension: string = path.parse(file.originalname).ext;
+            cb(null, `${filename}${extension}`);
+          },
+        }),
+      }),
+    )
+    async uploadImages(
+      @Param('id', ParseIntPipe) id_property: number,
+      @UploadedFiles() images: Express.Multer.File[],
+    ) {
+      const property = await this.propertyService.findOneProperty(+id_property);
+      if (!property) {
+        throw new NotFoundException('Property not found');
+      }
+  
+      const savedImages = await Promise.all(
+        images.map(async (file) => {
+          const image = new Image();
+          image.property = property;
+          image.filename = file.filename;
+          return await this.imageRepository.save(image);
+        }),
+      );
+  
+      return savedImages;
+    }
+
+    @Get('/:id/images')
+    @HttpCode(HttpStatus.OK)
+    async getPropertyImages(@Param('id', ParseIntPipe) id: number) {
+      const property = await this.propertyService.findOneProperty(id);
+      if (!property) {
+        throw new NotFoundException('Property not found');
+      }
+      
+      const images = await this.imageRepository.find({ where: { property } });
+      
+      return { images };
+    }
+
+    @Delete('/images/:id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    async deleteImages(@Param('id', ParseIntPipe) id: number, @Body('imageIds') imageIds: number[]) {
+      const property = await this.propertyService.findOneProperty(id);
+      if (!property) {
+        throw new NotFoundException('Property not found');
+      }
+      
+      // Eliminar imágenes de la base de datos
+      await this.imageRepository.delete({ property, id: In(imageIds) });
+      
+      // Eliminar imágenes del almacenamiento externo
+      for (const imageId of imageIds) {
+        const image = await this.imageRepository.findOne({ where: { property, id: imageId } });
+        if (image) {
+          const imagePath = path.join(__dirname, '..', '..', '..', 'uploads', image.filename);
+          if (fs.existsSync(imagePath)) {
+            fs.unlinkSync(imagePath);
+          }
+        }
+      }
+      return { message: 'Images deleted successfully' };
+    }
+
+
+
+
+    @Post('/inventory/upload/:id')
+    @UseInterceptors(
+      FileInterceptor('file', {
+        storage: diskStorage({
+          destination: './uploads',
+          filename: (req, file, cb) => {
+            const filename = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+            const extension = path.parse(file.originalname).ext;
+            cb(null, `${filename}${extension}`);
+          },
+        }),
+        limits: {
+          fileSize: 1024 * 1024 * 10, // 10MB
         },
       }),
-    }),
-  )
-  async create(@UploadedFiles() images, @Body() createPropertyDto: CreatePropertyDto) {
-    const imageRepository = this.connection.getRepository(Image);
+    )
+    async uploadInventory(
+      @Param('id', ParseIntPipe) id_property: number,
+      @UploadedFile() file: Express.Multer.File,
+    ) {
+      if (!file) {
+        throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
+      }
+  
+      const property = await this.propertyService.findOneProperty(+id_property);
+      if (!property) {
+        throw new HttpException('Property not found', HttpStatus.NOT_FOUND);
+      }
+      
+      const inventory = new Inventory();
+      inventory.filename = file.filename;
+      inventory.property = property;
+      // Realizar cualquier otra operación necesaria
+  
+      const savedInventory = await this.inventoryRepository.save(inventory);
+  
+      return savedInventory;
+    }
 
-    // Almacena cada imagen en la base de datos
-    const imageEntities = images.map(image => {
-      const {filename } = image;
-      const imageEntity = new Image();
-      imageEntity.filename = filename;
-      return imageEntity;
-    });
+    @Get('/inventories/:id')
+    @HttpCode(HttpStatus.OK)
+    async getPropertyInventory(@Param('id', ParseIntPipe) id: number) {
+      const property = await this.propertyService.findOneProperty(id);
+      if (!property) {
+        throw new NotFoundException('Property not found');
+      }
+      
+      const inventory = await this.inventoryRepository.find({ where: { property } });
+      
+      return { inventory };
+    }
 
-    await imageRepository.save(imageEntities);
+    @Delete('/inventories/:id')
+    async deleteInventorty(@Param('id', ParseIntPipe) id: number) {
+      const inventory = await this.inventoryRepository.findOne({where: {id: id} });
+      if (!inventory) {
+        throw new NotFoundException('Inventory not found');
+      }
+  
+      // Eliminar el archivo del almacenamiento externo
+      const filePath = path.join(__dirname, '..', '..', '..', 'uploads', inventory.filename);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+  
+      // Eliminar el contrato de la base de datos
+      await this.inventoryRepository.delete({ id: id });
+  
+      return { message: 'Inventory deleted successfully' };
+    }
 
-    // Crea la propiedad utilizando la información de createPropertyDto
-    return this.propertyService.createProperty(createPropertyDto);
-  }
-    */
+
+    @Get('get-last-number/:')
+    @HttpCode(HttpStatus.OK)
+    async getNumber(): Promise<number> {
+        return this.propertyService.GetLastNumber();
+    }
+
+  
 }
     
 

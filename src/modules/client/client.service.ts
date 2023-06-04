@@ -146,9 +146,21 @@ export class ClientService {
         message: 'No payments found for this client.',
       };
     }
+
+    const { name, last_name } = client; // Obtener nombre y apellido del cliente
+
   
-    return bookings;
+    const clientBookings = {
+      client: {
+        name,
+        last_name,
+      },
+      bookings,
+    };
+  
+    return clientBookings;
   }
+
 
   async findClientPayments(id_client: number) {
     const client = await this.clientRepository.findOne({
@@ -161,17 +173,29 @@ export class ClientService {
     }
   
     const payments = client.payments;
-
+  
     if (payments.length === 0) {
       return {
         message: 'No payments found for this client.',
       };
     }
-    
-    return payments;
   
+    const { name, last_name } = client; // Obtener nombre y apellido del cliente
+  
+    const clientPayments = {
+      client: {
+        name,
+        last_name,
+      },
+      payments,
+    };
+  
+    return clientPayments;
+  }
 }
+  
+  
+
 
   
 
-}
