@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
 import { ClientService } from 'src/modules/client/client.service';
 import { CreateClientDto, UpdateClientDto } from 'src/modules/client/dto';
@@ -65,4 +66,15 @@ export class ClientController {
   searchByDocument(@Param('document_number') document_number: string) {
     return this.clientService.findByDocument(document_number);
   }
+
+  @Get(':id/bookings')
+  async getClientBookings(@Param('id') id: number) {
+    return this.clientService.findClientBookings(id);
+  }
+
+  @Get(':id/payments')
+  async getClientPayments(@Param('id') id: number) {
+    return this.clientService.findClientPayments(id);
+  }
+
 }

@@ -25,11 +25,11 @@ import { ImageModule } from './shared/image/image.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'agusdev',
-      password: '123456',
-      database: 'tesis',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       logging: false,
       synchronize: true,
@@ -53,5 +53,4 @@ import { ImageModule } from './shared/image/image.module';
     ImageModule,
   ],
 })
-
 export class AppModule {}

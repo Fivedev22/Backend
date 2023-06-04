@@ -1,10 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Property } from 'src/modules/property/entities/property.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
-@Entity({
-  name: 'image',
-})
+@Entity('image')
 export class Image {
   @PrimaryGeneratedColumn()
   id: number;
@@ -13,14 +11,11 @@ export class Image {
   filename: string;
 
   @Column()
-  path: string;
+  mimeType: string;
 
   @Column()
-  mimetype: string;
+  path: string; // Nuevo campo para almacenar la ruta de la imagen
 
-  @Column()
-  size: number;
-
-  @ManyToOne(() => Property, (property) => property.images)
+  @ManyToOne(() => Property, property => property.images)
   property: Property;
 }

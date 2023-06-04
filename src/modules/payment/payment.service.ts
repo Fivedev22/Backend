@@ -117,4 +117,15 @@ export class PaymentService {
           throw new HttpException('A problem occurred while unarchiving the payment', HttpStatus.NOT_FOUND);
         }
       }
+
+      async GetLastNumber(): Promise<number> {
+        const payment = await this.paymentRepository
+        .createQueryBuilder('payment')
+        .orderBy('payment.payment_number', 'DESC')
+        .getOne();
+  
+        return  payment ? payment.payment_number: 0;
+      }
+
+      
 }

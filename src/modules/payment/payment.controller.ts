@@ -66,4 +66,10 @@ export class PaymentController {
     searchByNumber(@Param('payment_number', ParseIntPipe) payment_number: number) {
         return this.paymentService.findByPaymentNumber(+payment_number);
     }
+
+    @Get('get-last-number/:')
+    @HttpCode(HttpStatus.OK)
+    async getNumber(): Promise<number> {
+        return this.paymentService.GetLastNumber();
+    }
 }

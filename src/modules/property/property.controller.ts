@@ -1,19 +1,19 @@
-/* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { PropertyService } from './property.service';
 import { Image } from '../../shared/image/image.entity'
 import { v4 as uuidv4 } from 'uuid';
-import { ImagePropertyDto } from './dto/image-property.dto';
-import { multerConfig } from 'src/shared/image/image.controller';
 
 
 @Controller('property')
 export class PropertyController {
-    //connection: any;
-    constructor (private propertyService: PropertyService) {}
+    constructor (
+      private propertyService: PropertyService,
+      @InjectRepository(Image)
+      private imageRepository: Repository<Image>,
+    ) {}
     
 
     // @Post('/create')
@@ -117,25 +117,9 @@ export class PropertyController {
     // Crea la propiedad utilizando la información de createPropertyDto
     return this.propertyService.createProperty(createPropertyDto);
   }
-
-   // let {images} = createPropertyDto;
-      // images = files;
-      
-      // // const imagesUpload = []
-      // // files.map((img)=> {
-      // //    imagesUpload.push(img);
-      // // })
-     
-      
-      // console.log("==>Imagenes prop CPDTO; ",images)
-      // console.log("=> CPDTO: ",createPropertyDto)
-
-        // let {images} = createPropertyDto;
-       
-        // images = [...images, files]; // agregar los elementos del array "files" al array "images" del DTO
-
-        // console.log("==>Imagenes prop CPDTO; ", images);
-        // console.log("=> CPDTO: ", createPropertyDto);
     */
 }
+    
+
+
 

@@ -66,7 +66,17 @@ export class BookingController {
     @HttpCode(HttpStatus.OK)
     searchByNumber(@Param('booking_number', ParseIntPipe) booking_number: number) {
         return this.bookingService.findByBookingNumber(+booking_number);
-      }
+    }
 
+    @Get('get-last-number/:')
+    @HttpCode(HttpStatus.OK)
+    async getNumber(): Promise<number> {
+        return this.bookingService.GetLastNumber();
+    }
 
+    @Get(':property/occupied-dates')
+    async getOccupiedDatesForProperty(
+        @Param('property') propertyId: number,) {
+            return this.bookingService.getOccupiedDates(propertyId);
+    }
 }

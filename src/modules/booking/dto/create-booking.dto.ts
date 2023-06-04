@@ -48,13 +48,13 @@ export class CreateBookingDto {
   @Min(0)
   pets_number: number;
 
-  @ApiProperty({ type: 'string', format: 'date' })
+  @ApiProperty({ type: 'Date', format: 'date' })
   @IsDateString()
-  check_in_date: string;
+  check_in_date: Date;
 
-  @ApiProperty({ type: 'string', format: 'date' })
+  @ApiProperty({ type: 'Date', format: 'date' })
   @IsDateString()
-  check_out_date: string;
+  check_out_date: Date;
 
   @ApiProperty({ type: 'string', format: 'time' })
   @IsString()
@@ -71,7 +71,7 @@ export class CreateBookingDto {
   @Min(0)
   starting_price: number;
 
-  @ApiProperty({ type: 'integer', minimum: 0, nullable: true })
+  @ApiProperty({ type: 'number', minimum: 0, nullable: true })
   @IsOptional()
   @IsInt()
   @Min(0)

@@ -57,13 +57,15 @@ export class Payment {
 
     @Column({
         type: 'int',
-        name: 'booking_amount',
+        name: 'booking_starting_price',
     })
-    booking_amount: number;
+    booking_starting_price: number;
 
     @Column({
-        type: "int",
+        type: 'decimal',
         name: 'booking_discount',
+        precision: 10, // ajusta según tus necesidades
+        scale: 2, // ajusta según tus necesidades
         nullable: true
     })
     booking_discount: number;
@@ -73,6 +75,20 @@ export class Payment {
         name: 'deposit_amount',
     })
     deposit_amount: number;
+
+    @Column({
+        type: 'int',
+        name: 'booking_amount',
+    })
+    booking_amount: number;
+
+
+    @Column({
+        type: 'int',
+        name: 'extra_expenses',
+        nullable: true
+    })
+    extra_expenses: number;
 
     @Column({
         type: 'int',

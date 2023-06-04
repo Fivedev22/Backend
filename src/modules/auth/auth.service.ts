@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/modules/auth/jwt';
@@ -37,7 +38,7 @@ export class AuthService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     const resetToken = v4();
     userFound.reset_token = resetToken;
-    const slug = `http://localhost:4200/login/password-reset/${resetToken}`;
+    const slug = `http://localhost:4200/auth/reset-password/${resetToken}`;
     const message = {
       from: 'support.anahi-departamentos.com',
       to: userFound.email,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Post, Body, HttpCode, HttpStatus, Put } from '@nestjs/common';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { LoginAuthDto, PasswordResetAuthDto, PasswordResetRequestAuthDto } from 'src/modules/auth/dto';
@@ -12,7 +13,7 @@ export class AuthController {
     return this.authService.login(loginAuthDto);
   }
 
-  @Put('/password-reset-request')
+  @Post('/password-reset-request')
   @HttpCode(HttpStatus.OK)
   passwordResetRequest(@Body() passwordResetRequestAuthDto: PasswordResetRequestAuthDto) {
     return this.authService.passwordResetRequest(passwordResetRequestAuthDto);

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -126,5 +127,51 @@ export class ClientService {
       throw new HttpException('A problem occurred while unarchiving the client', HttpStatus.NOT_FOUND);
     }
   }
+
+
+  async findClientBookings(id_client: number) {
+    const client = await this.clientRepository.findOne({
+      relations: ['bookings'],
+      where: { id_client, is_active: true },
+    });
+  
+    if (!client) {
+      throw new HttpException(`Client with id ${id_client} does not exist or is inactive`, HttpStatus.NOT_FOUND);
+    }
+  
+    const bookings = client.bookings;
+
+    if (bookings.length === 0) {
+      return {
+        message: 'No payments found for this client.',
+      };
+    }
+  
+    return bookings;
+  }
+
+  async findClientPayments(id_client: number) {
+    const client = await this.clientRepository.findOne({
+      relations: ['payments'],
+      where: { id_client, is_active: true },
+    });
+  
+    if (!client) {
+      throw new HttpException(`Client with id ${id_client} does not exist or is inactive`, HttpStatus.NOT_FOUND);
+    }
+  
+    const payments = client.payments;
+
+    if (payments.length === 0) {
+      return {
+        message: 'No payments found for this client.',
+      };
+    }
+    
+    return payments;
+  
+}
+
+  
 
 }

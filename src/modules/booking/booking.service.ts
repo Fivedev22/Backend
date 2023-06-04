@@ -1,8 +1,9 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
 import { CreateBookingDto, UpdateBookingDto } from './dto';
+import * as moment from 'moment'
 
 @Injectable()
 export class BookingService {
@@ -55,18 +56,16 @@ export class BookingService {
           },
         });
       }
-    
+
       public async createBooking(createBookingDto: CreateBookingDto) {
-        const {booking_number, check_in_date} = createBookingDto;
-      
-        if (await this.findByBookingNumber(booking_number)) {
-          throw new HttpException('Repeating booking', HttpStatus.NOT_ACCEPTABLE);
-        }
-      
-        if (!await this.checkAvailability(check_in_date)) {
-          throw new HttpException('The check-in date is not available', HttpStatus.NOT_ACCEPTABLE);
-        }
-      
+        const { booking_number} = createBookingDto
+
+        if (await this.findByBookingNumber(booking_number)) throw new HttpException('Repeating booking', HttpStatus.NOT_ACCEPTABLE)
+
+        if (!await this.checkAvailabilityForProperty(createBookingDto)) {
+          throw new HttpException('The selected property is not available for the selected dates', HttpStatus.NOT_ACCEPTABLE);
+        } 
+
         try {
           await this.bookingRepository.save(createBookingDto);
           return {
@@ -76,13 +75,19 @@ export class BookingService {
         } catch (error) {
           return new BadRequestException(error);
         }
-      }
+      }    
       
-      private async checkAvailability(check_in_date: string): Promise<boolean> {
-        const bookings = await this.bookingRepository.find();
-        return !bookings.some(booking => booking.check_in_date === check_in_date);
-      }
-    
+      private async checkAvailabilityForProperty(createBookingDto: CreateBookingDto): Promise<boolean> {
+        const {property, check_in_date, check_out_date} = createBookingDto
+        const query = this.bookingRepository.createQueryBuilder('booking')
+        .innerJoinAndSelect('booking.property', 'property')
+        .where('property.id_property = :property', { property })
+        .andWhere('booking.check_in_date <= :checkOutDate', { checkOutDate: check_out_date })
+        .andWhere('booking.check_out_date >= :checkInDate', { checkInDate: check_in_date });
+        const bookings = await query.getMany();
+        return bookings.length === 0;      
+      } 
+          
       public async updateBooking(id_booking: number, updateBookingDto: UpdateBookingDto) {
         if (!await this.findOneBooking(id_booking)) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
         const booking = await this.bookingRepository.preload({ id_booking, ...updateBookingDto});
@@ -136,4 +141,43 @@ export class BookingService {
       }
     }
 
+    async GetLastNumber(): Promise<number> {
+      const booking = await this.bookingRepository
+      .createQueryBuilder('booking')
+      .orderBy('booking.booking_number', 'DESC')
+      .getOne();
+
+      return  booking ? booking.booking_number:0;
+    }
+
+
+    public async getOccupiedDates(id_property: number): Promise<Date[]> {
+      const query = this.bookingRepository.createQueryBuilder('booking')
+        .innerJoin('booking.property', 'property')
+        .select('booking.check_in_date', 'check_in_date')
+        .addSelect('booking.check_out_date', 'check_out_date')
+        .where('booking.is_active = true')
+        .andWhere('property.id_property = :id_property', { id_property })
+        .andWhere('booking.check_out_date >= :now', { now: moment().startOf('day').toDate() })
+        .orderBy('booking.check_in_date', 'ASC');
+    
+      const bookings = await query.getRawMany();
+      const occupiedDatesArray: Date[] = [];
+    
+      for (const booking of bookings) {
+        const checkInDate = new Date(booking.check_in_date);
+        const checkOutDate = new Date(booking.check_out_date);
+        const daysDiff = moment(checkOutDate).diff(checkInDate, 'days');
+        const datesInRange = Array.from({ length: daysDiff + 1 }, (_, i) =>
+          moment(checkInDate).add(i, 'days').toDate()
+        );
+        occupiedDatesArray.push(...datesInRange);
+      }
+    
+      return occupiedDatesArray;
+    }
+   
+      
 }
+
+

@@ -20,7 +20,7 @@ export class Booking {
     @Column({
         type: 'int',
         name: 'booking_number',
-        unique: true
+        unique: true,
     })
     booking_number: number;
 
@@ -66,13 +66,13 @@ export class Booking {
         type: 'date',
         name: 'check_in_date',
     })
-    check_in_date: string;
+    check_in_date: Date;
 
     @Column({ 
         type: 'date',
         name: 'check_out_date',
     })
-    check_out_date: string;
+    check_out_date: Date;
 
     @Column({ 
         type: 'time',
@@ -93,8 +93,10 @@ export class Booking {
     starting_price: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
         name: 'discount',
+        precision: 10, // ajusta según tus necesidades
+        scale: 2, // ajusta según tus necesidades
         nullable: true
     })
     discount: number;
