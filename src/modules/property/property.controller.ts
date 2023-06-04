@@ -237,6 +237,13 @@ export class PropertyController {
       return { message: 'Inventory deleted successfully' };
     }
 
+
+    @Get('get-last-number/:')
+    @HttpCode(HttpStatus.OK)
+    async getNumber(): Promise<number> {
+        return this.propertyService.GetLastNumber();
+    }
+
   
 }
     

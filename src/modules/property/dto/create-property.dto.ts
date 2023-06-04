@@ -5,12 +5,14 @@ import { Province } from 'src/shared/province/province.entity';
 import { AvailabilityStatus } from 'src/shared/availability_status/availability_status.entity';
 import { ActivityStatus } from 'src/shared/activity_status/activity_status.entity';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePropertyDto {
     @IsNotEmpty()
     @IsInt()
     id_property: number;
   
+    @ApiProperty({ type: 'integer', uniqueItems: true })
     @IsNotEmpty()
     @IsInt()
     reference_number: number;

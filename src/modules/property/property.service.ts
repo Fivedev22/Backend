@@ -123,6 +123,15 @@ export class PropertyService {
       } catch {
         throw new HttpException('A problem occurred while unarchiving the property', HttpStatus.NOT_FOUND);
       }
+    }
+
+    async GetLastNumber(): Promise<number> {
+      const property = await this.propertyRepository
+      .createQueryBuilder('property')
+      .orderBy('property.reference_number', 'DESC')
+      .getOne();
+
+      return  property ? property.reference_number:0;
     }    
   
 }
