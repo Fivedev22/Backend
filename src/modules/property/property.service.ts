@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { Property } from './entities/property.entity';
-import { Image } from 'src/shared/image/image.entity';
 
 @Injectable()
 export class PropertyService {
@@ -57,34 +56,11 @@ export class PropertyService {
         })
       }
     
-      public async createProperty( files ,createPropertyDto: CreatePropertyDto) {
-       
-        const images = [];
-        for (const file of files) {
-          const newImage = new Image();
-          newImage.filename = file.filename;
-          newImage.path = file.path;
-          newImage.mimetype = file.mimetype;
-          newImage.size = file.size;
-          images.push(newImage);
-        }
-       
-        // createPropertyDto.images = images
-
-        
-        const myObject = {};
-      
-        for (const [key, value] of Object.entries(createPropertyDto)) {
-          myObject[key] = value;
-         
-        }
-        // myObject.images = images
-     
-
-        const {reference_number} = createPropertyDto;
+      public async createProperty(createBookingDto: CreatePropertyDto) {
+        const {reference_number} = createBookingDto;
         if (await this.findByReferenceNumber(reference_number)) throw new HttpException('Repeating property', HttpStatus.NOT_ACCEPTABLE);
         try {
-          await this.propertyRepository.save(myObject);
+          await this.propertyRepository.save(createBookingDto);
           return {
             statusCode: 200,
             msg: 'Property Saved Successfully',

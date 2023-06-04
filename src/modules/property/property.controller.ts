@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, NotFoundException, Param, ParseIntPipe, Patch, Post, Req, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -30,18 +31,10 @@ export class PropertyController {
     ) {}
     
 
-    // @Post('/create')
-    // @HttpCode(HttpStatus.CREATED)
-    // createProperty(@Body() createPropertyDto: CreatePropertyDto, @Param('images') images: ImagePropertyDto ) {
-    //   console.log(images)
-    //     return this.propertyService.createProperty(createPropertyDto);
-    // }
-
     @Post('/create')
-    @UseInterceptors(FilesInterceptor('files', 10, multerConfig ))
     @HttpCode(HttpStatus.CREATED)
-    create(@UploadedFiles() files, @Body() createPropertyDto: CreatePropertyDto) {
-      return this.propertyService.createProperty(files, createPropertyDto)
+    createProperty(@Body() createPropertyDto: CreatePropertyDto) {
+        return this.propertyService.createProperty(createPropertyDto);
     }
 
     @Get()

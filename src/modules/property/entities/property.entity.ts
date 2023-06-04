@@ -167,9 +167,6 @@ export class Property {
     @OneToMany(() => Payment, (payment) => payment.property)
     payments: Payment[];
 
-    @OneToMany(() => Image, (image) => image.property)
-    images: Image[]
-
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
     // el is_active es para archivar y desarchivar el cobro
