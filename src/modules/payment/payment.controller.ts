@@ -19,6 +19,12 @@ export class PaymentController {
         return this.paymentService.findAll();
     }
 
+    @Get('/paid')
+    @HttpCode(HttpStatus.OK)
+    findAllPaymentsPaid() {
+        return this.paymentService.findAllCobrados();
+    }
+
     @Get('/archived')
     @HttpCode(HttpStatus.OK)
     findAllPaymentsArchived() {

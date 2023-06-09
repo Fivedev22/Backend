@@ -99,7 +99,7 @@ export class BookingService {
       }
     
       public async removeBooking(id_booking: number) {
-        if (!await this.findOneBooking(id_booking)) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
+        if (!await this.findOneBookingArchived(id_booking)) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
         try {
           await this.bookingRepository.delete({
             id_booking: id_booking,

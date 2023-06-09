@@ -24,6 +24,16 @@ export class PaymentService {
         });
         return payments;
       }
+    
+      public async findAllCobrados() {
+        const payments = await this.paymentRepository.find({
+          relations: ['booking', 'client', 'property', 'payment_type', 'payment_status'],
+          where: { is_active: true, payment_status: { id_payment_status: 2 } },
+          order: { id_payment: 'ASC' }
+        });
+        return payments;
+      }
+      
 
       public async findAllArchived() {
         const payments = await this.paymentRepository.find({

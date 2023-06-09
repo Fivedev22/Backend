@@ -78,7 +78,7 @@ export class ClientService {
   }
 
   async remove(id_client: number) {
-    if (!await this.findOne(id_client)) throw new HttpException(`Client with id ${id_client} does not exist`, HttpStatus.NOT_FOUND);
+    if (!await this.findOneArchived(id_client)) throw new HttpException(`Client with id ${id_client} does not exist`, HttpStatus.NOT_FOUND);
     try {
       await this.clientRepository.delete(id_client);
       return {

@@ -69,7 +69,7 @@ export class BookingController {
         return this.bookingService.unarchive(+id_booking);
     }
 
-    @Delete('/remove/:id')
+    @Delete('remove/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     removeBooking(@Param('id') id_booking) {
       return this.bookingService.removeBooking(id_booking);
