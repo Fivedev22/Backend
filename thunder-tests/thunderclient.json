@@ -649,12 +649,12 @@
     "method": "POST",
     "sortNum": 18750,
     "created": "2023-05-12T02:45:30.102Z",
-    "modified": "2023-06-11T17:45:42.766Z",
+    "modified": "2023-06-11T19:08:00.161Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n\n  \"reference_number\": 123,\n  \"property_name\": \"La Soñada\",\n  \"property_type\": 1,\n  \"square_meter\": \"25\",\n  \"street\": \"Liniers\",\n  \"street_number\": \"23\",\n  \"province\": 1,\n  \"town\": \"Alta Gracia\",\n  \"district\": \"Santa Maria\",\n  \"daily_rent\": false,\n  \"monthly_rent\": true,\n  \"annual_rent\": true,\n  \"rooms_number\": 3,\n  \"bathrooms_number\": 1,\n  \"internet\": true,\n  \"pool\": false,\n  \"kitchen\": true,\n  \"laundry_equipment\": true,\n  \"yard\": false,\n  \"parking\": true,\n  \"disabled_access\": false,\n  \"kids_beds\": true,\n  \"availability_status\": 1,\n  \"activity_status\": 1,\n  \"is_active\": true\n}",
+      "raw": "{\n\n  \"reference_number\": 124,\n  \"property_name\": \"El Paraiso\",\n  \"property_type\": 1,\n  \"square_meter\": \"30\",\n  \"street\": \"Reconquista\",\n  \"street_number\": \"231\",\n  \"province\": 1,\n  \"town\": \"Villa Carlos Paz\",\n  \"district\": \"Punilla\",\n  \"daily_rent\": false,\n  \"monthly_rent\": true,\n  \"annual_rent\": true,\n  \"rooms_number\": 3,\n  \"bathrooms_number\": 1,\n  \"internet\": true,\n  \"pool\": false,\n  \"kitchen\": true,\n  \"laundry_equipment\": true,\n  \"yard\": false,\n  \"parking\": true,\n  \"disabled_access\": false,\n  \"kids_beds\": true,\n  \"availability_status\": 1,\n  \"activity_status\": 1,\n  \"is_active\": true\n}",
       "form": []
     },
     "tests": [
