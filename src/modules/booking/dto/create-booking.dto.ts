@@ -43,9 +43,8 @@ export class CreateBookingDto {
   @Min(0)
   kids_number: number;
 
-  @ApiProperty({ type: 'integer', minimum: 0 })
+  @ApiProperty({ type: 'integer', nullable: true })
   @IsInt()
-  @Min(0)
   pets_number: number;
 
   @ApiProperty({ type: 'Date', format: 'date' })
@@ -66,8 +65,8 @@ export class CreateBookingDto {
   @IsNotEmpty()
   check_out_hour: string;
 
-  @ApiProperty({ type: 'integer', minimum: 0 })
-  @IsInt()
+  @ApiProperty({ type: 'number', minimum: 0 })
+  @IsNumber()
   @Min(0)
   starting_price: number;
 
@@ -77,7 +76,7 @@ export class CreateBookingDto {
   @Min(0)
   discount: number;
 
-  @IsInt()
+  @IsNumber()
   @Min(0)
   deposit_amount: number;
 
@@ -87,8 +86,8 @@ export class CreateBookingDto {
   estimated_amount_deposit: number;
 
   @IsNotEmpty()
-  @IsInt()
-  @ApiProperty()
+  @IsNumber()
+  @ApiProperty({ type: 'number' })
   booking_amount: number;
 
   @IsNotEmpty()

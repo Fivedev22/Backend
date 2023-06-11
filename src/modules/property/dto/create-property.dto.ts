@@ -1,10 +1,9 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PropertyType } from 'src/shared/property_type/property_type.entity';
 import { Province } from 'src/shared/province/province.entity';
 import { AvailabilityStatus } from 'src/shared/availability_status/availability_status.entity';
 import { ActivityStatus } from 'src/shared/activity_status/activity_status.entity';
-import { Booking } from 'src/modules/booking/entities/booking.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePropertyDto {
@@ -38,6 +37,7 @@ export class CreatePropertyDto {
     street_number: string;
   
     @IsString()
+    @IsOptional()
     building_floor: string;
   
     @IsNotEmpty()
@@ -114,9 +114,6 @@ export class CreatePropertyDto {
     @ValidateNested()
     @Type(() => ActivityStatus)
     activity_status: ActivityStatus;
-  
-    //@IsNotEmpty()
-    //bookings: Booking[];
   
     @IsNotEmpty()
     @IsBoolean()
