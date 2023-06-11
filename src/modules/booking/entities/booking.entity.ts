@@ -88,7 +88,9 @@ export class Booking {
     check_out_hour: string;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10, 
+        scale: 2,
         name: 'starting_price',
     })
     starting_price: number;
@@ -96,14 +98,16 @@ export class Booking {
     @Column({
         type: 'decimal',
         name: 'discount',
-        precision: 10, // ajusta según tus necesidades
-        scale: 2, // ajusta según tus necesidades
+        precision: 10, 
+        scale: 2,
         nullable: true
     })
     discount: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'deposit_amount',
     })
     deposit_amount: number;
@@ -115,7 +119,9 @@ export class Booking {
     estimated_amount_deposit: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'booking_amount',
     })
     booking_amount: number;

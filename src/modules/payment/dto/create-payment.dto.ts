@@ -40,9 +40,9 @@ export class CreatePaymentDTO {
   @IsDateString()
   check_out_date: string;
 
-  @IsNotEmpty()
-  @IsInt()
-  @ApiProperty()
+  @ApiProperty({ type: 'number', minimum: 0 })
+  @IsNumber()
+  @Min(0)
   booking_starting_price: number;
 
   @ApiProperty({ type: 'number', minimum: 0, nullable: true })
@@ -51,18 +51,18 @@ export class CreatePaymentDTO {
   @Min(0)
   booking_discount?: number;
 
-  @IsInt()
+  @IsNumber()
   @Min(0)
   deposit_amount: number;
 
   @IsNotEmpty()
-  @IsInt()
-  @ApiProperty()
+  @IsNumber()
+  @ApiProperty({ type: 'number' })
   booking_amount: number;
 
   @ApiProperty({ type: 'number', minimum: 0, nullable: true })
   @IsOptional()
-  @IsInt()
+  @IsNumber()
   @Min(0)
   extra_expenses?: number;
 

@@ -56,7 +56,9 @@ export class Payment {
     check_out_date: string;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10, 
+        scale: 2,
         name: 'booking_starting_price',
     })
     booking_starting_price: number;
@@ -71,33 +73,43 @@ export class Payment {
     booking_discount: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'deposit_amount',
     })
     deposit_amount: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'booking_amount',
     })
     booking_amount: number;
 
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'extra_expenses',
         nullable: true
     })
     extra_expenses: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'payment_amount_subtotal',
     })
     payment_amount_subtotal: number;
 
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'payment_amount_total',
     })
     payment_amount_total: number;
