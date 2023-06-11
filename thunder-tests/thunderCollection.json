@@ -31,7 +31,7 @@
       },
       {
         "_id": "17331fe5-7bee-46b9-addb-6ce164316d66",
-        "name": "categories",
+        "name": "Properties",
         "containerId": "",
         "created": "2023-05-12T02:45:30.099Z",
         "sortNum": 140000,
@@ -72,7 +72,7 @@
         }
       ],
       "options": {
-        "baseUrl": "http://localhost:5432/"
+        "baseUrl": "http://localhost:3000/"
       }
     }
   }

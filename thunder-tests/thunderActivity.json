@@ -8599,246 +8599,6 @@
     "tests": []
   },
   {
-    "_id": "225206f6-afb8-43e4-a7ad-7369f29f5dc9",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/646582f079bc35cfe0032505",
-    "url": "/activities/646582f079bc35cfe0032505",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:31:28.418Z",
-    "modified": "2023-05-18T04:31:28.418Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "16f4897c-9dec-490a-a2c1-f0d8386c151c",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/64658448fccc22cba820f8f2",
-    "url": "/activities/64658448fccc22cba820f8f2",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:31:34.518Z",
-    "modified": "2023-05-18T04:31:34.518Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "7a0ee003-a8fa-415f-bdf3-4b69d569caae",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/64658502e3bdc5be2c4c6b0c",
-    "url": "/activities/64658502e3bdc5be2c4c6b0c",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:31:41.135Z",
-    "modified": "2023-05-18T04:31:41.135Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "ab76bfdc-de47-4877-bed1-8cadf178cef5",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6465858ce3bdc5be2c4c6b30",
-    "url": "/activities/6465858ce3bdc5be2c4c6b30",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:31:46.626Z",
-    "modified": "2023-05-18T04:31:46.626Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "a6d31961-b4da-4f70-bb75-0da5defed7d6",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/64658620de702cc9c886fa04",
-    "url": "/activities/64658620de702cc9c886fa04",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:31:52.552Z",
-    "modified": "2023-05-18T04:31:52.552Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "643d15d6-7a3e-4216-82cf-851875de9372",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6465884b2b41e2bda80a1e22",
-    "url": "/activities/6465884b2b41e2bda80a1e22",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:31:59.161Z",
-    "modified": "2023-05-18T04:31:59.161Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "06802287-ab00-416b-b7f4-74ce915ffd94",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/646588847a51b3d0686619c8",
-    "url": "/activities/646588847a51b3d0686619c8",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:32:05.991Z",
-    "modified": "2023-05-18T04:32:05.991Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "264511c0-db02-47fe-8c30-3d27141b93dc",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/646588f17a51b3d0686619ce",
-    "url": "/activities/646588f17a51b3d0686619ce",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:32:11.590Z",
-    "modified": "2023-05-18T04:32:11.590Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "61c0bb58-8258-46fd-82e9-547508a1e775",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/64658988775b31c19cc65d13",
-    "url": "/activities/64658988775b31c19cc65d13",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:32:18.410Z",
-    "modified": "2023-05-18T04:32:18.410Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "02beeb20-10cc-4cf0-86bc-c7433497233b",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/64658d0f226c80cf2493815c",
-    "url": "/activities/64658d0f226c80cf2493815c",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:32:24.398Z",
-    "modified": "2023-05-18T04:32:24.398Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "26e263e5-03c2-4ae8-afc4-f0f688ef83e6",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/64658e087610d7b5b8d62a1f",
-    "url": "/activities/64658e087610d7b5b8d62a1f",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T04:32:30.913Z",
-    "modified": "2023-05-18T04:32:30.913Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "fb8d6a4a-a1d2-445c-9764-8d6611f16745",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities?_filters={\"employee\":\"6463a46f8e9ae9951c837f94\"}",
-    "url": "/activities?_filters={\"employee\":\"6463a46f8e9ae9951c837f94\"}",
-    "method": "GET",
-    "sortNum": 0,
-    "created": "2023-05-18T11:54:51.576Z",
-    "modified": "2023-05-18T11:54:51.576Z",
-    "headers": [],
-    "params": [
-      {
-        "name": "_populates",
-        "value": "[ {[\"stage\":{\"name\":\"v\"}]} , \"employee\"]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_filters",
-        "value": "{\"employee\":\"6463a46f8e9ae9951c837f94\"} ",
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "{\"id\":1}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "[[\"start_date\", \"1\"]]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_filters",
-        "value": "{\"startDate\":{\"$gte\":\"2023-05-22T03:00:00.000Z\",\"$lte\":\"2023-05-26T02:59:59.999Z\"}}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_filters",
-        "value": "{\"id\":1}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_populates",
-        "value": "[\"employee\", \"stage\" ]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_page",
-        "value": "0",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_perPage",
-        "value": "20\"",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "{\"updatedAt\":-1}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_populates",
-        "value": "[\"stage\",\"employee\"]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "{\"updatedAt\":-1}%26_populates=[\"stage\",\"employee\"]",
-        "isDisabled": true,
-        "isPath": false
-      }
-    ],
-    "tests": []
-  },
-  {
     "_id": "052243c5-a331-4320-bd05-483fb7dd2640",
     "colId": "history",
     "containerId": "",
@@ -8877,218 +8637,6 @@
         "name": "_filters",
         "value": "{\"startDate\":{\"$gte\":\"2023-05-20T03:00:00.000Z\",\"$lte\":\"2023-05-26T02:59:59.999Z\"}}",
         "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_filters",
-        "value": "{\"id\":1}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_populates",
-        "value": "[\"employee\", \"stage\" ]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_page",
-        "value": "0",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_perPage",
-        "value": "20\"",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "{\"updatedAt\":-1}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_populates",
-        "value": "[\"stage\",\"employee\"]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "{\"updatedAt\":-1}%26_populates=[\"stage\",\"employee\"]",
-        "isDisabled": true,
-        "isPath": false
-      }
-    ],
-    "tests": []
-  },
-  {
-    "_id": "eed0ad49-267b-4707-b3bc-9f4f1ef1ceb1",
-    "colId": "history",
-    "containerId": "",
-    "name": "/employees/6465ab345426f4381cd5841b",
-    "url": "/employees/6465ab345426f4381cd5841b",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:55:47.627Z",
-    "modified": "2023-05-18T11:55:47.627Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "3188c8c5-9afb-4f0c-9615-d6240ee56ced",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6465b01c29eaccab64bbd0fb",
-    "url": "/activities/6465b01c29eaccab64bbd0fb",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:56:10.268Z",
-    "modified": "2023-05-18T11:56:10.268Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "6ff90a20-e2f2-4ee0-84f2-06d6b66cf43a",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6465b02a29eaccab64bbd101",
-    "url": "/activities/6465b02a29eaccab64bbd101",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:56:18.249Z",
-    "modified": "2023-05-18T11:56:18.249Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "f5102b18-a7e2-446e-8e99-e4a670cf6e98",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6465b08474e759b8ecbee6cf",
-    "url": "/activities/6465b08474e759b8ecbee6cf",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:56:25.290Z",
-    "modified": "2023-05-18T11:56:25.290Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "fd7d7fad-56e3-4875-a0b5-aca7be963d2e",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/646610a1e32d2dafa063127a",
-    "url": "/activities/646610a1e32d2dafa063127a",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:56:31.319Z",
-    "modified": "2023-05-18T11:56:31.319Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "79b8985f-2368-4f5b-9117-20b1145056c0",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6466110d52c3aedb68be2171",
-    "url": "/activities/6466110d52c3aedb68be2171",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:56:37.617Z",
-    "modified": "2023-05-18T11:56:37.617Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "f4e51e8d-646d-4d52-ad3e-721228d782d3",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/646611da12b347af942425f8",
-    "url": "/activities/646611da12b347af942425f8",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:56:43.126Z",
-    "modified": "2023-05-18T11:56:43.126Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "c04e204d-4622-4fcc-a139-9eb5ecd727c1",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6466129a12b347af94242630",
-    "url": "/activities/6466129a12b347af94242630",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:58:07.705Z",
-    "modified": "2023-05-18T11:58:07.705Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "3fb57745-6185-4dc4-86db-7817c44aad53",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities/6466128b12b347af9424262a",
-    "url": "/activities/6466128b12b347af9424262a",
-    "method": "DELETE",
-    "sortNum": 0,
-    "created": "2023-05-18T11:58:15.662Z",
-    "modified": "2023-05-18T11:58:15.662Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "a1f69408-3f36-4cfb-b042-9890cc0a5128",
-    "colId": "history",
-    "containerId": "",
-    "name": "/activities?_filters={\"startDate\":{\"$gte\":\"2023-05-22T03:00:00.000Z\",\"$lte\":\"2023-05-26T02:59:59.999Z\"}}",
-    "url": "/activities?_filters={\"startDate\":{\"$gte\":\"2023-05-22T03:00:00.000Z\",\"$lte\":\"2023-05-26T02:59:59.999Z\"}}",
-    "method": "GET",
-    "sortNum": 0,
-    "created": "2023-05-18T13:28:03.619Z",
-    "modified": "2023-05-18T13:28:03.619Z",
-    "headers": [],
-    "params": [
-      {
-        "name": "_populates",
-        "value": "[ {[\"stage\":{\"name\":\"v\"}]} , \"employee\"]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_filters",
-        "value": "{\"employee\":\"6463a6b38e9ae9951c837fea\"} ",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "{\"id\":1}",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_sort",
-        "value": "[[\"start_date\", \"1\"]]",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "_filters",
-        "value": "{\"startDate\":{\"$gte\":\"2023-05-22T03:00:00.000Z\",\"$lte\":\"2023-05-26T02:59:59.999Z\"}}",
         "isPath": false
       },
       {
@@ -12350,5 +11898,101 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "15243144-7dc1-4b78-9d46-482a1c3ff130",
+    "colId": "history",
+    "containerId": "",
+    "name": "/property",
+    "url": "/property",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-06-11T17:37:27.152Z",
+    "modified": "2023-06-11T17:45:31.153Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n\n  \"reference_number\": 123,\n  \"property_name\": \"La Soñada\",\n  \"property_type\": 1,\n  \"square_meter\": \"25\",\n  \"street\": \"Liniers\",\n  \"street_number\": \"23\",\n  \"province\": 1,\n  \"town\": \"Alta Gracia\",\n  \"district\": \"Santa Maria\",\n  \"daily_rent\": false,\n  \"monthly_rent\": true,\n  \"annual_rent\": true,\n  \"rooms_number\": 3,\n  \"bathrooms_number\": 1,\n  \"internet\": true,\n  \"pool\": false,\n  \"kitchen\": true,\n  \"laundry_equipment\": true,\n  \"yard\": false,\n  \"parking\": true,\n  \"disabled_access\": false,\n  \"kids_beds\": true,\n  \"availability_status\": 1,\n  \"activity_status\": 1,\n  \"is_active\": true\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "set-env-var",
+        "custom": "json.data.refreshTokenasd",
+        "action": "setto",
+        "value": "{{RefreshToken}}"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.data.accessTokenghfj",
+        "action": "setto",
+        "value": "{{AccessToken}}"
+      }
+    ]
+  },
+  {
+    "_id": "bf0f8538-b5b3-4ec0-af3b-b5735323b769",
+    "colId": "history",
+    "containerId": "",
+    "name": "property",
+    "url": "property",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-06-11T17:37:34.993Z",
+    "modified": "2023-06-11T17:37:34.993Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"name\": \"Departamento\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "set-env-var",
+        "custom": "json.data.refreshTokenasd",
+        "action": "setto",
+        "value": "{{RefreshToken}}"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.data.accessTokenghfj",
+        "action": "setto",
+        "value": "{{AccessToken}}"
+      }
+    ]
+  },
+  {
+    "_id": "28355567-7245-4f1e-b08e-3bd332458dc3",
+    "colId": "history",
+    "containerId": "",
+    "name": "property/create",
+    "url": "property/create",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2023-06-11T17:38:04.240Z",
+    "modified": "2023-06-11T17:45:42.821Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n\n  \"reference_number\": 123,\n  \"property_name\": \"La Soñada\",\n  \"property_type\": 1,\n  \"square_meter\": \"25\",\n  \"street\": \"Liniers\",\n  \"street_number\": \"23\",\n  \"province\": 1,\n  \"town\": \"Alta Gracia\",\n  \"district\": \"Santa Maria\",\n  \"daily_rent\": false,\n  \"monthly_rent\": true,\n  \"annual_rent\": true,\n  \"rooms_number\": 3,\n  \"bathrooms_number\": 1,\n  \"internet\": true,\n  \"pool\": false,\n  \"kitchen\": true,\n  \"laundry_equipment\": true,\n  \"yard\": false,\n  \"parking\": true,\n  \"disabled_access\": false,\n  \"kids_beds\": true,\n  \"availability_status\": 1,\n  \"activity_status\": 1,\n  \"is_active\": true\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "set-env-var",
+        "custom": "json.data.refreshTokenasd",
+        "action": "setto",
+        "value": "{{RefreshToken}}"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.data.accessTokenghfj",
+        "action": "setto",
+        "value": "{{AccessToken}}"
+      }
+    ]
   }
 ]

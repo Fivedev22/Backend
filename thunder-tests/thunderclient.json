@@ -645,16 +645,16 @@
     "colId": "8c9fc5ca-16ca-4c1d-b1c6-7ca5a053b56f",
     "containerId": "17331fe5-7bee-46b9-addb-6ce164316d66",
     "name": "Create",
-    "url": "/categories",
+    "url": "property/create",
     "method": "POST",
     "sortNum": 18750,
     "created": "2023-05-12T02:45:30.102Z",
-    "modified": "2023-05-22T14:41:51.516Z",
+    "modified": "2023-06-11T17:45:42.766Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Cafeteria\"\n}",
+      "raw": "{\n\n  \"reference_number\": 123,\n  \"property_name\": \"La Soñada\",\n  \"property_type\": 1,\n  \"square_meter\": \"25\",\n  \"street\": \"Liniers\",\n  \"street_number\": \"23\",\n  \"province\": 1,\n  \"town\": \"Alta Gracia\",\n  \"district\": \"Santa Maria\",\n  \"daily_rent\": false,\n  \"monthly_rent\": true,\n  \"annual_rent\": true,\n  \"rooms_number\": 3,\n  \"bathrooms_number\": 1,\n  \"internet\": true,\n  \"pool\": false,\n  \"kitchen\": true,\n  \"laundry_equipment\": true,\n  \"yard\": false,\n  \"parking\": true,\n  \"disabled_access\": false,\n  \"kids_beds\": true,\n  \"availability_status\": 1,\n  \"activity_status\": 1,\n  \"is_active\": true\n}",
       "form": []
     },
     "tests": [
@@ -704,5 +704,37 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "558a8885-66f7-4a3e-a30e-2faa802ea3a4",
+    "colId": "8c9fc5ca-16ca-4c1d-b1c6-7ca5a053b56f",
+    "containerId": "17331fe5-7bee-46b9-addb-6ce164316d66",
+    "name": "Create Type Property",
+    "url": "property/create",
+    "method": "POST",
+    "sortNum": 29375,
+    "created": "2023-06-11T17:33:11.731Z",
+    "modified": "2023-06-11T17:38:04.454Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"name\": \"Departamento\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "set-env-var",
+        "custom": "json.data.refreshTokenasd",
+        "action": "setto",
+        "value": "{{RefreshToken}}"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.data.accessTokenghfj",
+        "action": "setto",
+        "value": "{{AccessToken}}"
+      }
+    ]
   }
 ]
