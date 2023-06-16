@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { IsBoolean, IsDateString, IsInt, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, Min, MinLength } from 'class-validator';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
 import { Client } from 'src/modules/client/client.entity';
 import { Property } from 'src/modules/property/entities/property.entity';
@@ -40,39 +40,41 @@ export class CreatePaymentDTO {
   @IsDateString()
   check_out_date: string;
 
-  @ApiProperty({ type: 'number', minimum: 0 })
-  @IsNumber()
-  @Min(0)
-  booking_starting_price: number;
+  @ApiProperty({ type: 'string'})
+  @IsNumberString()
+  @MinLength(1)
+  booking_starting_price: string;
 
-  @ApiProperty({ type: 'number', minimum: 0, nullable: true })
+  @ApiProperty({ type: 'string', nullable: true })
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  booking_discount?: number;
+  @IsNumberString()
+  @MinLength(1)
+  booking_discount?: string;
 
-  @IsNumber()
-  @Min(0)
-  deposit_amount: number;
+  @IsNumberString()
+  @MinLength(1)
+  deposit_amount: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  @ApiProperty({ type: 'number' })
-  booking_amount: number;
+  @IsNumberString()
+  @ApiProperty({ type: 'string' })
+  booking_amount: string;
 
-  @ApiProperty({ type: 'number', minimum: 0, nullable: true })
+  @ApiProperty({ type: 'string', nullable: true })
   @IsOptional()
-  @IsNumber()
-  @Min(0)
-  extra_expenses?: number;
+  @IsNumberString()
+  @MinLength(1)
+  extra_expenses?: string;
 
-  @ApiProperty({ example: 110 })
-  @IsNumber()
-  payment_amount_subtotal: number;
+  @ApiProperty({ example: '110' })
+  @IsNumberString()
+  @MinLength(1)
+  payment_amount_subtotal: string;
 
-  @ApiProperty({ example: 120 })
-  @IsNumber()
-  payment_amount_total: number;
+  @ApiProperty({ example: '120' })
+  @IsNumberString()
+  @MinLength(1)
+  payment_amount_total: string;
 
   @ApiProperty({ type: PaymentType })
   @Type(() => PaymentType)

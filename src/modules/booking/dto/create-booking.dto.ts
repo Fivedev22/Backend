@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { IsBoolean, IsDateString, IsInt, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, Min, MinLength } from 'class-validator';
 import { BookingType } from '../../../shared/booking_type/booking_type.entity';
 import { Booking_Origin } from '../../../shared/booking_origin/origin.entity';
 import { Client } from '../../client/client.entity';
@@ -65,30 +65,30 @@ export class CreateBookingDto {
   @IsNotEmpty()
   check_out_hour: string;
 
-  @ApiProperty({ type: 'number', minimum: 0 })
-  @IsNumber()
-  @Min(0)
-  starting_price: number;
-
-  @ApiProperty({ type: 'number', minimum: 0, nullable: true })
+  @ApiProperty({ type: 'string'})
+  @IsNumberString()
+  @MinLength(0)
+  starting_price: string;
+  
+  @ApiProperty({ type: 'string', nullable: true })
   @IsOptional()
-  @IsInt()
-  @Min(0)
-  discount: number;
-
-  @IsNumber()
-  @Min(0)
-  deposit_amount: number;
-
-  @ApiProperty({ type: 'integer', minimum: 0 })
-  @IsInt()
-  @Min(0)
-  estimated_amount_deposit: number;
-
+  @IsNumberString()
+  @MinLength(0)
+  discount: string;
+  
+  @IsNumberString()
+  @MinLength(0)
+  deposit_amount: string;
+  
+  @ApiProperty({ type: 'string'})
+  @IsNumberString()
+  @MinLength(0)
+  estimated_amount_deposit: string;
+  
   @IsNotEmpty()
-  @IsNumber()
-  @ApiProperty({ type: 'number' })
-  booking_amount: number;
+  @IsNumberString()
+  @ApiProperty({ type: 'string' })
+  booking_amount: string;
 
   @IsNotEmpty()
   @IsBoolean()

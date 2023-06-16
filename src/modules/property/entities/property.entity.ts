@@ -79,24 +79,6 @@ export class Property {
     district: string;
     // puse district para barrio//
 
-    @Column('bool',{
-        name: 'daily_rent',
-        default: false,
-    })
-    daily_rent: boolean
-
-    @Column('bool',{
-        name: 'monthly_rent',
-        default: false,
-    })
-    monthly_rent: boolean
-
-    @Column('bool',{
-        name: 'annual_rent',
-        default: false,
-    })
-    annual_rent: boolean
-
     @Column('int', {
         name: 'rooms_number',
     })

@@ -54,18 +54,6 @@ export class CreatePropertyDto {
     district: string;
   
     @IsNotEmpty()
-    @IsBoolean()
-    daily_rent: boolean;
-  
-    @IsNotEmpty()
-    @IsBoolean()
-    monthly_rent: boolean;
-  
-    @IsNotEmpty()
-    @IsBoolean()
-    annual_rent: boolean;
-  
-    @IsNotEmpty()
     @IsInt()
     rooms_number: number;
   

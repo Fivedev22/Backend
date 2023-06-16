@@ -93,8 +93,8 @@ export class Booking {
         scale: 2,
         name: 'starting_price',
     })
-    starting_price: number;
-
+    starting_price: string;
+    
     @Column({
         type: 'decimal',
         name: 'discount',
@@ -102,29 +102,31 @@ export class Booking {
         scale: 2,
         nullable: true
     })
-    discount: number;
-
+    discount: string;
+    
     @Column({
         type: 'decimal',
         precision: 10,
         scale: 2,
         name: 'deposit_amount',
     })
-    deposit_amount: number;
-
+    deposit_amount: string;
+    
     @Column({
-        type: 'int',
+        type: 'decimal',
+        precision: 10,
+        scale: 2,
         name: 'estimated_amount_deposit',
     })
-    estimated_amount_deposit: number;
-
+    estimated_amount_deposit: string;    
+    
     @Column({
         type: 'decimal',
         precision: 10,
         scale: 2,
         name: 'booking_amount',
     })
-    booking_amount: number;
+    booking_amount: string;
     
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
