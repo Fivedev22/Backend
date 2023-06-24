@@ -16,4 +16,5 @@ export class AvailabilityStatusController {
     findOne(@Param('id', ParseIntPipe) id: number) {
         return this.availabilityStatusService.findOne(+id);
     }
+    
 }

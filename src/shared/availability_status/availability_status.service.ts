@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { AvailabilityStatus } from './availability_status.entity';
 
 @Injectable()
@@ -18,9 +18,9 @@ export class AvailabilityStatusService {
       }
     
       async findOne(id: number) {
-        const gender_type = await this.availabilityStatusRepository.findOne({
+        const availability_status = await this.availabilityStatusRepository.findOne({
           relations: ['properties'],  
           where: { id } });
-        return gender_type;
-      }
+        return availability_status;
+      }      
 }
