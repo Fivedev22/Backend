@@ -235,5 +235,23 @@ export class PropertyService {
         .set(activityStatusId);
     }
   }
+
+  public async findPropertiesWithAvailabilityLibre() {
+    const properties = await this.propertyRepository.find({
+      relations: [
+        'property_type',
+        'province',
+        'availability_status',
+        'activity_status',
+        'bookings',
+        'payments',
+        'images',
+      ],
+      where: { availability_status: { id: 1 } },
+      order: { id_property: 'ASC' },
+    });
+
+    return properties;
+  }
   
 }

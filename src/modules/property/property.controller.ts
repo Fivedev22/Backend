@@ -251,10 +251,11 @@ export class PropertyController {
       return { message: 'Activity status updated successfully' };
     }
 
-    
+    @Get('availability/libre')
+    async getPropertiesWithAvailabilityLibre() {
+      return this.propertyService.findPropertiesWithAvailabilityLibre();
+    }
 
-    
-  
 }
     
 
