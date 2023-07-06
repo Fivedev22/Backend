@@ -5,6 +5,8 @@ import { Booking_Origin } from "../../../shared/booking_origin/origin.entity";
 import { Property } from "src/modules/property/entities/property.entity";
 import { Payment } from "src/modules/payment/entities/payment.entity";
 import { Contract } from "./contract.entity";
+import { PaymentType } from "src/shared/payment_type/payment_type.entity";
+import { Car } from "./car.entity";
 
 
 @Entity({
@@ -131,6 +133,12 @@ export class Booking {
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
     // el is_active es para archivar y desarchivar el cobro
+
+    @ManyToOne(() => PaymentType, (payment_type) => payment_type.bookings)
+    payment_type: PaymentType
+
+    @OneToMany(() => Car, car => car.booking, { cascade: true })
+    cars: Car[];
 
     @OneToMany(() => Payment, (payment) => payment.booking)
     payments: Payment[];

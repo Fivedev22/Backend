@@ -5,6 +5,8 @@ import { BookingType } from '../../../shared/booking_type/booking_type.entity';
 import { Booking_Origin } from '../../../shared/booking_origin/origin.entity';
 import { Client } from '../../client/client.entity';
 import { Property } from '../../property/entities/property.entity';
+import { PaymentType } from 'src/shared/payment_type/payment_type.entity';
+import { Car } from '../entities/car.entity';
 
 export class CreateBookingDto {
   @ApiProperty({ type: 'integer' })
@@ -47,6 +49,10 @@ export class CreateBookingDto {
   @IsInt()
   pets_number: number;
 
+  @ApiProperty({ type: [Car]})
+  @Type(() => Car)
+  cars: Car[];
+
   @ApiProperty({ type: 'Date', format: 'date' })
   @IsDateString()
   check_in_date: Date;
@@ -69,7 +75,12 @@ export class CreateBookingDto {
   @IsNumberString()
   @MinLength(0)
   starting_price: string;
-  
+
+  @ApiProperty({ type: 'string'})
+  @IsNumberString()
+  @MinLength(0)
+  estimated_amount_deposit: string;
+
   @ApiProperty({ type: 'string', nullable: true })
   @IsOptional()
   @IsNumberString()
@@ -77,13 +88,12 @@ export class CreateBookingDto {
   discount: string;
   
   @IsNumberString()
-  @MinLength(0)
+  @MinLength(1)
   deposit_amount: string;
-  
-  @ApiProperty({ type: 'string'})
-  @IsNumberString()
-  @MinLength(0)
-  estimated_amount_deposit: string;
+
+  @ApiProperty({ type: PaymentType })
+  @Type(() => PaymentType)
+  payment_type: PaymentType;
   
   @IsNotEmpty()
   @IsNumberString()
