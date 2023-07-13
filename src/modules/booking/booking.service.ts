@@ -4,27 +4,24 @@ import { Repository } from 'typeorm';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
 import { CreateBookingDto, UpdateBookingDto } from './dto';
 import * as moment from 'moment'
-import { Car } from './entities/car.entity';
 
 @Injectable()
 export class BookingService {
     constructor(
         @InjectRepository(Booking)
-        private readonly bookingRepository: Repository<Booking>,
-        @InjectRepository(Car)
-        private readonly carRepository: Repository<Car>
+        private readonly bookingRepository: Repository<Booking>
     ) {}
 
     async findByBookingNumber(booking_number: number) {
       const numberFound = await this.bookingRepository.findOne({
-        relations: ['booking_type', 'booking_origin', 'client', 'property','cars'], 
+        relations: ['booking_type', 'booking_origin', 'client', 'property'], 
         where: { booking_number: booking_number } });
       return numberFound;
     }
 
     public async findAllBookings() {
         const bookings = await this.bookingRepository.find({
-          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type','cars'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {is_active: true},
           order: { id_booking: 'ASC'}
         });
@@ -33,7 +30,7 @@ export class BookingService {
 
       public async findAllBookingsArchived() {
         const bookings = await this.bookingRepository.find({
-          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type','cars'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {is_active: false},
           order: { id_booking: 'ASC'}
         });
@@ -42,7 +39,7 @@ export class BookingService {
     
       public async findOneBooking(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type','cars'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {
             id_booking: id_booking,
             is_active: true
@@ -52,7 +49,7 @@ export class BookingService {
 
       public async findOneBookingArchived(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type','cars'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {
             id_booking: id_booking,
             is_active: false
@@ -92,36 +89,15 @@ export class BookingService {
       } 
           
       public async updateBooking(id_booking: number, updateBookingDto: UpdateBookingDto) {
-        const booking = await this.findOneBooking(id_booking);
-        if (!booking) {
-          throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
-        }
-      
+        if (!await this.findOneBooking(id_booking)) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
+        const booking = await this.bookingRepository.preload({ id_booking, ...updateBookingDto});
         try {
-          // Actualizar los datos de la reserva
-          Object.assign(booking, updateBookingDto);
-          await this.bookingRepository.save(booking);
-      
-          // Actualizar los autos asociados a la reserva
-          for (const carData of updateBookingDto.cars) {
-            const carId = carData.id;
-            const car = await this.carRepository.findOne({where: {id:carId}});
-      
-            if (car) {
-              car.brand = carData.brand;
-              car.model = carData.model;
-              car.licensePlate = carData.licensePlate;
-              await this.carRepository.save(car);
-            }
-          }
+          await this.bookingRepository.update(id_booking, booking);
         } catch (error) {
-          console.log(error);
-          throw new HttpException('A problem occurred while updating the booking', HttpStatus.INTERNAL_SERVER_ERROR);
+          throw new HttpException('A problem occurred while updating the booking', HttpStatus.NOT_FOUND);
         }
       }
-      
-      
-    
+          
       public async removeBooking(id_booking: number) {
         if (!await this.findOneBookingArchived(id_booking)) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
         try {

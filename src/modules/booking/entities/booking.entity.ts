@@ -6,7 +6,6 @@ import { Property } from "src/modules/property/entities/property.entity";
 import { Payment } from "src/modules/payment/entities/payment.entity";
 import { Contract } from "./contract.entity";
 import { PaymentType } from "src/shared/payment_type/payment_type.entity";
-import { Car } from "./car.entity";
 
 
 @Entity({
@@ -46,25 +45,6 @@ export class Booking {
     @ManyToOne(() => Property, (property) => property.bookings)
     property: Property
 
-    @Column({
-        type: 'int',
-        name: 'adults_number',
-    })
-    adults_number: number;
-
-    @Column({
-        type: 'int',
-        name: 'kids_number',
-    })
-    kids_number: number;
-
-    @Column({
-        type: 'int',
-        name: 'pets_number',
-        nullable: true
-    })
-    pets_number: number;
-
     @Column({ 
         type: 'date',
         name: 'check_in_date',
@@ -88,6 +68,46 @@ export class Booking {
         name: 'check_out_hour',
     })
     check_out_hour: string;
+
+    @Column({
+        type: 'int',
+        name: 'adults_number',
+    })
+    adults_number: number;
+
+    @Column({
+        type: 'int',
+        name: 'kids_number',
+    })
+    kids_number: number;
+
+    @Column({
+        type: 'int',
+        name: 'pets_number',
+        nullable: true
+    })
+    pets_number: number;
+
+    @Column({ 
+        type: 'varchar',
+        name: 'brand',
+        nullable: true,
+    })
+    brand: string;
+
+    @Column({ 
+        type: 'varchar',
+        name: 'model',
+        nullable: true,
+    })
+    model: string;
+
+    @Column({ 
+        type: 'varchar',
+        name: 'licensePlate',
+        nullable: true,
+    })
+    licensePlate: string;
 
     @Column({
         type: 'decimal',
@@ -136,9 +156,6 @@ export class Booking {
 
     @ManyToOne(() => PaymentType, (payment_type) => payment_type.bookings)
     payment_type: PaymentType
-
-    @OneToMany(() => Car, car => car.booking, { cascade: true })
-    cars: Car[];
 
     @OneToMany(() => Payment, (payment) => payment.booking)
     payments: Payment[];

@@ -6,7 +6,6 @@ import { Booking_Origin } from '../../../shared/booking_origin/origin.entity';
 import { Client } from '../../client/client.entity';
 import { Property } from '../../property/entities/property.entity';
 import { PaymentType } from 'src/shared/payment_type/payment_type.entity';
-import { Car } from '../entities/car.entity';
 
 export class CreateBookingDto {
   @ApiProperty({ type: 'integer' })
@@ -35,24 +34,6 @@ export class CreateBookingDto {
   @Type(() => Property)
   property: Property;
 
-  @ApiProperty({ type: 'integer', minimum: 1 })
-  @IsInt()
-  @Min(1)
-  adults_number: number;
-
-  @ApiProperty({ type: 'integer', minimum: 0 })
-  @IsInt()
-  @Min(0)
-  kids_number: number;
-
-  @ApiProperty({ type: 'integer', nullable: true })
-  @IsInt()
-  pets_number: number;
-
-  @ApiProperty({ type: [Car]})
-  @Type(() => Car)
-  cars: Car[];
-
   @ApiProperty({ type: 'Date', format: 'date' })
   @IsDateString()
   check_in_date: Date;
@@ -70,6 +51,29 @@ export class CreateBookingDto {
   @IsString()
   @IsNotEmpty()
   check_out_hour: string;
+
+  @ApiProperty({ type: 'integer', minimum: 1 })
+  @IsInt()
+  @Min(1)
+  adults_number: number;
+
+  @ApiProperty({ type: 'integer', minimum: 0 })
+  @IsInt()
+  @Min(0)
+  kids_number: number;
+
+  @ApiProperty({ type: 'integer', nullable: true })
+  @IsInt()
+  pets_number: number;
+
+  @ApiProperty({ type: 'varchar', nullable: true })
+  brand: string;
+
+  @ApiProperty({ type: 'varchar', nullable: true })
+  model: string;
+
+  @ApiProperty({ type: 'varchar', nullable: true })
+  licensePlate: string;
 
   @ApiProperty({ type: 'string'})
   @IsNumberString()
