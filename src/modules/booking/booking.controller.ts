@@ -167,6 +167,12 @@ export class BookingController {
       return { message: 'Contract deleted successfully' };
     }
 
+
+    @Patch('/updateIsPaid/:id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    updateIsPaid(@Param('id', ParseIntPipe) id_booking: number) {
+        return this.bookingService.UpdateIsPaid(+id_booking);
+    }
     
 }
 

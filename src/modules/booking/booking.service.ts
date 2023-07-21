@@ -177,6 +177,20 @@ export class BookingService {
       return occupiedDatesArray;
     }
 
+    async UpdateIsPaid(id_booking: number) {
+      const booking = await this.bookingRepository.findOne({
+        where: { id_booking: id_booking}
+      });
+      if (!booking) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
+      try {
+        booking.is_paid = true;
+        await this.bookingRepository.update(id_booking, booking);
+      } catch {
+        throw new HttpException('A problem occurred while archiving the booking', HttpStatus.NOT_FOUND);
+      }
+    }
+
+
   }
 
 

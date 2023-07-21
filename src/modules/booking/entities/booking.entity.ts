@@ -152,8 +152,16 @@ export class Booking {
     
     @Column({ type: 'boolean', name: 'is_active', default: true, nullable: false })
     is_active: boolean
-    // el is_active es para archivar y desarchivar el cobro
 
+    
+    @Column({
+        type: 'boolean',
+        name: 'is_paid',
+        nullable: true,
+        default: false
+    })
+    is_paid: boolean;    
+    
     @ManyToOne(() => PaymentType, (payment_type) => payment_type.bookings)
     payment_type: PaymentType
 

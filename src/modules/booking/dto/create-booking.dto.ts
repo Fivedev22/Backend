@@ -109,4 +109,9 @@ export class CreateBookingDto {
   @ApiProperty()
   is_active: boolean;
 
+  @IsNotEmpty()
+  @IsBoolean()
+  @ApiProperty()
+  is_paid: boolean;
+
 }

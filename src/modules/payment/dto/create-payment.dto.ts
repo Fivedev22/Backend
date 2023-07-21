@@ -66,11 +66,6 @@ export class CreatePaymentDTO {
   @MinLength(1)
   extra_expenses?: string;
 
-  @ApiProperty({ example: '110' })
-  @IsNumberString()
-  @MinLength(1)
-  payment_amount_subtotal: string;
-
   @ApiProperty({ example: '120' })
   @IsNumberString()
   @MinLength(1)

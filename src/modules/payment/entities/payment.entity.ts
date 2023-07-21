@@ -101,14 +101,6 @@ export class Payment {
         type: 'decimal',
         precision: 10,
         scale: 2,
-        name: 'payment_amount_subtotal',
-    })
-    payment_amount_subtotal: string;
-    
-    @Column({
-        type: 'decimal',
-        precision: 10,
-        scale: 2,
         name: 'payment_amount_total',
     })
     payment_amount_total: string;    

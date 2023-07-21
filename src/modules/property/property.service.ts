@@ -209,6 +209,7 @@ export class PropertyService {
   public async updateActivityStatus() {
     const properties = await this.propertyRepository.find({
       relations: ['bookings', 'activity_status'],
+      where: { is_active: true}
     });
   
     const currentDate = new Date();
