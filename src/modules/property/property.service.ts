@@ -219,6 +219,7 @@ export class PropertyService {
   
       for (const booking of property.bookings) {
         if (
+          booking.is_active &&                 
           currentDate >= new Date(booking.check_in_date) &&
           currentDate <= new Date(booking.check_out_date)
         ) {
