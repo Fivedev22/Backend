@@ -10,6 +10,7 @@ import {
 import { UserService } from 'src/modules/user/user.service';
 import { v4 } from 'uuid';
 import { transporter } from 'src/config/nodemailer';
+import { transporterGmail } from 'src/config/send_email';
 
 @Injectable()
 export class AuthService {
@@ -48,7 +49,7 @@ export class AuthService {
           `,
     };
     try {
-      await transporter.sendMail(message);
+      await transporterGmail.sendMail(message);
       await this.userService.addResetToken(email, resetToken);
       return { resetToken };
     } catch {
