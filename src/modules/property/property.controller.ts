@@ -245,7 +245,17 @@ export class PropertyController {
         return this.propertyService.GetLastNumber();
     }
 
-  
+    @Post('update-activity-status')
+    async updateActivityStatus() {
+      await this.propertyService.updateActivityStatus();
+      return { message: 'Activity status updated successfully' };
+    }
+
+    @Get('availability/libre')
+    async getPropertiesWithAvailabilityLibre() {
+      return this.propertyService.findPropertiesWithAvailabilityLibre();
+    }
+
 }
     
 

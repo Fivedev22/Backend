@@ -1,3 +1,4 @@
+import { Booking } from "src/modules/booking/entities/booking.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Payment } from "../../modules/payment/entities/payment.entity";
 
@@ -20,4 +21,7 @@ export class PaymentType {
 
     @OneToMany(() => Payment, (payment) => payment.payment_type)
     payments: Payment[]
+
+    @OneToMany(() => Booking, (booking) => booking.payment_type)
+    bookings: Booking[]
 }

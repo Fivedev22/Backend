@@ -57,38 +57,37 @@ export class Payment {
 
     @Column({
         type: 'decimal',
-        precision: 10, 
+        precision: 10,
         scale: 2,
         name: 'booking_starting_price',
     })
-    booking_starting_price: number;
-
+    booking_starting_price: string;
+    
     @Column({
         type: 'decimal',
         name: 'booking_discount',
-        precision: 10, // ajusta según tus necesidades
-        scale: 2, // ajusta según tus necesidades
+        precision: 10,
+        scale: 2,
         nullable: true
     })
-    booking_discount: number;
-
+    booking_discount: string;
+    
     @Column({
         type: 'decimal',
         precision: 10,
         scale: 2,
         name: 'deposit_amount',
     })
-    deposit_amount: number;
-
+    deposit_amount: string;
+    
     @Column({
         type: 'decimal',
         precision: 10,
         scale: 2,
         name: 'booking_amount',
     })
-    booking_amount: number;
-
-
+    booking_amount: string;
+    
     @Column({
         type: 'decimal',
         precision: 10,
@@ -96,23 +95,15 @@ export class Payment {
         name: 'extra_expenses',
         nullable: true
     })
-    extra_expenses: number;
-
-    @Column({
-        type: 'decimal',
-        precision: 10,
-        scale: 2,
-        name: 'payment_amount_subtotal',
-    })
-    payment_amount_subtotal: number;
-
+    extra_expenses: string;
+    
     @Column({
         type: 'decimal',
         precision: 10,
         scale: 2,
         name: 'payment_amount_total',
     })
-    payment_amount_total: number;
+    payment_amount_total: string;    
 
     @ManyToOne(() => PaymentType, (payment_type) => payment_type.payments)
     payment_type: PaymentType

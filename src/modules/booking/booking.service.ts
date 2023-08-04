@@ -1,6 +1,6 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Booking } from 'src/modules/booking/entities/booking.entity';
 import { CreateBookingDto, UpdateBookingDto } from './dto';
 import * as moment from 'moment'
@@ -9,7 +9,7 @@ import * as moment from 'moment'
 export class BookingService {
     constructor(
         @InjectRepository(Booking)
-        private readonly bookingRepository: Repository<Booking>,
+        private readonly bookingRepository: Repository<Booking>
     ) {}
 
     async findByBookingNumber(booking_number: number) {
@@ -21,7 +21,7 @@ export class BookingService {
 
     public async findAllBookings() {
         const bookings = await this.bookingRepository.find({
-          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {is_active: true},
           order: { id_booking: 'ASC'}
         });
@@ -30,7 +30,7 @@ export class BookingService {
 
       public async findAllBookingsArchived() {
         const bookings = await this.bookingRepository.find({
-          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {is_active: false},
           order: { id_booking: 'ASC'}
         });
@@ -39,7 +39,7 @@ export class BookingService {
     
       public async findOneBooking(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {
             id_booking: id_booking,
             is_active: true
@@ -49,7 +49,7 @@ export class BookingService {
 
       public async findOneBookingArchived(id_booking: number) {
         return await this.bookingRepository.findOne({
-          relations: ['booking_type', 'booking_origin', 'client', 'property'],
+          relations: ['booking_type', 'booking_origin', 'client', 'property','payment_type'],
           where: {
             id_booking: id_booking,
             is_active: false
@@ -97,7 +97,7 @@ export class BookingService {
           throw new HttpException('A problem occurred while updating the booking', HttpStatus.NOT_FOUND);
         }
       }
-    
+          
       public async removeBooking(id_booking: number) {
         if (!await this.findOneBookingArchived(id_booking)) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
         try {
@@ -176,6 +176,20 @@ export class BookingService {
     
       return occupiedDatesArray;
     }
+
+    async UpdateIsPaid(id_booking: number) {
+      const booking = await this.bookingRepository.findOne({
+        where: { id_booking: id_booking}
+      });
+      if (!booking) throw new HttpException(`Booking with id ${id_booking} does not exist`, HttpStatus.NOT_FOUND);
+      try {
+        booking.is_paid = true;
+        await this.bookingRepository.update(id_booking, booking);
+      } catch {
+        throw new HttpException('A problem occurred while archiving the booking', HttpStatus.NOT_FOUND);
+      }
+    }
+
 
   }
 

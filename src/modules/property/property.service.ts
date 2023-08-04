@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePropertyDto, UpdatePropertyDto } from './dto';
 import { Property } from './entities/property.entity';
+import { ActivityStatus } from 'src/shared/activity_status/activity_status.entity';
 
 @Injectable()
 export class PropertyService {
@@ -45,6 +46,7 @@ export class PropertyService {
       where: { is_active: true },
       order: { id_property: 'ASC' },
     });
+
     return properties;
   }
 
@@ -203,4 +205,55 @@ export class PropertyService {
 
     return property ? property.reference_number : 0;
   }
+
+  public async updateActivityStatus() {
+    const properties = await this.propertyRepository.find({
+      relations: ['bookings', 'activity_status'],
+      where: { is_active: true}
+    });
+  
+    const currentDate = new Date();
+  
+    for (const property of properties) {
+      let hasActiveBooking = false;
+  
+      for (const booking of property.bookings) {
+        if (
+          booking.is_active &&                 
+          currentDate >= new Date(booking.check_in_date) &&
+          currentDate <= new Date(booking.check_out_date)
+        ) {
+          hasActiveBooking = true;
+          break;
+        }
+      }
+  
+      const activityStatusId = hasActiveBooking ? 2 : 1;
+  
+      await this.propertyRepository
+        .createQueryBuilder()
+        .relation(Property, 'activity_status')
+        .of(property)
+        .set(activityStatusId);
+    }
+  }
+
+  public async findPropertiesWithAvailabilityLibre() {
+    const properties = await this.propertyRepository.find({
+      relations: [
+        'property_type',
+        'province',
+        'availability_status',
+        'activity_status',
+        'bookings',
+        'payments',
+        'images',
+      ],
+      where: { availability_status: { id: 1 } },
+      order: { id_property: 'ASC' },
+    });
+
+    return properties;
+  }
+  
 }

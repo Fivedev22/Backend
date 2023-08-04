@@ -21,6 +21,8 @@ import { ImageModule } from './shared/image/image.module';
 import { join } from 'path';
 import * as express from 'express';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { NotesModule } from './shared/notes/notes.module';
+
 
 
 
@@ -55,6 +57,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     PaymentModule,
     PaymentStatusModule,
     ImageModule,
+    NotesModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'), // Ruta absoluta a la carpeta de uploads
       serveRoot: '/uploads', // Ruta base para servir los archivos
